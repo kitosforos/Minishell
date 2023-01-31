@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/01/31 13:43:13 by maralons         ###   ########.fr       */
+/*   Updated: 2023/01/31 20:32:24 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,35 +27,42 @@ int	builtins(char *cmds[], char *envp[])
 	return (EXIT_SUCCESS);
 }
 
-int	minishell_loop(char *envp[])
+void	errors(int argc, char **argv)
 {
-	char	*buffer;
-	char	**cmds;
-
-	buffer = readline("Minishell > ");
-	while (strcmp(buffer, "exit") != 0)
-	{
-		add_history(buffer);
-		cmds = ft_split(buffer, ' ');
-		if (builtins(cmds, envp) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		buffer = readline("\nMinishell > ");
-	}
-	return (EXIT_SUCCESS);
+	if (argc != 1 || !(*argv))
+		exit(EXIT_FAILURE);
 }
 
-void	minishell_free(void)
+void	program_loop(Minishell *mini)
 {
+	signal(SIGINT, SIG_IGN);
+	mini->buf = readline("Minishell > ");
+	if (!mini->buf)
+		return ;
+	while (strcmp(mini->buf, "exit") != 0)
+	{
+		printf("%s\n", mini->buf);
+		free(mini->buf);
+		mini->buf = readline("Minishell > ");
+		add_history(mini->buf);
+		minishell(mini);
+	}
+	free(mini->buf);
+}
+
+void program_free(Minishell *mini)
+{
+	mini_free(mini);
 	rl_clear_history();
 }
 
-int	main(int argc, char *argv[], char *envp[])
+int	main(int argc, char **argv, char **envp)
 {
-	if (minishell_loop(envp) == 1)
-	{		
-		minishell_free();
-		return (EXIT_FAILURE);
-	}
-	minishell_free();
-	return (EXIT_SUCCESS);
+	Minishell	*mini;
+	
+	errors(argc, argv);
+	mini = mini_init(envp);
+	program_loop(mini);
+	program_free(mini);
+	return (0);
 }
