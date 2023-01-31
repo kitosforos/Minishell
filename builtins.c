@@ -3,24 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:58:13 by maralons          #+#    #+#             */
-/*   Updated: 2023/01/31 13:52:39 by maralons         ###   ########.fr       */
+/*   Updated: 2023/01/31 20:46:24 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "builtins.h"
 
 int	dollar_echo(char *argv[], char *envp[], int i)
 {
-	int		j;
 	int		flag;
 	char	**words_env;
 	char	*var;
 
 	flag = i;
-	j = 0;
 	if (argv[i][1] == '$')
 		printf("$");
 	var = ft_strtrim(argv[i], "$");
