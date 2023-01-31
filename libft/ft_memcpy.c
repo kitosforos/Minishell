@@ -3,37 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 19:04:07 by maralons          #+#    #+#             */
-/*   Updated: 2022/03/24 18:56:21 by maralons         ###   ########.fr       */
+/*   Created: 2019/10/09 17:16:39 by rchallie          #+#    #+#             */
+/*   Updated: 2019/10/21 10:23:04 by rchallie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
+#include "libft.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t	i;
+	char		*dstc;
+	const char	*srccc;
 
-	if (!dest && !src)
-		return (NULL);
-	i = 0;
-	while (i < n)
-	{
-		((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
-		i++;
-	}
-	return (dest);
+	if ((dst == src) || n == 0)
+		return (dst);
+	if (!dst && !src)
+		return (0);
+	dstc = (char *)dst;
+	srccc = (const char *)src;
+	while (n--)
+		dstc[n] = srccc[n];
+	return (dst);
 }
-
-// int main()
-// {
-// 	char str[50] = "This is string.h library function\n";
-// 	char str2[50] = "This is string.h library function\n";
-// 	char str3[50] = "IMBECIL";
-// 	char str4[50] = "IMBECIL";
-// 	printf("%s\n", memcpy(str, str3, 3));
-// 	printf("%s", ft_memcpy(str2, str4, 3));
-// }

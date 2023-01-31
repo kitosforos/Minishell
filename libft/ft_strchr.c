@@ -3,37 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 18:28:23 by maralons          #+#    #+#             */
-/*   Updated: 2022/04/05 17:18:58 by maralons         ###   ########.fr       */
+/*   Created: 2019/10/08 17:32:21 by rchallie          #+#    #+#             */
+/*   Updated: 2019/10/14 16:52:45 by rchallie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
 char	*ft_strchr(const char *s, int c)
 {
-	int		i;
-	int		j;
-	char	*str;
+	int i;
 
 	i = 0;
-	str = (char *)s;
-	while (str[i] != 0)
-		i++;
-	j = 0;
-	while (j <= i)
+	while (s[i])
 	{
-		if (*str == (char)c)
-			return (str);
-		str++;
-		j++;
+		if (s[i] == c)
+			return ((char *)s + i);
+		i++;
 	}
+	if (s[i] == c)
+		return ((char *)s + i);
 	return (0);
 }
-
-//  int main()
-//  {
-// 	printf("%s", ft_strchr("holaquetal", '\0'));
-// }

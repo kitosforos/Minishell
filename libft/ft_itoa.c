@@ -3,81 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 16:19:18 by maralons          #+#    #+#             */
-/*   Updated: 2022/04/01 18:12:32 by maralons         ###   ########.fr       */
+/*   Created: 2019/10/10 15:29:57 by rchallie          #+#    #+#             */
+/*   Updated: 2019/10/23 10:55:12 by rchallie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	csize(int aux)
+static int		ft_estim(long n)
 {
-	int	count;
+	size_t	estim;
+	int		isneg;
 
-	count = 0;
-	while (aux != 0)
+	estim = 0;
+	isneg = 0;
+	if (n < 0)
 	{
-		count++;
-		aux /= 10;
+		estim++;
+		isneg++;
+		n = -n;
 	}
-	return (count);
-}
-
-static char	*fill_numero_asqueroso(char *num)
-{
-	num[0] = '-';
-	num[1] = '2';
-	num[2] = '1';
-	num[3] = '4';
-	num[4] = '7';
-	num[5] = '4';
-	num[6] = '8';
-	num[7] = '3';
-	num[8] = '6';
-	num[9] = '4';
-	num[10] = '8';
-	num[11] = 0;
-	return ((char *) num);
-}
-
-static char	*filltable(int n, int count, char *str)
-{
-	if (n < 0 && n != -2147483648)
+	while (n >= 1)
 	{
-		str[0] = '-';
-		n *= -1;
-	}
-	str[count] = 0;
-	if (n == 0)
-		str[count - 1] = (n % 10) + 48;
-	while (n != 0)
-	{
-		str[count - 1] = (n % 10) + 48;
+		estim++;
 		n /= 10;
-		count--;
 	}
-	return (str);
+	return (estim);
 }
 
-char	*ft_itoa(int n)
+static char		*ft_gen(char *rtn, long nbr, int len, int isneg)
 {
-	int		count;
-	char	*num;
-	int		aux;
-
-	aux = n;
-	count = 0;
-	if (aux < 0 || aux == 0)
-		count++;
-	count += csize(aux);
-	num = malloc(sizeof(char) * (count + 1));
-	if (!num)
-		return (NULL);
-	if (n == -2147483648)
-		num = fill_numero_asqueroso(num);
+	if (nbr != 0)
+		rtn = malloc(sizeof(char) * (len + 1));
 	else
-		num = filltable(n, count, num);
-	return (num);
+		return (rtn = ft_strdup("0"));
+	if (!rtn)
+		return (0);
+	isneg = 0;
+	if (nbr < 0)
+	{
+		isneg++;
+		nbr = -nbr;
+	}
+	rtn[len] = '\0';
+	while (--len)
+	{
+		rtn[len] = (nbr % 10) + '0';
+		nbr /= 10;
+	}
+	if (isneg == 1)
+		rtn[0] = '-';
+	else
+		rtn[0] = (nbr % 10) + '0';
+	return (rtn);
+}
+
+char			*ft_itoa(int n)
+{
+	int		len;
+	char	*rtn;
+	long	nbr;
+	int		isneg;
+
+	nbr = n;
+	len = ft_estim(nbr);
+	rtn = 0;
+	isneg = 0;
+	if (!(rtn = ft_gen(rtn, nbr, len, isneg)))
+		return (0);
+	return (rtn);
 }

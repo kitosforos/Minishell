@@ -4,7 +4,7 @@ LIB = -L/home/linuxbrew/.linuxbrew/opt/readline/lib -lreadline -Llibft -lft
 LIBFT = libft.a
 
 all: $(LIBFT)
-	gcc $(CFLAGS) main.c process.c minishell.c -o minishell $(INC) $(LIB)
+	gcc $(CFLAGS) main.c process.c minishell.c builtins.c -o minishell $(INC) $(LIB)
 
 $(LIBFT):
 	make -C libft

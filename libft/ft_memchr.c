@@ -3,36 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 19:43:48 by maralons          #+#    #+#             */
-/*   Updated: 2022/03/30 21:04:05 by maralons         ###   ########.fr       */
+/*   Created: 2019/10/10 11:55:54 by rchallie          #+#    #+#             */
+/*   Updated: 2019/10/23 11:15:17 by rchallie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
+#include "libft.h"
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	char	*p;
-	char	ch;
-	size_t	i;
+	const char	*str;
+	size_t		i;
 
-	p = (char *)s;
-	ch = c;
+	str = (const char *)s;
 	i = 0;
 	while (i < n)
 	{
-		if (p[i] == ch)
-			return (p + i);
+		if (str[i] == c)
+			return ((void *)(s + i));
 		i++;
 	}
 	return (0);
 }
-
-// int main()
-// {
-// 	printf("%s\n", ft_memchr("holaquetal", 'a', 9));
-// 	printf("%s", memchr("holaquetal", 'a', 9));
-// }

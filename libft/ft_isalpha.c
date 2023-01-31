@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   isalpha.c                                          :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rchallie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 16:59:10 by maralons          #+#    #+#             */
-/*   Updated: 2022/03/21 16:59:15 by maralons         ###   ########.fr       */
+/*   Created: 2019/10/07 15:43:54 by rchallie          #+#    #+#             */
+/*   Updated: 2019/10/07 15:53:52 by rchallie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
-int	ft_isalpha(int c)
+int		ft_isalpha(int c)
 {
-	if ((c <= 90 && c >= 65) || (c <= 122 && c >= 97))
-		return (1);
-	else
-		return (0);
+	return ((c >= 65 && c <= 90) || (c >= 97 && c <= 122));
 }
-
-// int	main()
-// {
-// 	int a = 'A';
-// 	printf("%d", isalpha(a));
-// 	printf("%d", isalpha('A'));
-// 	printf("%d", isalpha(3));
-// }

@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rchallie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 17:44:51 by maralons          #+#    #+#             */
-/*   Updated: 2022/03/23 20:08:14 by maralons         ###   ########.fr       */
+/*   Created: 2019/10/07 14:15:07 by rchallie          #+#    #+#             */
+/*   Updated: 2019/10/07 14:18:19 by rchallie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
-int	ft_tolower(int c)
+int		ft_tolower(int c)
 {
-	if (c <= 'Z' && c >= 'A')
-		return (c + 32);
-	else
-		return (c);
+	return ((c >= 65 && c <= 90) ? c + 32 : c);
 }

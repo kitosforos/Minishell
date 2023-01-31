@@ -3,33 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rchallie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 18:03:01 by maralons          #+#    #+#             */
-/*   Updated: 2022/03/22 18:48:52 by maralons         ###   ########.fr       */
+/*   Created: 2019/10/09 16:57:14 by rchallie          #+#    #+#             */
+/*   Updated: 2019/10/14 16:57:50 by rchallie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdio.h>
+#include "libft.h"
 
-void	*ft_memset(void *str, int c, size_t n)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	size_t	i;
+	size_t			i;
+	unsigned char	*buc;
 
 	i = 0;
-	while (i < n)
+	buc = (unsigned char *)b;
+	while (i < len)
 	{
-		((unsigned char *)str)[i] = (unsigned char)c;
+		buc[i] = c;
 		i++;
 	}
-	return (str);
+	return (b = buc);
 }
-
-// int main()
-// {
-// 	char str[50] = "This is string.h library function\n";
-// 	char str2[50] = "This is string.h library function\n";
-// 	printf("%s", memset(str, '$', 7));
-// 	printf("%s", ft_memset(str2, '$', 0));
-// }
