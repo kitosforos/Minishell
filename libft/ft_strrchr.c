@@ -3,27 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/09 14:25:42 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/14 15:45:09 by rchallie         ###   ########.fr       */
+/*   Created: 2022/03/23 13:47:25 by dcruz-na          #+#    #+#             */
+/*   Updated: 2022/04/01 18:44:28 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
 	int		i;
-	char	*ptr;
+	char	*str;
 
+	str = (char *) s;
 	i = 0;
-	ptr = 0;
-	while (s[i])
+	while (*str)
 	{
-		if (s[i] == c)
-			ptr = (char *)(s + i);
+		str++;
 		i++;
 	}
-	if (s[i] == c)
-		ptr = (char *)(s + i);
-	return (ptr);
+	while (i >= 0)
+	{
+		if (*str == (char) c)
+			return (str);
+		str--;
+		i--;
+	}
+	return (NULL);
 }
+
+// int main(){
+//    const char str[] = "http://www.tutorialspoint.com";
+//    const char ch = 'o';
+//    char *ret;
+//    ret = strrchr(str, ch);
+//    printf("String after |%c| is - |%s|\n", ch, ret);
+//    return(0);
+// }

@@ -3,31 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 11:01:52 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/16 14:52:11 by rchallie         ###   ########.fr       */
+/*   Created: 2022/03/22 19:38:31 by dcruz-na          #+#    #+#             */
+/*   Updated: 2022/04/01 18:20:24 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void	*ft_memmove(void *dst, const void *src, size_t n)
 {
-	char *d;
-	char *s;
+	unsigned char	*a;
+	unsigned char	*b;
+	size_t			i;
 
-	d = (char *)dst;
-	s = (char *)src;
-	if (dst == src)
-		return (dst);
-	if (s < d)
+	a = (unsigned char *)dst;
+	b = (unsigned char *)src;
+	if (dst == NULL && src == NULL)
+		return (NULL);
+	i = 0;
+	if (b < a)
 	{
-		while (len--)
-			*(d + len) = *(s + len);
-		return (dst);
+		while (++i <= n)
+			a[n - i] = b[n - i];
 	}
-	while (len--)
-		*d++ = *s++;
+	else
+	{
+		while (n--)
+			*a++ = *b++;
+	}
 	return (dst);
 }
+// int main()
+// {
+// 	char x[] = "bue   na  dsf  ";
+// 	char y[] = "klk pap  ";
+// 	ft_memmove(x, x + 2, 5);
+// 	printf("%s", x);
+// }

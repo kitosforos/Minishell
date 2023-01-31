@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 14:05:40 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/23 10:54:58 by rchallie         ###   ########.fr       */
+/*   Created: 2022/03/24 19:11:02 by danicn            #+#    #+#             */
+/*   Updated: 2022/03/31 15:06:30 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,30 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*rtn;
-	size_t	i;
+	unsigned char	*n;
+	unsigned int	i;
+	unsigned int	j;
 
-	if (!s)
+	if (s == NULL)
 		return (NULL);
-	if ((size_t)start > ft_strlen(s))
+	if (len > (unsigned int)ft_strlen(s) && start == 0)
+		return (ft_strdup(s));
+	if (start > (unsigned int)ft_strlen(s))
 		return (ft_strdup(""));
-	rtn = malloc(sizeof(char) * (len + 1));
 	i = 0;
-	if (!rtn)
-		return (0);
-	while (i < len)
+	j = 0;
+	n = malloc(sizeof(char) * (len + 1));
+	if (n == NULL)
+		return (NULL);
+	i = start;
+	while (j < len)
 	{
-		rtn[i] = *(s + start + i);
-		i++;
+		n[j++] = s[i++];
 	}
-	rtn[i] = '\0';
-	return (rtn);
+	n[len] = '\0';
+	return ((char *)n);
 }
+// int main(){
+// 	char a[] = "hola buenas";
+// 	printf("%s", ft_substr(a, 2, 8));
+// }

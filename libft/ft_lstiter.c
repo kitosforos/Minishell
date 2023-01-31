@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_listiter.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/17 15:57:27 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/19 18:46:42 by rchallie         ###   ########.fr       */
+/*   Created: 2022/03/26 14:14:39 by danicn            #+#    #+#             */
+/*   Updated: 2022/03/26 14:19:07 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	if (!lst || !f)
-		return ;
-	while (lst)
+	if (lst && f)
 	{
-		f(lst->content);
-		lst = lst->next;
+		while (lst)
+		{
+			f(lst->content);
+			lst = lst->next;
+		}
 	}
 }

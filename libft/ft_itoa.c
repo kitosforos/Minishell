@@ -3,75 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 15:29:57 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/23 10:55:12 by rchallie         ###   ########.fr       */
+/*   Created: 2022/03/25 17:57:17 by danicn            #+#    #+#             */
+/*   Updated: 2022/04/01 18:48:29 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_estim(long n)
+static void	final(long *i, char *s)
 {
-	size_t	estim;
-	int		isneg;
+	if (ft_strlen(s) == 0)
+		s[*i++] = '0';
+	s[*i] = 0;
+}
 
-	estim = 0;
-	isneg = 0;
-	if (n < 0)
-	{
-		estim++;
-		isneg++;
-		n = -n;
-	}
-	while (n >= 1)
-	{
-		estim++;
+static long	ft_pow(long x, long exp)
+{
+	if (exp == 0)
+		return (1);
+	if (exp == 1)
+		return (x);
+	return (x * ft_pow(x, exp - 1));
+}
+
+static long	ncifras(long n)
+{
+	long	j;
+
+	j = 0;
+	while (n != 0)
+	{	
 		n /= 10;
+		j++;
 	}
-	return (estim);
+	return (j);
 }
 
-static char		*ft_gen(char *rtn, long nbr, int len, int isneg)
+char	*ft_itoa(int n)
 {
-	if (nbr != 0)
-		rtn = malloc(sizeof(char) * (len + 1));
-	else
-		return (rtn = ft_strdup("0"));
-	if (!rtn)
-		return (0);
-	isneg = 0;
-	if (nbr < 0)
+	long	i;
+	long	j;
+	char	*s;
+	long	l;
+
+	l = (long)n;
+	j = ncifras(l);
+	s = (char *)malloc(sizeof(char) * (j + 2));
+	if (s == NULL)
+		return (NULL);
+	i = 0;
+	if (l < 0)
 	{
-		isneg++;
-		nbr = -nbr;
+		s[i++] = '-';
+		l *= -1;
 	}
-	rtn[len] = '\0';
-	while (--len)
+	if (l == 0)
+		s[i++] = '0';
+	while (j != 0)
 	{
-		rtn[len] = (nbr % 10) + '0';
-		nbr /= 10;
+		s[i++] = (char)(l / ft_pow(10, j - 1)) + '0';
+		l = l % ft_pow(10, --j);
 	}
-	if (isneg == 1)
-		rtn[0] = '-';
-	else
-		rtn[0] = (nbr % 10) + '0';
-	return (rtn);
+	final(&i, s);
+	return (s);
 }
 
-char			*ft_itoa(int n)
-{
-	int		len;
-	char	*rtn;
-	long	nbr;
-	int		isneg;
-
-	nbr = n;
-	len = ft_estim(nbr);
-	rtn = 0;
-	isneg = 0;
-	if (!(rtn = ft_gen(rtn, nbr, len, isneg)))
-		return (0);
-	return (rtn);
-}
+// int main(){
+// 	printf("%s", ft_itoa(0));
+// }

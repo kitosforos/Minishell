@@ -3,36 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 16:13:35 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/08 16:42:01 by rchallie         ###   ########.fr       */
+/*   Created: 2022/03/24 13:45:09 by dcruz-na          #+#    #+#             */
+/*   Updated: 2022/04/01 18:44:40 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+static unsigned int	lenn(const char *str)
 {
-	size_t	i;
-	size_t	c;
-	size_t	n_len;
-	char	*hay;
+	int	i;
 
 	i = 0;
-	hay = (char *)haystack;
-	n_len = ft_strlen(needle);
-	if (n_len == 0 || haystack == needle)
-		return (hay);
-	while (hay[i] != '\0' && i < len)
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strnstr(const char *h, const char *need, unsigned int len)
+{
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	k;
+	unsigned int	c;
+	char			*hay;
+
+	hay = (char *) h;
+	c = lenn(need);
+	i = 0;
+	while (i < len && hay[i] && c != 0)
 	{
-		c = 0;
-		while (hay[i + c] != '\0' && needle[c] != '\0'
-				&& hay[i + c] == needle[c] && i + c < len)
-			c++;
-		if (c == n_len)
-			return (hay + i);
+		j = 0;
+		k = i;
+		if (hay[i] == (char) need[j])
+		{
+			while ((j < c) && k < len && hay[k++] == (char) need[j])
+				j++;
+			if (j == c)
+				return (&hay[i]);
+		}
 		i++;
 	}
-	return (0);
+	if (!c)
+		return (hay);
+	return (NULL);
 }
+
+// int main()
+// {
+// 	char a[] = "Buenos dias compa", b[] = "dias";
+// 	printf("%s", ft_strnstr(a, b, 10));
+// }

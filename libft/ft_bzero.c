@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/09 17:10:02 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/14 17:38:46 by rchallie         ###   ########.fr       */
+/*   Created: 2022/03/22 19:02:38 by dcruz-na          #+#    #+#             */
+/*   Updated: 2022/03/27 19:05:15 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,21 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	size_t			i;
-	unsigned char	*suc;
-
-	i = 0;
-	suc = (unsigned char *)s;
-	while (i < n)
+	while (n)
 	{
-		suc[i] = 0;
-		i++;
+		*(unsigned char *)(s) = 0;
+		s++;
+		n--;
 	}
-	s = suc;
 }
+
+// int main()
+// {
+//     int i;
+// 	char x[] = "bue   na  dsf  ";
+// 	bzero(x, 5);
+// 	for(i = 0; i < 16; i++){
+//         printf("%c", x[i]);
+//     }
+//     return 0;
+// }

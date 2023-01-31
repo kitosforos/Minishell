@@ -3,117 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/11 10:51:19 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/23 10:19:55 by rchallie         ###   ########.fr       */
+/*   Created: 2022/03/25 15:03:08 by danicn            #+#    #+#             */
+/*   Updated: 2022/04/01 20:41:36 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_hm(char const *s, char c)
+static void	declar(int *i, int *j, int *k)
 {
-	size_t	nbr;
-	int		i;
-
-	nbr = 0;
-	i = 0;
-	while (s[i])
-	{
-		while (s[i] == c)
-			i++;
-		if (i > 0 && s[i] && s[i - 1] == c)
-			nbr++;
-		if (s[i])
-			i++;
-	}
-	if (nbr == 0 && s[i - 1] == c)
-		return (0);
-	if (s[0] != c)
-		nbr++;
-	return (nbr);
+	*i = 0;
+	*j = 0;
+	*k = 0;
 }
 
-static char		**ft_mal(char **strs, char const *s, char c)
+static void	init(char *s, int *j, int *k, char c)
 {
-	size_t	count;
-	int		i;
-	int		h;
+	while ((char)(s[*j]) == c)
+		*k = ++(*j);
+	while ((char)(s[*j]) != c && s[*j])
+		(*j)++;
+}
 
-	count = 0;
-	i = 0;
-	h = 0;
-	while (s[h])
+static int	allocate(char **s, int i, int j, int k)
+{
+	s[i] = (char *)malloc(sizeof(char) * (j - k + 1));
+	if (s[i] == NULL)
 	{
-		if (s[h] != c)
-			count++;
-		else if (h > 0 && s[h - 1] != c)
+		while (--i >= 0)
+			free(s[i]);
+		free(s);
+		return (0);
+	}
+	return (1);
+}
+
+static int	counting_words(const char *str, char c)
+{
+	int	i;
+	int	trigger;
+
+	i = 0;
+	trigger = 0;
+	while (*str)
+	{
+		if (*str != c && trigger == 0)
 		{
-			strs[i] = malloc(sizeof(char) * (count + 1));
-			if (!strs[i])
-				return (0);
-			count = 0;
+			trigger = 1;
 			i++;
 		}
-		if (s[h + 1] == '\0' && s[h] != c)
-			if (!(strs[i] = malloc(sizeof(char) * count + 1)))
-				return (0);
-		h++;
+		else if (*str == c)
+			trigger = 0;
+		str++;
 	}
-	return (strs);
+	return (i);
 }
 
-static char		**ft_cpy(char **strs, char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
-	int i;
-	int j;
-	int h;
+	int		i;
+	int		j;
+	int		z;
+	int		k;
+	char	**sts;
 
-	i = 0;
-	j = 0;
-	h = 0;
-	while (s[h])
-	{
-		if (s[h] != c)
-			strs[i][j++] = s[h];
-		else if (h > 0 && s[h - 1] != c)
-			if (h != 0)
-			{
-				strs[i][j] = '\0';
-				j = 0;
-				i++;
-			}
-		if (s[h + 1] == '\0' && s[h] != c)
-			strs[i][j] = '\0';
-		h++;
-	}
-	return (strs);
-}
-
-char			**ft_split(char const *s, char c)
-{
-	char	**rtn;
-	int		nbr_w;
-
-	if (!s || !*s)
-	{
-		if (!(rtn = malloc(sizeof(char *) * 1)))
-			return (NULL);
-		*rtn = (void *)0;
-		return (rtn);
-	}
-	nbr_w = ft_hm(s, c);
-	rtn = malloc(sizeof(char *) * (nbr_w + 1));
-	if (!rtn)
-		return (0);
-	if (ft_mal(rtn, s, c) != 0)
-		ft_cpy(rtn, s, c);
-	else
-	{
-		free(rtn);
+	if (s == NULL)
 		return (NULL);
+	sts = (char **) malloc(sizeof(char *) * (counting_words(s, c) + 1));
+	if (sts == NULL)
+		return (NULL);
+	declar(&i, &j, &k);
+	while (i < counting_words(s, c))
+	{
+		init((char *)s, &j, &k, c);
+		if (allocate(sts, i, j, k) == 0)
+			return (NULL);
+		z = 0;
+		while (k < j)
+			sts[i][z++] = (char)(s[k++]);
+		sts[i++][z] = 0;
 	}
-	rtn[nbr_w] = (void *)0;
-	return (rtn);
+	sts[i] = NULL;
+	return ((char **)sts);
 }
+// int main(){
+// 	int i;
+// 	char x[] = "   lorem   ipsum dolor     sit amet, co
+// 	char **strs = ft_split(x, ' ');
+// 	i = 0;
+// 	while(strs[i])
+// 		printf("%s\n", strs[i++]);
+// 	printf("%s", strs[i]);
+// 	system("leaks a.out");
+// }

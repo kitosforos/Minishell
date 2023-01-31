@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 17:48:39 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/23 10:03:18 by rchallie         ###   ########.fr       */
+/*   Created: 2022/03/22 20:06:02 by dcruz-na          #+#    #+#             */
+/*   Updated: 2022/03/27 19:46:24 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,31 @@
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t i;
-	size_t src_len;
+	unsigned int	i;
+	unsigned int	k;
 
+	k = 0;
 	i = 0;
-	if (!dst || !src)
-		return (0);
-	src_len = ft_strlen(src);
-	if (!dstsize)
-		return (src_len);
-	while (src[i] != '\0' && i < dstsize)
+	if (dstsize == 0)
+	{
+		while (src[i])
+			i++;
+		return (i);
+	}
+	while (src[k])
+		k++;
+	i = 0;
+	while (i < (dstsize - 1) && src[i])
 	{
 		dst[i] = src[i];
 		i++;
 	}
-	if (dstsize < src_len)
-		dst[dstsize - 1] = '\0';
-	else if (dstsize != 0)
-		dst[i] = '\0';
-	return (src_len);
+	dst[i] = 0;
+	return (k);
 }
+
+// int main()
+// {
+// 	char a[20] = "Holassagsgsgfg", b[] = "Buenasfsdjkg";
+// 	ft_strlcpy(a, b, 8);
+// }

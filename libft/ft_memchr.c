@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 11:55:54 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/23 11:15:17 by rchallie         ###   ########.fr       */
+/*   Created: 2022/03/23 14:12:44 by dcruz-na          #+#    #+#             */
+/*   Updated: 2022/04/01 18:39:40 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,26 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	const char	*str;
-	size_t		i;
+	size_t			i;
+	unsigned char	*str;
 
-	str = (const char *)s;
+	str = (unsigned char *) s;
 	i = 0;
 	while (i < n)
 	{
-		if (str[i] == c)
-			return ((void *)(s + i));
+		if (*str == (unsigned char) c)
+			return (str);
+		str++;
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
+
+// int main(){
+//    const char str[] = "benaskfllkakffdcxa";
+//    const char ch = 'u';
+//    char *ret;
+//    ret = ft_memchr(str, ch, 40);
+//    printf("String after |%c| is - |%s|\n", ch, ret);
+//    return(0);
+// }

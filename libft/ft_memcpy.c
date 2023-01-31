@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/09 17:16:39 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/21 10:23:04 by rchallie         ###   ########.fr       */
+/*   Created: 2022/03/22 19:17:46 by dcruz-na          #+#    #+#             */
+/*   Updated: 2022/04/01 18:22:11 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,23 @@
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	char		*dstc;
-	const char	*srccc;
+	size_t	i;
 
-	if ((dst == src) || n == 0)
-		return (dst);
-	if (!dst && !src)
-		return (0);
-	dstc = (char *)dst;
-	srccc = (const char *)src;
-	while (n--)
-		dstc[n] = srccc[n];
+	if (dst == NULL && src == NULL)
+		return (NULL);
+	i = 0;
+	while (i < n)
+	{
+		*((char *)dst + i) = *((char *)src + i);
+		i++;
+	}
 	return (dst);
 }
+
+// int main()
+// {
+// 	char x[] = "bue   na  dsf  ";
+// 	char y[] = "klk pap  ";
+// 	memcpy(x, y, 5);
+// 	printf("%s", x);
+// }
