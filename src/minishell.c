@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:52:11 by danicn            #+#    #+#             */
-/*   Updated: 2023/01/31 21:28:51 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:29:46 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ void    minishell(Minishell *mini)
 {
     char **args;
 
+	if (mini->buf == NULL || strcmp(mini->buf, "exit") != 0)
+		return ;
+		
     args = ft_split(mini->buf, ' ');
     exec_process(args, mini->envp);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/01/31 21:39:59 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:29:03 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ void	program_loop(Minishell *mini)
 	while (strcmp(mini->buf, "exit") != 0)
 	{
 		printf("%s\n", mini->buf);
+		add_history(mini->buf);
+		minishell(mini);
 		free(mini->buf);
 		mini->buf = readline("Minishell > ");
-		add_history(mini->buf);
-		if (strcmp(mini->buf, "exit") != 0)
-			minishell(mini);
 	}
 	free(mini->buf);
 }
