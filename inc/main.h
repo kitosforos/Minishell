@@ -6,13 +6,14 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:34 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/01 14:41:22 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/01 20:42:36 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <string.h>
 #include "minishell.h"
 #include "process.h"
 #include "builtins.h"

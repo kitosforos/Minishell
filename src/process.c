@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:28:12 by danicn            #+#    #+#             */
-/*   Updated: 2023/01/31 21:35:41 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/01 21:25:24 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	exec_process(char **arr, char **envp)
 	else if (parent == 0)
 	{
 		child_process(arr, envp);
+		exit(0);
 	}
 	else
 	{
@@ -79,12 +80,16 @@ void	child_process(char **arr, char **envp)
 	char	**path;
 	char	*cmd_path;
 
-	path = ft_split(find_path(envp), ':');
-	if (!path)
+	if (!arr || !arr[0])
 		return ;
+	path = ft_split(find_path(envp), ':');
+	if (!path) {
+		return ;
+	}
 	cmd_path = find_cmd_path(path, arr[0]);
 	if (!cmd_path)
 	{
+		printf("Orden <<%s>> no encontrada\n", arr[0]);
 		return ;
 	}
 	free(arr[0]);

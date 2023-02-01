@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/01 14:58:29 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/01 21:25:34 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,9 @@ void	program_loop(Minishell *mini)
 	read_and_add(mini);
 	while (strncmp(mini->buf, "exit", 4) != 0)
 	{
-		printf("\n");
 		minishell(mini);
 		free(mini->buf);
 		read_and_add(mini);
-		printf("%s", mini->buf);
-		if (strcmp(mini->buf, "exit") == 0)
-			break;
 	}
 	free(mini->buf);
 }
