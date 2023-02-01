@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/01 14:29:03 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/01 14:58:29 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,11 @@
 #include <readline/history.h>
 #include "main.h"
 
-int	builtins(char *cmds[], char *envp[])
+void	read_and_add(Minishell *mini)
 {
-	if (!cmds[0])
-		return (EXIT_FAILURE);
-	if (strcmp(cmds[0], "echo") == 0)
-		my_echo(cmds, envp);
-	else if (strcmp(cmds[0], "pwd") == 0)
-		my_pwd();
-	else if (strcmp(cmds[0], "env") == 0)
-		my_env(envp);
-	else if (strcmp(cmds[0], "cd") == 0)
-		my_cd(cmds[1]);
-	return (EXIT_SUCCESS);
-}
+	mini->buf = readline("Minishell > ");
+	add_history(mini->buf);
+;}
 
 void	errors(int argc, char **argv)
 {
@@ -38,16 +29,16 @@ void	errors(int argc, char **argv)
 void	program_loop(Minishell *mini)
 {
 	signal(SIGINT, SIG_IGN);
-	mini->buf = readline("Minishell > ");
-	if (!mini->buf)
-		return ;
-	while (strcmp(mini->buf, "exit") != 0)
+	read_and_add(mini);
+	while (strncmp(mini->buf, "exit", 4) != 0)
 	{
-		printf("%s\n", mini->buf);
-		add_history(mini->buf);
+		printf("\n");
 		minishell(mini);
 		free(mini->buf);
-		mini->buf = readline("Minishell > ");
+		read_and_add(mini);
+		printf("%s", mini->buf);
+		if (strcmp(mini->buf, "exit") == 0)
+			break;
 	}
 	free(mini->buf);
 }

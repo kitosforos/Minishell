@@ -6,9 +6,12 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:07:21 by danicn            #+#    #+#             */
-/*   Updated: 2023/01/31 14:25:30 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/01 14:42:12 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef PROCESS_H
+#define PROCESS_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -26,5 +29,5 @@ char	*find_path(char **envp);
 char	*find_cmd_path(char **path, char *cmd);
 void	child_process(char **arr, char **envp);
 
-
+#endif
 

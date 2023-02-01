@@ -6,11 +6,28 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:58:13 by maralons          #+#    #+#             */
-/*   Updated: 2023/01/31 20:46:24 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/01 14:50:30 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+int	builtins(char *cmds[], char *envp[])
+{
+	if (!cmds[0])
+		return (EXIT_FAILURE);
+	if (strcmp(cmds[0], "echo") == 0)
+		my_echo(cmds, envp);
+	else if (strcmp(cmds[0], "pwd") == 0)
+		my_pwd();
+	else if (strcmp(cmds[0], "env") == 0)
+		my_env(envp);
+	else if (strcmp(cmds[0], "cd") == 0)
+		my_cd(cmds[1]);
+	else
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
 
 int	dollar_echo(char *argv[], char *envp[], int i)
 {
