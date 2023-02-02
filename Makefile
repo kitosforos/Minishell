@@ -1,8 +1,8 @@
 NAME = minishell
 LIBFT = libft/libft.a
-SRCS = src/builtins.c src/process.c src/minishell.c src/main.c src/env.c
-INC = -IUsers/dcruz-na/.brew/opt/readline/include -Iinc -Ilibft
-LIB = -L/Users/dcruz-na/.brew/opt/readline/lib -lreadline 
+SRCS = src/builtins.c src/process.c src/minishell.c src/main.c
+INC = -IUsers/${USER}/.brew/opt/readline/include -Iinc -Ilibft
+LIB = -L/Users/${USER}/.brew/opt/readline/lib -lreadline 
 OBJS = $(patsubst src/%, obj/%, $(SRCS:.c=.o))
 CFLAGS = -Wall -Wextra -Werror
 ############################
