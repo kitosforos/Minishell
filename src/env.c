@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:37:14 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 18:00:18 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/02 19:03:41 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,10 @@ Env	*env_init(char **envp)
 
 void	env_print(Env *env, char *var)
 {
-	char *content;
+	char	*content;
+
 	if (!var)
 		return ;
-	
-	content = env_find(env, var+1);
-	
-	
+	content = env_find(env, var + 1);
+	printf("%s\n", content);
 }

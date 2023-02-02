@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:36:46 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/01 14:41:53 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/02 19:09:13 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,16 @@
 #include "process.h"
 #include "builtins.h"
 #include "libft.h"
+#include "env.h"
 
 typedef struct _Minishell {
-    char	*buf;
-    char	**envp;
+    char    *buf;
+    char    **envp;
+	Env		*env;
 } Minishell;
 
 void		mini_free(Minishell *mini);
 Minishell	*mini_init(char **envp);
-void    	minishell(Minishell *mini);
+void		minishell(Minishell *mini);
 
 #endif

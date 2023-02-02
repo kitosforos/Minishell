@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:28:12 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 17:36:47 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/02 19:05:25 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	child_process(char **arr, char **envp)
 	if (!arr || !arr[0])
 		return ;
 	path = ft_split(find_path(envp), ':');
-	if (!path) {
+	if (!path)
+	{
 		return ;
 	}
 	cmd_path = find_cmd_path(path, arr[0]);
