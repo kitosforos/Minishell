@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/02 21:36:21 by maralons         ###   ########.fr       */
+/*   Updated: 2023/02/02 21:53:30 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 void	read_and_add(Minishell *mini)
 {
 	mini->buf = readline("Minishell > ");
-	add_history(mini->buf);
-;}
+	if (mini->buf != NULL)
+		add_history(mini->buf);
+}
 
 void	errors(int argc, char **argv)
 {
@@ -30,10 +31,13 @@ void	program_loop(Minishell *mini)
 {
 	signal(SIGINT, SIG_IGN);
 	read_and_add(mini);
-	while (strncmp(mini->buf, "exit", 4) != 0)
+	while (ft_strncmp(mini->buf, "exit", 4) != 0)
 	{
-		minishell(mini);
-		free(mini->buf);
+		if (mini->buf != NULL)
+		{
+			minishell(mini);
+			free(mini->buf);
+		}
 		read_and_add(mini);
 	}
 	free(mini->buf);
@@ -47,7 +51,7 @@ void program_free(Minishell *mini)
 int	main(int argc, char **argv, char **envp)
 {
 	Minishell	*mini;
-	
+
 	errors(argc, argv);
 	mini = mini_init(envp);
 	if (!mini)

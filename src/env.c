@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:37:14 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 21:38:24 by maralons         ###   ########.fr       */
+/*   Updated: 2023/02/02 21:53:33 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ void	env_print(t_env *env, char *var)
 {
 	char	*content;
 
-	if (!var)
+	if (!var || !env)
 		return ;
-	content = env_find(env, var + 1);
-	printf("%s\n", content);
+	content = getenv(var + 1);
+	if (content)
+		printf("%s\n", content);
 }
