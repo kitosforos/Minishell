@@ -6,7 +6,7 @@
 /*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:52:11 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 19:13:36 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/02 19:25:15 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void	minishell(Minishell *mini)
 	args = ft_split(mini->buf, ' ');
 	if (args[0][0] == '$')
 		env_print(mini->env, args[0]);
-	if (builtins(args, mini->envp) == EXIT_FAILURE)
+	else if (builtins(args, mini->envp) == EXIT_FAILURE)
 		exec_process(args, mini->envp);
 }
