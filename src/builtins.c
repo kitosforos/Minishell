@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:58:13 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/02 21:55:22 by maralons         ###   ########.fr       */
+/*   Updated: 2023/02/02 22:09:02 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,4 @@ int	my_env(t_env *env)
 	}
 	printf("%s\n", env->env->content);
 	return (1);
-}
-
-int	my_cd(char	*argv)
-{
-	if (chdir(argv) == 0)
-		return (1);
-	return (0);
 }

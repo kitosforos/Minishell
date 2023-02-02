@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:37:14 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 21:53:33 by maralons         ###   ########.fr       */
+/*   Updated: 2023/02/02 22:13:54 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ char	*env_find(t_env *env, char *var)
     int		i;
 
     i = ft_strlen(var);
-	while (ft_strncmp((char *)env->env->content, var, i))
-		env->env++;
+	while (ft_strncmp((char *)env->env->content, var, i) && env->env->next)
+		env->env = env->env->next;
 	return ((char *)env->env->content + i + 1);
 }
 
