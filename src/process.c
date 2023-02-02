@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:28:12 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/01 21:25:24 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/02 17:36:47 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	child_process(char **arr, char **envp)
 	cmd_path = find_cmd_path(path, arr[0]);
 	if (!cmd_path)
 	{
-		printf("Orden <<%s>> no encontrada\n", arr[0]);
+		printf("orden <<%s>> no encontrada\n", arr[0]);
 		return ;
 	}
 	free(arr[0]);
