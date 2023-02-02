@@ -6,7 +6,7 @@
 /*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:28:12 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 19:05:25 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/02 20:04:17 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,6 @@ char	*find_cmd_path(char **path, char *cmd)
 		path++;
 	}
 	return (NULL);
-}
-
-char	*find_path(char **envp)
-{
-	while (strncmp(*envp, "PATH", 4))
-		envp++;
-	return (*envp + 5);
 }
 
 void	free_path(char **path, char **arr, char *cmd_path)
@@ -82,7 +75,7 @@ void	child_process(char **arr, char **envp)
 
 	if (!arr || !arr[0])
 		return ;
-	path = ft_split(find_path(envp), ':');
+	path = ft_split(getenv("PATH"), ':');
 	if (!path)
 	{
 		return ;

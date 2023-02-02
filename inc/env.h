@@ -6,7 +6,7 @@
 /*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:37:31 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 19:08:14 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/02 20:02:15 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,4 @@ typedef struct _Env {
 
 Env	*env_init(char **envp);
 void	env_print(Env *env, char *var);
-char	*env_find(Env *env, char *var);
 #endif

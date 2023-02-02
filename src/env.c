@@ -6,40 +6,30 @@
 /*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:37:14 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 19:03:41 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/02 20:01:52 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-char	*env_find(Env *env, char *var)
-{
-    int i;
-
-    i = ft_strlen(var);
-	while (ft_strncmp(*env->env, var, i))
-		env->env++;
-	return (*env->env + i + 1);
-}
-
 Env	*env_init(char **envp)
 {
 	Env	*env;
-	
+
 	env = (Env *) malloc(sizeof(Env));
 	if (!env)
-		return NULL;
-
+		return (NULL);
 	env->env = envp;
-	return env;
+	return (env);
 }
 
 void	env_print(Env *env, char *var)
 {
 	char	*content;
 
-	if (!var)
+	if (!var || !env)
 		return ;
-	content = env_find(env, var + 1);
-	printf("%s\n", content);
+	content = getenv(var + 1);
+	if (content)
+		printf("%s\n", content);
 }
