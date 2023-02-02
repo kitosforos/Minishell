@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:58:13 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/02 21:49:16 by maralons         ###   ########.fr       */
+/*   Updated: 2023/02/02 21:55:22 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,12 @@ int	my_env(t_env *env)
 	int	i;
 
 	i = 0;
-	while (env->env->content)
+	while (env->env->content && env->env->next)
 	{
 		printf("%s\n", env->env->content);
 		env->env = env->env->next;
 	}
+	printf("%s\n", env->env->content);
 	return (1);
 }
 
