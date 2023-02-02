@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:52:11 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 19:13:36 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/02 21:48:17 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ Minishell	*mini_init(char **envp)
 	mini->env = env_init(envp);
 	if (!mini->env)
 		return NULL;
-	mini->envp = envp;
 	mini->buf = NULL;
-	return mini;
+	return (mini);
 }
 
 void	minishell(Minishell *mini)
@@ -41,6 +40,6 @@ void	minishell(Minishell *mini)
 	args = ft_split(mini->buf, ' ');
 	if (args[0][0] == '$')
 		env_print(mini->env, args[0]);
-	if (builtins(args, mini->envp) == EXIT_FAILURE)
-		exec_process(args, mini->envp);
+	else if (builtins(args, mini->env) == EXIT_FAILURE)
+		exec_process(args, mini->env);
 }

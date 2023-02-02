@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:36:46 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 19:09:13 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/02 21:21:07 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@
 #include "env.h"
 
 typedef struct _Minishell {
-    char    *buf;
-    char    **envp;
-	Env		*env;
+    char        *buf;
+	t_env		*env;
 } Minishell;
 
 void		mini_free(Minishell *mini);

@@ -3,33 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:58:13 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/01 14:50:30 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/02 21:49:16 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	builtins(char *cmds[], char *envp[])
+int	builtins(char *cmds[], t_env *env)
 {
 	if (!cmds[0])
 		return (EXIT_FAILURE);
 	if (strcmp(cmds[0], "echo") == 0)
-		my_echo(cmds, envp);
+		my_echo(cmds, env);
 	else if (strcmp(cmds[0], "pwd") == 0)
 		my_pwd();
 	else if (strcmp(cmds[0], "env") == 0)
-		my_env(envp);
+		my_env(env);
 	else if (strcmp(cmds[0], "cd") == 0)
 		my_cd(cmds[1]);
+	else if (strcmp(cmds[0], "export") == 0)
+		my_export(cmds, env);
 	else
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-int	dollar_echo(char *argv[], char *envp[], int i)
+int	dollar_echo(char *argv[], t_env *env, int i)
 {
 	int		flag;
 	char	**words_env;
@@ -39,18 +41,19 @@ int	dollar_echo(char *argv[], char *envp[], int i)
 	if (argv[i][1] == '$')
 		printf("$");
 	var = ft_strtrim(argv[i], "$");
-	while (envp[i])
+	while (env->env->content)
 	{
-		words_env = ft_split(envp[i++], '=');
+		words_env = ft_split(env->env->content, '=');
 		if (strcmp(words_env[0], var) == 0)
 			printf("%s", words_env[1]);
+		env->env = env->env->next;
 	}
 	if (flag == 1)
 		printf("\n");
 	return (1);
 }
 
-int	my_echo(char *argv[], char *envp[])
+int	my_echo(char *argv[], t_env *env)
 {
 	int	i;
 	int	flag;
@@ -65,7 +68,7 @@ int	my_echo(char *argv[], char *envp[])
 	if (strcmp(argv[1], "-n") == 0)
 		i++;
 	if (argv[i][0] == '$')
-		return (dollar_echo(argv, envp, i));
+		return (dollar_echo(argv, env, i));
 	while (argv[i])
 	{
 		if (flag)
@@ -92,13 +95,16 @@ int	my_pwd(void)
 	return (1);
 }
 
-int	my_env(char *envp[])
+int	my_env(t_env *env)
 {
 	int	i;
 
 	i = 0;
-	while (envp[i])
-		printf("%s\n", envp[i++]);
+	while (env->env->content)
+	{
+		printf("%s\n", env->env->content);
+		env->env = env->env->next;
+	}
 	return (1);
 }
 

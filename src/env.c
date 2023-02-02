@@ -3,38 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:37:14 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 19:03:41 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/02 21:38:24 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-char	*env_find(Env *env, char *var)
+char	*env_find(t_env *env, char *var)
 {
-    int i;
+    int		i;
 
     i = ft_strlen(var);
-	while (ft_strncmp(*env->env, var, i))
+	while (ft_strncmp((char *)env->env->content, var, i))
 		env->env++;
-	return (*env->env + i + 1);
+	return ((char *)env->env->content + i + 1);
 }
 
-Env	*env_init(char **envp)
+t_env	*env_init(char **envp)
 {
-	Env	*env;
-	
-	env = (Env *) malloc(sizeof(Env));
-	if (!env)
-		return NULL;
+	t_env	*env;
+	t_list	*node;
+	int		i;
 
-	env->env = envp;
-	return env;
+	i = 1;
+	env = (t_env *) malloc(sizeof(t_env));
+	if (!env)
+		return (NULL);
+	env->env = ft_lstnew(envp[0]);
+	env->envp = envp;
+	while (envp[i])
+	{
+		node = ft_lstnew(envp[i++]);
+		ft_lstadd_back(&env->env, node);
+	}
+	return (env);
 }
 
-void	env_print(Env *env, char *var)
+void	env_print(t_env *env, char *var)
 {
 	char	*content;
 

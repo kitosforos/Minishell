@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:28:12 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 19:05:25 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/02 21:46:23 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ char	*find_cmd_path(char **path, char *cmd)
 	return (NULL);
 }
 
-char	*find_path(char **envp)
+char	*find_path(t_env *env)
 {
-	while (strncmp(*envp, "PATH", 4))
-		envp++;
-	return (*envp + 5);
+	while (strncmp(env->env->content, "PATH", 4))
+	{
+		env->env = env->env->next;
+	}
+	return (env->env->content + 5);
 }
 
 void	free_path(char **path, char **arr, char *cmd_path)
@@ -54,7 +56,7 @@ void	free_path(char **path, char **arr, char *cmd_path)
 	free(cmd_path);
 }
 
-void	exec_process(char **arr, char **envp)
+void	exec_process(char **arr, t_env *env)
 {
 	pid_t	parent;
 
@@ -65,7 +67,7 @@ void	exec_process(char **arr, char **envp)
 	}
 	else if (parent == 0)
 	{
-		child_process(arr, envp);
+		child_process(arr, env);
 		exit(0);
 	}
 	else
@@ -75,14 +77,14 @@ void	exec_process(char **arr, char **envp)
 	}
 }
 
-void	child_process(char **arr, char **envp)
+void	child_process(char **arr, t_env *env)
 {
 	char	**path;
 	char	*cmd_path;
 
 	if (!arr || !arr[0])
 		return ;
-	path = ft_split(find_path(envp), ':');
+	path = ft_split(find_path(env), ':');
 	if (!path)
 	{
 		return ;
@@ -95,5 +97,5 @@ void	child_process(char **arr, char **envp)
 	}
 	free(arr[0]);
 	arr[0] = cmd_path;
-	execve(arr[0], arr, envp);
+	execve(arr[0], arr, env->envp);
 }
