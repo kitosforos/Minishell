@@ -30,7 +30,7 @@ int	my_export(char *args[], t_env *env)
 	i = 0;
 	words = ft_split(args[1], '=');
 	env_word = ft_split(tmp->content, '=');
-	if (getenv(words[0]))
+	if (env_find(env, words[0]))
 	{
 		while (strcmp(words[0], env_word[0]) != 0)
 		{
@@ -41,5 +41,16 @@ int	my_export(char *args[], t_env *env)
 		tmp->content = args[1];
 		return (EXIT_SUCCESS);
 	}
+	else
+		export_add(args[1], env);
+	return (EXIT_SUCCESS);
+}
+
+int	export_add(char *var, t_env *env)
+{
+	t_list	*node;	
+	
+	node = ft_lstnew(var);
+	ft_lstadd_back(&env->env, node);
 	return (EXIT_SUCCESS);
 }

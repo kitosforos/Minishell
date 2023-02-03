@@ -25,7 +25,7 @@
 # include "builtins2.h"
 # include "env.h"
 
-#define PATH_MAX 32768
+# define PATH_MAX 32768
 
 int	dollar_echo(char *argv[], t_env *env, int i);
 int	my_echo(char *argv[], t_env *env);

@@ -21,5 +21,6 @@
 
 int	my_cd(char	*argv);
 int	my_export(char *args[], t_env *env);
+int	export_add(char *var, t_env *env);
 
 #endif

@@ -36,18 +36,23 @@ int	dollar_echo(char *argv[], t_env *env, int i)
 	int		flag;
 	char	**words_env;
 	char	*var;
+	t_list	*tmp;
 
+	tmp = env->env;
 	flag = i;
 	if (argv[i][1] == '$')
 		printf("$");
 	var = ft_strtrim(argv[i], "$");
-	while (env->env->content)
+	while (tmp->content && tmp->next)
 	{
-		words_env = ft_split(env->env->content, '=');
-		if (strcmp(words_env[0], var) == 0)
+		words_env = ft_split(tmp->content, '=');
+		if (ft_strncmp(words_env[0], var, ft_strlen(var)) == 0)
 			printf("%s", words_env[1]);
-		env->env = env->env->next;
+		tmp = tmp->next;
 	}
+	words_env = ft_split(tmp->content, '=');
+	if (strcmp(words_env[0], var) == 0)
+			printf("%s", words_env[1]);
 	if (flag == 1)
 		printf("\n");
 	return (1);
@@ -97,14 +102,14 @@ int	my_pwd(void)
 
 int	my_env(t_env *env)
 {
-	int	i;
+	t_list *tmp;
 
-	i = 0;
-	while (env->env->content && env->env->next)
+	tmp = env->env;
+	while (tmp->content && tmp->next)
 	{
-		printf("%s\n", env->env->content);
-		env->env = env->env->next;
+		printf("%s\n", (char *)tmp->content);
+		tmp = tmp->next;
 	}
-	printf("%s\n", env->env->content);
+	printf("%s\n", (char *)tmp->content);
 	return (1);
 }

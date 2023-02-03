@@ -12,14 +12,22 @@
 
 #include "env.h"
 
-char	*env_find(t_env *env, char *var)
+int	env_find(t_env *env, char *var)
 {
     int		i;
+	t_list	*tmp;
 
+	tmp = env->env;
     i = ft_strlen(var);
-	while (ft_strncmp((char *)env->env->content, var, i) && env->env->next)
-		env->env = env->env->next;
-	return ((char *)env->env->content + i + 1);
+	while (tmp->next)
+	{
+		if (ft_strncmp((char *)tmp->content, var, i) == 0)
+			return (1);
+		tmp = tmp->next;
+	}
+	if (ft_strncmp((char *)tmp->content, var, i) == 0)
+			return (1);
+	return (0);
 }
 
 t_env	*env_init(char **envp)
@@ -44,11 +52,20 @@ t_env	*env_init(char **envp)
 
 void	env_print(t_env *env, char *var)
 {
-	char	*content;
+	t_list	*tmp;
 
+	tmp = env->env;
 	if (!var || !env)
 		return ;
-	content = getenv(var + 1);
-	if (content)
-		printf("%s\n", content);
+	if (env_find(env, var))
+	{
+		while (tmp->next)
+		{
+			if (ft_strncmp(tmp->content, var, ft_strlen(var)) == 0)
+				printf("%s\n", (char *)tmp->content + ft_strlen(var) + 1);
+			tmp = tmp->next;
+		}
+		if (ft_strncmp(tmp->content, var, ft_strlen(var)) == 0)
+				printf("%s\n", (char *)tmp->content + ft_strlen(var) + 1);
+	}
 }

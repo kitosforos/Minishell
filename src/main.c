@@ -31,19 +31,20 @@ void	program_loop(Minishell *mini)
 {
 	signal(SIGINT, SIG_IGN);
 	read_and_add(mini);
-	while (ft_strncmp(mini->buf, "exit", 4) != 0)
+	while (ft_strncmp(mini->buf, "exit", ft_strlen(mini->buf) + 1) != 0)
 	{
-		if (mini->buf != NULL)
+		if (mini->buf != NULL && ft_strlen(mini->buf))
 		{
 			minishell(mini);
 			free(mini->buf);
 		}
 		read_and_add(mini);
 	}
+	printf("Exit\n");
 	free(mini->buf);
 }
 
-void program_free(Minishell *mini)
+void	program_free(Minishell *mini)
 {
 	mini_free(mini);
 }

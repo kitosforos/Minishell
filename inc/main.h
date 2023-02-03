@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #ifndef MAIN_H
-#define MAIN_H
+# define MAIN_H
 
-#include <string.h>
+# include <string.h>
 #include "minishell.h"
 #include "process.h"
 #include "builtins.h"

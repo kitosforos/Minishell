@@ -39,7 +39,7 @@ void	minishell(Minishell *mini)
 		return ;
 	args = ft_split(mini->buf, ' ');
 	if (args[0][0] == '$')
-		env_print(mini->env, args[0]);
+		env_print(mini->env, args[0] + 1);
 	else if (builtins(args, mini->env) == EXIT_FAILURE)
 		exec_process(args, mini->env);
 }
