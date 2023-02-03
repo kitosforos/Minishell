@@ -26,6 +26,8 @@ int	builtins(char *cmds[], t_env *env)
 		my_cd(cmds[1]);
 	else if (strcmp(cmds[0], "export") == 0)
 		my_export(cmds, env);
+	else if (ft_strncmp(cmds[0], "unset", ft_strlen(cmds[0])) == 0)
+		my_unset(cmds, env);
 	else
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

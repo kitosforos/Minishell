@@ -24,17 +24,14 @@ int	my_export(char *args[], t_env *env)
 	char	**words;
 	char	**env_word;
 	t_list	*tmp;
-	int		i;
 
 	tmp = env->env;
-	i = 0;
 	words = ft_split(args[1], '=');
 	env_word = ft_split(tmp->content, '=');
 	if (env_find(env, words[0]))
 	{
-		while (strcmp(words[0], env_word[0]) != 0)
+		while (ft_strncmp(words[0], env_word[0], ft_strlen(env_word[0])) != 0)
 		{
-			i++;
 			tmp = tmp->next;
 			env_word = ft_split(tmp->content, '=');
 		}
@@ -53,4 +50,31 @@ int	export_add(char *var, t_env *env)
 	node = ft_lstnew(var);
 	ft_lstadd_back(&env->env, node);
 	return (EXIT_SUCCESS);
+}
+
+int	my_unset(char *args[], t_env *env)
+{
+	t_list 		*tmp;
+	t_list 		*tmp2;
+	int			flag;
+	char		**env_word;
+
+	flag = 0;
+	tmp = env->env;
+	tmp2 = env->env;
+	env_word = ft_split(tmp->content, '=');
+	if (env_find(env, args[1]))
+	{
+		while (ft_strncmp(args[1], env_word[0], ft_strlen(env_word[0])) != 0)
+		{
+			if (flag == 1)
+				tmp2 = tmp2->next;
+			tmp = tmp->next;
+			env_word = ft_split(tmp->content, '=');
+			flag = 1;
+		}
+		tmp2->next = tmp2->next->next;
+		return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
 }
