@@ -59,12 +59,11 @@ void	free_path(char **path, char **arr, char *cmd_path)
 void	exec_process(char **arr, t_env *env)
 {
 	pid_t	parent;
+	int		status;
 
 	parent = fork();
 	if (parent < 0) 
-	{
 		return ;
-	}
 	else if (parent == 0)
 	{
 		child_process(arr, env);
@@ -72,30 +71,33 @@ void	exec_process(char **arr, t_env *env)
 	}
 	else
 	{
-		wait(NULL);
+		wait(&status);
+		exit_status = WEXITSTATUS(status);
 		return ;
 	}
 }
 
-void	child_process(char **arr, t_env *env)
+int	child_process(char **arr, t_env *env)
 {
 	char	**path;
 	char	*cmd_path;
 
 	if (!arr || !arr[0])
-		return ;
+		return 1;
 	path = ft_split(find_path(env), ':');
 	if (!path)
 	{
-		return ;
+		return 1;
 	}
 	cmd_path = find_cmd_path(path, arr[0]);
 	if (!cmd_path)
 	{
 		printf("orden <<%s>> no encontrada\n", arr[0]);
-		return ;
+		exit_status = 127;
+		exit(127);
 	}
 	free(arr[0]);
 	arr[0] = cmd_path;
 	execve(arr[0], arr, env->envp);
+	return (EXIT_SUCCESS);
 }

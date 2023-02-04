@@ -36,6 +36,7 @@ t_env	*env_init(char **envp)
 	t_list	*node;
 	int		i;
 
+	exit_status = 0;
 	i = 1;
 	env = (t_env *) malloc(sizeof(t_env));
 	if (!env)
@@ -50,13 +51,13 @@ t_env	*env_init(char **envp)
 	return (env);
 }
 
-void	env_print(t_env *env, char *var)
+int	env_print(t_env *env, char *var)
 {
 	t_list	*tmp;
 
 	tmp = env->env;
 	if (!var || !env)
-		return ;
+		return (EXIT_FAILURE);
 	if (env_find(env, var))
 	{
 		while (tmp->next)
@@ -68,4 +69,7 @@ void	env_print(t_env *env, char *var)
 		if (ft_strncmp(tmp->content, var, ft_strlen(var)) == 0)
 				printf("%s\n", (char *)tmp->content + ft_strlen(var) + 1);
 	}
+	if (ft_strncmp(var, "?", 2) == 0)
+		return (2);
+	return (0);
 }

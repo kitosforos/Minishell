@@ -1,6 +1,6 @@
 NAME = minishell
 LIBFT = libft/libft.a
-SRCS = src/builtins.c src/process.c src/minishell.c src/main.c src/env.c src/builtins2.c
+SRCS = src/env.c src/builtins2.c src/process.c src/main.c src/minishell.c src/builtins.c
 INC = -IUsers/${USER}/.brew/opt/readline/include -Iinc -Ilibft
 LIB = -L/Users/${USER}/.brew/opt/readline/lib -lreadline 
 OBJS = $(patsubst src/%, obj/%, $(SRCS:.c=.o))

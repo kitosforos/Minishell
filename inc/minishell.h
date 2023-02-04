@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,8 +23,9 @@
 #include <readline/history.h>
 #include "process.h"
 #include "builtins.h"
-#include "libft.h"
 #include "env.h"
+#include "libft.h"
+
 
 typedef struct _Minishell {
     char        *buf;

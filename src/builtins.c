@@ -12,6 +12,8 @@
 
 #include "builtins.h"
 
+int	exit_status;
+
 int	builtins(char *cmds[], t_env *env)
 {
 	if (!cmds[0])
@@ -42,13 +44,13 @@ int	dollar_echo(char *argv[], t_env *env, int i)
 
 	tmp = env->env;
 	flag = i;
-	if (argv[i][1] == '$')
-		printf("$");
+	if (argv[i][1] == '?')
+		printf("%d", exit_status);
 	var = ft_strtrim(argv[i], "$");
-	while (tmp->content && tmp->next)
+	while (tmp->content && tmp->next && ft_strlen(var))
 	{
 		words_env = ft_split(tmp->content, '=');
-		if (ft_strncmp(words_env[0], var, ft_strlen(var)) == 0)
+		if (ft_strncmp(words_env[0], var, my_select(words_env[0], var)) == 0)
 			printf("%s", words_env[1]);
 		tmp = tmp->next;
 	}
@@ -57,7 +59,7 @@ int	dollar_echo(char *argv[], t_env *env, int i)
 			printf("%s", words_env[1]);
 	if (flag == 1)
 		printf("\n");
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 int	my_echo(char *argv[], t_env *env)

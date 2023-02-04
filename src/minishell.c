@@ -34,12 +34,20 @@ Minishell	*mini_init(char **envp)
 void	minishell(Minishell *mini)
 {
 	char	**args;
+	int		flag;
 
+	flag = 0;
 	if (mini->buf == NULL || strcmp(mini->buf, "exit") == 0)
 		return ;
 	args = ft_split(mini->buf, ' ');
 	if (args[0][0] == '$')
-		env_print(mini->env, args[0] + 1);
+	{
+		flag = env_print(mini->env, args[0] + 1);
+		if (flag == 2)
+			args = ft_split(ft_itoa(exit_status), ' ');
+	}
 	else if (builtins(args, mini->env) == EXIT_FAILURE)
+		exec_process(args, mini->env);
+	if (flag == 2)
 		exec_process(args, mini->env);
 }

@@ -78,3 +78,11 @@ int	my_unset(char *args[], t_env *env)
 	}
 	return (EXIT_FAILURE);
 }
+
+int	my_select(char *one, char *two)
+{
+	if (ft_strlen(two) > ft_strlen(one))
+		return ft_strlen(two);
+	else
+		return ft_strlen(one);
+}

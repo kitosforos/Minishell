@@ -24,11 +24,12 @@
 # include "libft.h"
 # include "env.h"
 
+
 void	exec_process(char **arr, t_env *env);
 void	free_path(char **path, char **arr, char *cmd_path);
 char	*find_path(t_env *env);
 char	*find_cmd_path(char **path, char *cmd);
-void	child_process(char **arr, t_env *env);
+int		child_process(char **arr, t_env *env);
 
 #endif
 

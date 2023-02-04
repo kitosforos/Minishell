@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
-#define BUILTINS_H
+# define BUILTINS_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -23,6 +23,7 @@
 # include <errno.h>
 # include "libft.h"
 # include "builtins2.h"
+# include "process.h"
 # include "env.h"
 
 # define PATH_MAX 32768
