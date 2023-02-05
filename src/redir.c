@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:05:09 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/04 14:30:49 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/05 14:14:33 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redir.h"
+
+char **take_cmd(t_list *lst)
+{
+	
+}
 
 t_redir	*redir_init(char **args, t_env *env)
 {
@@ -27,14 +32,17 @@ t_redir	*redir_init(char **args, t_env *env)
 	while (args[i])
 	{
 		if (args[i][0] == '|')
+		{
+			ft_lstadd_back(&red->cmds, ft_lstnew(args[i]));
 			red->n++;
+		}
 		else
 			ft_lstadd_back(&red->cmds, ft_lstnew(args[i]));
 		i++;
 	}
 	red->pipes = (int *) malloc(sizeof(int)*red->n);
 	/* parent creates all needed pipes at the start */
-	for( i = 0; i < red->n; i++ ){
+	for ( i = 0; i < red->n; i++ ){
 		if( pipe(red->pipes + i*2) < 0 )
 		{
 			perror("Error");
@@ -91,17 +99,19 @@ int	pipex(t_redir *red)
 	int	i;
 	pid_t	pid;
 	t_list	*lst;
-	
+	char	**str;
 	i = 0;
 	lst = red->cmds;
 	while(lst){
 		pid = fork();
-		if( pid == 0 ){
+		if( pid == 0 ){			
 			/* child gets input from the previous command,
 				if it's not the first command */
-			if(lst != red->cmds){
-				if( dup2(red->pipes[(i-1)*2], 0) < 0){
-					perror("ERROR\n");
+			if(lst != red->cmds)
+			{
+				if( dup2(red->pipes[(i-1)*2], 0) < 0)
+				{
+					perror("ERRORx\n");
 					exit(1);
 				}
 			}
@@ -109,19 +119,21 @@ int	pipex(t_redir *red)
 				the last command */
 			if(lst != ft_lstlast(red->cmds)){
 				if( dup2(red->pipes[i*2+1], 1) < 0 ){
-					perror("ERROR\n");
+					perror("ERRORy\n");
 					exit(1);
 				}
 			}
 			for( i = 0; i < 2 * red->n; i++ ){
 				close(red->pipes[i]);
 			}
-			child_process((char **)&red->cmds->content, red->env);
-		} else if( pid < 0 ){
-			perror("ERROR\n");
+			str = take_cmd(&lst);
+			child_process(str, red->env);
+		} 
+		else if( pid < 0)
+		{
+			perror("ERRORz\n");
 			exit(1);
 		}
-		lst = lst->next;
 		i++;
 	}
 	/* parent closes all of its copies at the end */
