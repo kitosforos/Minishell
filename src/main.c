@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/02 21:53:30 by maralons         ###   ########.fr       */
+/*   Updated: 2023/02/03 19:39:01 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	errors(int argc, char **argv)
 
 void	program_loop(Minishell *mini)
 {
-	signal(SIGINT, SIG_IGN);
+	signals();
 	read_and_add(mini);
 	while (ft_strncmp(mini->buf, "exit", ft_strlen(mini->buf) + 1) != 0)
 	{
@@ -38,7 +38,7 @@ void	program_loop(Minishell *mini)
 		}
 		read_and_add(mini);
 	}
-	printf("Exit\n");
+	printf("exit\n");
 	free(mini->buf);
 }
 

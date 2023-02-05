@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:52:11 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/03 11:15:08 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/05 12:04:07 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,20 @@ void	minishell(Minishell *mini)
 	if (mini->buf == NULL || strcmp(mini->buf, "exit") == 0)
 		return ;
 	args = ft_split(mini->buf, ' ');
-	if (args[0][0] == '$')
+	if (is_pipe_or_redir(args) == 0)
 	{
-		flag = env_print(mini->env, args[0] + 1);
+		if (args[0][0] == '$')
+		{
+			flag = env_print(mini->env, args[0] + 1);
+			if (flag == 2)
+				args = ft_split(ft_itoa(exit_status), ' ');
+		}
+		else if (builtins(args, mini->env) == EXIT_FAILURE)
+			exec_process(args, mini->env);
 		if (flag == 2)
-			args = ft_split(ft_itoa(exit_status), ' ');
+			exec_process(args, mini->env);
 	}
-	else if (builtins(args, mini->env) == EXIT_FAILURE)
-		exec_process(args, mini->env);
-	if (flag == 2)
-		exec_process(args, mini->env);
+	else{
+		redirs(args, mini->env);
+	}
 }

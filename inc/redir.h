@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   redir.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 19:13:34 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/05 12:05:23 by danicn           ###   ########.fr       */
+/*   Created: 2023/02/03 20:05:15 by danicn            #+#    #+#             */
+/*   Updated: 2023/02/04 14:25:32 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef REDIR_H
+#define REDIR_H
 
-# include <string.h>
-#include "minishell.h"
 #include "process.h"
 #include "libft.h"
 #include "env.h"
-#include "signals.h"
-void	errors(int argc, char **argv);
-void	program_loop(Minishell *mini);
-void	program_free(Minishell *mini);
 
+typedef struct s_redir {
+    int     	*pipes;
+    int        	n;
+    t_list		*cmds;
+    t_env		*env;
+} t_redir;
+
+
+int is_pipe_or_redir(char **text);
+int	redir_errors(t_redir *red, char **args);
+int	pipex(t_redir *red);
+int redirs(char **args, t_env *env);
 #endif

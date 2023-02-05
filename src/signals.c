@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 19:13:34 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/05 12:05:23 by danicn           ###   ########.fr       */
+/*   Created: 2023/02/03 19:32:24 by danicn            #+#    #+#             */
+/*   Updated: 2023/02/03 19:59:07 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
-
-# include <string.h>
-#include "minishell.h"
-#include "process.h"
-#include "libft.h"
-#include "env.h"
 #include "signals.h"
-void	errors(int argc, char **argv);
-void	program_loop(Minishell *mini);
-void	program_free(Minishell *mini);
 
-#endif
+void    signals()
+{
+    signal(SIGINT, ctrlc);
+	signal(SIGQUIT, ctrld);
+}
+
+void	ctrld(int n)
+{
+	n = n;
+	exit(1);
+}
+void	ctrlc(int n)
+{
+	n=n;
+	exit(1);
+}
