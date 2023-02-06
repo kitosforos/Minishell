@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:28:12 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/05 13:59:04 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/06 11:16:14 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,10 @@ int	child_process(char **arr, t_env *env)
 	}
 	free(arr[0]);
 	arr[0] = cmd_path;
-	execve(arr[0], arr, env->envp);
+	if (execve(arr[0], arr, env->envp) < 0)
+	{
+		perror("ERRO EN EXECVE");
+		exit(1);
+	}
 	return (EXIT_SUCCESS);
 }

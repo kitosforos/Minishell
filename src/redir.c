@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:05:09 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/05 14:14:33 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/02/06 12:09:56 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,31 @@
 
 char **take_cmd(t_list *lst)
 {
+	char **cmd;
+	int	i;
+	t_list *l;
 	
+	i = 0;
+	l = lst;
+	
+	while (l && ft_strncmp(l->content, "|", 1) != 0)
+	{
+		i++;
+		l = l->next;
+	}
+	cmd = (char **) malloc(sizeof(char)*(i+1));
+	if (!cmd)
+		return (NULL);
+	i = 0;
+	l = lst;
+	while (l && ft_strncmp(l->content, "|", 1))
+	{
+		cmd[i] = (char *) malloc(sizeof(char)*ft_strlen(l->content)+1);
+		ft_strlcpy(cmd[i++], l->content, ft_strlen(l->content)+1);
+		l = l->next;
+	}
+	cmd[i] = NULL;
+	return (cmd);
 }
 
 t_redir	*redir_init(char **args, t_env *env)
@@ -102,9 +126,10 @@ int	pipex(t_redir *red)
 	char	**str;
 	i = 0;
 	lst = red->cmds;
-	while(lst){
+	while(lst)
+	{
 		pid = fork();
-		if( pid == 0 ){			
+		if( pid == 0 ){
 			/* child gets input from the previous command,
 				if it's not the first command */
 			if(lst != red->cmds)
@@ -117,7 +142,7 @@ int	pipex(t_redir *red)
 			}
 			/* child outputs to next command, if it's not
 				the last command */
-			if(lst != ft_lstlast(red->cmds)){
+			if(i != red->n){
 				if( dup2(red->pipes[i*2+1], 1) < 0 ){
 					perror("ERRORy\n");
 					exit(1);
@@ -126,7 +151,7 @@ int	pipex(t_redir *red)
 			for( i = 0; i < 2 * red->n; i++ ){
 				close(red->pipes[i]);
 			}
-			str = take_cmd(&lst);
+			str = take_cmd(lst);
 			child_process(str, red->env);
 		} 
 		else if( pid < 0)
@@ -134,6 +159,10 @@ int	pipex(t_redir *red)
 			perror("ERRORz\n");
 			exit(1);
 		}
+		while (lst && ft_strncmp(lst->content, "|", 1) != 0)
+			lst = lst->next;
+		if (lst && ft_strncmp(lst->content, "|", 1) == 0)
+			lst = lst->next;
 		i++;
 	}
 	/* parent closes all of its copies at the end */
