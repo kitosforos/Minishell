@@ -30,8 +30,8 @@
 
 int	dollar_echo(char *argv[], t_env *env, int i);
 int	my_echo(char *argv[], t_env *env);
-int	my_pwd(void);
-int	my_env(t_env *env);
+int	my_pwd(char *cmds[]);
+int	my_env(t_env *env, char *cmds[]);
 int	builtins(char *cmds[], t_env *env);
 
 #endif

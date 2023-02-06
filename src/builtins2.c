@@ -14,9 +14,20 @@
 
 int	my_cd(char	*argv)
 {
-	if (chdir(argv) == 0)
-		return (1);
-	return (0);
+	char	*path;
+	char	buff[PATH_MAX];
+	
+	path = ft_strjoin(getcwd(buff, sizeof(buff)), "/");
+	path = ft_strjoin(path, argv);
+	if (chdir(argv) == -1)
+	{
+		if (access(path, F_OK) == -1)
+			printf("cd: no existe el archivo o directorio: %s\n", argv);
+		else
+			printf("cd: permiso denegado: %s\n", argv);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	my_export(char *args[], t_env *env)
@@ -25,6 +36,8 @@ int	my_export(char *args[], t_env *env)
 	char	**env_word;
 	t_list	*tmp;
 
+	if (args[1][0] >= 48 && args[1][0] <= 57)
+		return (exit_numeric(args));
 	tmp = env->env;
 	words = ft_split(args[1], '=');
 	env_word = ft_split(tmp->content, '=');
@@ -62,6 +75,8 @@ int	my_unset(char *args[], t_env *env)
 	flag = 0;
 	tmp = env->env;
 	tmp2 = env->env;
+	if (args[1][0] >= 48 && args[1][0] <= 57)
+		return (exit_numeric(args));
 	env_word = ft_split(tmp->content, '=');
 	if (env_find(env, args[1]))
 	{
@@ -85,4 +100,13 @@ int	my_select(char *one, char *two)
 		return ft_strlen(two);
 	else
 		return ft_strlen(one);
+}
+
+int	exit_numeric(char *cmds[])
+{
+	if (ft_strncmp(cmds[0], "unset", ft_strlen(cmds[0])) == 0)
+		printf("%s: %s: invalid parameter name\n", cmds[0], cmds[1]);
+	else
+		printf("%s: not an identifier: %s\n", cmds[0], cmds[1]);
+	return (EXIT_FAILURE);
 }
