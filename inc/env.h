@@ -15,11 +15,10 @@
 
 # include "libft.h"
 
-extern	int		exit_status;
-
 typedef struct _Env {
 	t_list		*env;
 	char		**envp;
+	int			exit_status;
 }	t_env;
 
 t_env		*env_init(char **envp);

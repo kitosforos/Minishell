@@ -46,7 +46,7 @@ void	minishell(Minishell *mini)
 		{
 			flag = env_print(mini->env, args[0] + 1);
 			if (flag == 2)
-				args = ft_split(ft_itoa(exit_status), ' ');
+				args = ft_split(ft_itoa(mini->env->exit_status), ' ');
 		}
 		else if (builtins(args, mini->env) == EXIT_FAILURE)
 			exec_process(args, mini->env);

@@ -17,6 +17,11 @@ void	read_and_add(Minishell *mini)
 	mini->buf = readline("Minishell > ");
 	if (mini->buf != NULL)
 		add_history(mini->buf);
+	else
+	{
+		printf("exit\n");
+		exit(EXIT_SUCCESS);
+	}
 }
 
 void	errors(int argc, char **argv)
@@ -46,6 +51,7 @@ void	program_free(Minishell *mini)
 	mini_free(mini);
 }
 
+
 int	main(int argc, char **argv, char **envp)
 {
 	Minishell	*mini;
@@ -54,6 +60,7 @@ int	main(int argc, char **argv, char **envp)
 	mini = mini_init(envp);
 	if (!mini)
 		return (EXIT_FAILURE);
+	set_signals();
 	program_loop(mini);
 	program_free(mini);
 	return (0);

@@ -36,13 +36,13 @@ t_env	*env_init(char **envp)
 	t_list	*node;
 	int		i;
 
-	exit_status = 0;
 	i = 1;
 	env = (t_env *) malloc(sizeof(t_env));
 	if (!env)
 		return (NULL);
 	env->env = ft_lstnew(envp[0]);
 	env->envp = envp;
+	env->exit_status = 0;
 	while (envp[i])
 	{
 		node = ft_lstnew(envp[i++]);

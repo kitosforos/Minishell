@@ -12,19 +12,19 @@
 
 #include "signals.h"
 
-void    signals()
+int g_signal;
+
+void	set_signals(void)
 {
-    signal(SIGINT, ctrlc);
-	signal(SIGQUIT, ctrld);
+	signal(SIGINT, ctrlc);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-void	ctrld(int n)
-{
-	n = n;
-	exit(1);
-}
 void	ctrlc(int n)
 {
-	n=n;
-	exit(1);
+	n += 1;
+	printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }

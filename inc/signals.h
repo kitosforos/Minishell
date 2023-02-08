@@ -17,8 +17,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
-void    signals();
+void    set_signals();
 void    ctrlc(int n);
-void	ctrld(int n);
+void	ctrlbs(int n);
 #endif

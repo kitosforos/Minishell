@@ -19,6 +19,10 @@
 #include "libft.h"
 #include "env.h"
 #include "signals.h"
+
+extern int g_signal;
+
+
 void	errors(int argc, char **argv);
 void	program_loop(Minishell *mini);
 void	program_free(Minishell *mini);

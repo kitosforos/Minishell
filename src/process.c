@@ -72,7 +72,7 @@ void	exec_process(char **arr, t_env *env)
 	else
 	{
 		wait(&status);
-		exit_status = WEXITSTATUS(status);
+		env->exit_status = WEXITSTATUS(status);
 		return ;
 	}
 }
@@ -93,7 +93,7 @@ int	child_process(char **arr, t_env *env)
 	if (!cmd_path)
 	{
 		printf("orden <<%s>> no encontrada\n", arr[0]);
-		exit_status = 127;
+		env->exit_status = 127;
 		exit(127);
 	}
 	free(arr[0]);

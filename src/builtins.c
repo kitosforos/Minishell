@@ -12,24 +12,22 @@
 
 #include "builtins.h"
 
-int	exit_status;
-
 int	builtins(char *cmds[], t_env *env)
 {
 	if (!cmds[0])
 		return (EXIT_FAILURE);
 	if (strcmp(cmds[0], "echo") == 0)
-		exit_status = my_echo(cmds, env);
+		env->exit_status = my_echo(cmds, env);
 	else if (strcmp(cmds[0], "pwd") == 0)
-		exit_status = my_pwd(cmds);
+		env->exit_status = my_pwd(cmds);
 	else if (strcmp(cmds[0], "env") == 0)
-		exit_status = my_env(env, cmds);
+		env->exit_status = my_env(env, cmds);
 	else if (strcmp(cmds[0], "cd") == 0)
-		exit_status = my_cd(cmds[1]);
+		env->exit_status = my_cd(cmds[1]);
 	else if (strcmp(cmds[0], "export") == 0)
-		exit_status = my_export(cmds, env);
+		env->exit_status = my_export(cmds, env);
 	else if (ft_strncmp(cmds[0], "unset", ft_strlen(cmds[0])) == 0)
-		exit_status = my_unset(cmds, env);
+		env->exit_status = my_unset(cmds, env);
 	else
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
@@ -45,7 +43,7 @@ int	dollar_echo(char *argv[], t_env *env, int i)
 	tmp = env->env;
 	flag = i;
 	if (argv[i][1] == '?')
-		printf("%d", exit_status);
+		printf("%d", env->exit_status);
 	var = ft_strtrim(argv[i], "$");
 	while (tmp->content && tmp->next && ft_strlen(var))
 	{
