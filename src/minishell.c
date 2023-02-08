@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:52:11 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/05 12:04:07 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/08 12:57:23 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	minishell(Minishell *mini)
 {
 	char	**args;
 	int		flag;
+	pid_t	pid;
 
 	flag = 0;
 	if (mini->buf == NULL || strcmp(mini->buf, "exit") == 0)
@@ -54,6 +55,17 @@ void	minishell(Minishell *mini)
 			exec_process(args, mini->env);
 	}
 	else{
-		redirs(args, mini->env);
+		pid = fork();
+		if (pid < 0) {
+			perror("ERROR\n");
+		printf("\n");
+			exit(1);
+		}
+		else if(pid == 0) {
+			redirs(args, mini->env);
+			exit(0);
+		}
+		else
+			wait(NULL);
 	}
 }
