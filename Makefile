@@ -1,4 +1,5 @@
 NAME = minishell
+LEAKS = -fsanitize=address -static-libasan -g
 LIBFT = libft/libft.a
 SRCS = src/builtins.c src/process.c src/minishell.c src/main.c src/env.c src/builtins2.c src/redir.c src/signals.c
 INC = -IUsers/${USER}/.brew/opt/readline/include -Iinc -Ilibft
