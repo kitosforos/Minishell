@@ -33,9 +33,10 @@ void	errors(int argc, char **argv)
 void	program_loop(Minishell *mini)
 {
 	read_and_add(mini);
+
 	while (ft_strncmp(mini->buf, "exit", ft_strlen(mini->buf) + 1) != 0)
 	{
-		if (mini->buf != NULL && ft_strlen(mini->buf))
+		if (mini->buf != NULL && ft_strlen(mini->buf) && check_quotes(mini->buf) == 0)
 		{
 			minishell(mini);
 			free(mini->buf);

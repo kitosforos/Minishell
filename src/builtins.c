@@ -14,8 +14,16 @@
 
 int	builtins(char *cmds[], t_env *env)
 {
+	int	i;
+
+	i = 0;
 	if (!cmds[0])
 		return (EXIT_FAILURE);
+	while (cmds[i])
+	{
+		cmds[i] = ignore_quotes(cmds[i]);
+		i++;
+	}
 	if (strcmp(cmds[0], "echo") == 0)
 		env->exit_status = my_echo(cmds, env);
 	else if (strcmp(cmds[0], "pwd") == 0)

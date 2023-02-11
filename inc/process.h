@@ -21,6 +21,7 @@
 # include <sys/wait.h>
 # include <string.h>
 # include <errno.h>
+# include "quotes.h"
 # include "libft.h"
 # include "env.h"
 

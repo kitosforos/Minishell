@@ -15,6 +15,7 @@
 
 # include <string.h>
 #include "minishell.h"
+#include "quotes.h"
 #include "process.h"
 #include "libft.h"
 #include "env.h"
