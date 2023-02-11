@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:52:11 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/08 12:57:23 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/11 14:46:19 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	minishell(Minishell *mini)
 	flag = 0;
 	if (mini->buf == NULL || strcmp(mini->buf, "exit") == 0)
 		return ;
-	args = ft_split(mini->buf, ' ');
+	args = ft_split2(mini->buf, ' ');
 	if (is_pipe_or_redir(args) == 0)
 	{
 		if (args[0][0] == '$')

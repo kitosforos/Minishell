@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:05:15 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/04 14:25:32 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/11 01:16:20 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_redir {
     int        	n;
     t_list		*cmds;
     t_env		*env;
+    int         file;
 } t_redir;
 
 

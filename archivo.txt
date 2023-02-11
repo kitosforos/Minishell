@@ -1,3 +1,12 @@
+total 76
+-rwx------ 1 danicn danicn     0 feb 11 15:00 archivo.txt
+drwxrwxr-x 2 danicn danicn  4096 feb  9 18:30 inc
+drwxrwxr-x 2 danicn danicn  4096 feb 10 16:54 libft
+-rw-rw-r-- 1 danicn danicn   720 feb 11 14:45 Makefile
+-rwxrwxr-x 1 danicn danicn 49832 feb 11 14:59 minishell
+drwxrwxr-x 2 danicn danicn  4096 feb 11 14:59 obj
+-rw-rw-r-- 1 danicn danicn    12 feb  5 17:12 README.md
+drwxrwxr-x 2 danicn danicn  4096 feb 11 14:59 src
 NAME = minishell
 LEAKS = -fsanitize=address -static-libasan -g
 LIBFT = libft/libft.a
