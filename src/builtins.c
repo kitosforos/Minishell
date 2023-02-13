@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:58:13 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/02 22:09:02 by maralons         ###   ########.fr       */
+/*   Updated: 2023/02/13 20:48:13 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	builtins(char *cmds[], t_env *env)
 	while (cmds[i])
 	{
 		cmds[i] = ignore_quotes(cmds[i]);
+		cmds[i] = ignore_single_quotes(cmds[i]);
 		i++;
 	}
 	if (strcmp(cmds[0], "echo") == 0)

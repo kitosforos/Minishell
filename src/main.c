@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/07 13:06:38 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/13 21:01:03 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ void	errors(int argc, char **argv)
 		exit(EXIT_FAILURE);
 }
 
-void	program_loop(Minishell *mini)
+int	program_loop(Minishell *mini)
 {
-	read_and_add(mini);
+	int	exit;
+	int	i;
 
-	while (ft_strncmp(mini->buf, "exit", ft_strlen(mini->buf) + 1) != 0)
+	i = 5;
+	read_and_add(mini);
+	while (ft_strncmp(mini->buf, "exit", 4))
 	{
 		if (mini->buf != NULL && ft_strlen(mini->buf) && check_quotes(mini->buf) == 0)
 		{
@@ -43,8 +46,15 @@ void	program_loop(Minishell *mini)
 		}
 		read_and_add(mini);
 	}
+	exit = ft_atoi(mini->buf + 5);
+	while (mini->buf[i])
+	{
+		if (ft_isalpha(mini->buf[i++]))
+			exit = 255;
+	}
 	printf("exit\n");
 	free(mini->buf);
+	return (exit % 256);
 }
 
 void	program_free(Minishell *mini)
@@ -56,13 +66,14 @@ void	program_free(Minishell *mini)
 int	main(int argc, char **argv, char **envp)
 {
 	Minishell	*mini;
+	int			exit;
 
 	errors(argc, argv);
 	mini = mini_init(envp);
 	if (!mini)
 		return (EXIT_FAILURE);
 	set_signals();
-	program_loop(mini);
+	exit = program_loop(mini);
 	program_free(mini);
-	return (0);
+	return (exit);
 }
