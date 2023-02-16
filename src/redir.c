@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:05:09 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/11 13:00:08 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/16 17:42:14 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ int redirs(char **args, t_env *env)
 
 
 int redirection(t_redir *red, t_list *lst) {
+	char *buffer;
+	
 	while (lst->next && ft_strncmp(lst->next->content, "|", 1) != 0 && ft_strncmp(lst->next->content, ">", 1) != 0 && ft_strncmp(lst->next->content, "<", 1) != 0)
 		lst = lst->next;
 	if (lst->next && ft_strncmp(lst->next->content, ">", 1) == 0)
@@ -138,8 +140,32 @@ int redirection(t_redir *red, t_list *lst) {
 	}
 	else if(lst->next && ft_strncmp(lst->next->content, "<", 1) == 0)
 	{
-		red->file = open(lst->next->next->content, O_RDONLY);
-		dup2(red->file, 0);
+		if (ft_strlen(lst->next->content) == 1)
+		{
+			red->file = open(lst->next->next->content, O_RDONLY);
+			dup2(red->file, 0);
+		}
+		else if (ft_strlen(lst->next->content) == 2 && ft_strncmp(lst->next->content, "<<", 2) == 0)
+		{
+			red->file = open(".auxiliar", O_WRONLY | O_CREAT, S_IRWXU);
+			if (red->file < 0)
+			{
+				printf("ERROR in file");
+				exit(1);
+			}
+			buffer = readline("> ");
+			while (strncmp(buffer, lst->next->next->content, ft_strlen(buffer)) != 0)
+			{
+				write(red->file, buffer, ft_strlen(buffer));
+				write(red->file, "\n", 1);
+				free(buffer);
+				buffer = readline("> ");
+			}
+			close(red->file);
+			red->file = open(".auxiliar", O_RDONLY);
+			dup2(red->file, 0);
+			unlink(".auxiliar");
+		}
 	}
 	return (0);
 }
