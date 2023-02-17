@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:52:11 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/11 14:46:19 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/17 18:00:35 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,37 @@ void	minishell(Minishell *mini)
 	flag = 0;
 	if (mini->buf == NULL || strcmp(mini->buf, "exit") == 0)
 		return ;
+	
 	args = ft_split2(mini->buf, ' ');
-	if (is_pipe_or_redir(args) == 0)
+	if (args && args[0])
 	{
-		if (args[0][0] == '$')
+		if (is_pipe_or_redir(args) == 0)
 		{
-			flag = env_print(mini->env, args[0] + 1);
+			if (args[0][0] == '$')
+			{
+				flag = env_print(mini->env, args[0] + 1);
+				if (flag == 2)
+					args = ft_split(ft_itoa(mini->env->exit_status), ' ');
+			}
+			else if (builtins(args, mini->env) == EXIT_FAILURE)
+				exec_process(args, mini->env);
 			if (flag == 2)
-				args = ft_split(ft_itoa(mini->env->exit_status), ' ');
+				exec_process(args, mini->env);
 		}
-		else if (builtins(args, mini->env) == EXIT_FAILURE)
-			exec_process(args, mini->env);
-		if (flag == 2)
-			exec_process(args, mini->env);
+		else{
+			pid = fork();
+			if (pid < 0) {
+				perror("ERROR\n");
+			printf("\n");
+				exit(1);
+			}
+			else if(pid == 0) {
+				redirs(args, mini->env);
+				exit(0);
+			}
+			else
+				wait(NULL);
+		}
 	}
-	else{
-		pid = fork();
-		if (pid < 0) {
-			perror("ERROR\n");
-		printf("\n");
-			exit(1);
-		}
-		else if(pid == 0) {
-			redirs(args, mini->env);
-			exit(0);
-		}
-		else
-			wait(NULL);
-	}
+
 }
