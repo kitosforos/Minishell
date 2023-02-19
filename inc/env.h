@@ -23,5 +23,5 @@ typedef struct _Env {
 
 t_env		*env_init(char **envp);
 int			env_print(t_env *env, char *var);
-int			env_find(t_env *env, char *var);
+char		*env_find(t_env *env, char *var);
 #endif

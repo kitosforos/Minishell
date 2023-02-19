@@ -63,11 +63,6 @@ void	exec_process(char **arr, t_env *env)
 	int		i;
 
 	i = 0;
-	while (arr[i])
-	{
-		arr[i] = ignore_quotes(arr[i]);
-		i++;
-	}
 	parent = fork();
 	if (parent < 0) 
 		return ;

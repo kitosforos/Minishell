@@ -19,12 +19,6 @@ int	builtins(char *cmds[], t_env *env)
 	i = 0;
 	if (!cmds[0])
 		return (EXIT_FAILURE);
-	while (cmds[i])
-	{
-		cmds[i] = ignore_quotes(cmds[i]);
-		cmds[i] = ignore_single_quotes(cmds[i]);
-		i++;
-	}
 	if (strcmp(cmds[0], "echo") == 0)
 		env->exit_status = my_echo(cmds, env);
 	else if (strcmp(cmds[0], "pwd") == 0)
@@ -72,10 +66,12 @@ int	dollar_echo(char *argv[], t_env *env, int i)
 int	my_echo(char *argv[], t_env *env)
 {
 	int	i;
+	int	j;
 	int	flag;
 
 	flag = 0;
 	i = 1;
+	j = 0;
 	if (!argv[1])
 	{
 		printf("\n");
@@ -83,14 +79,17 @@ int	my_echo(char *argv[], t_env *env)
 	}
 	if (strcmp(argv[1], "-n") == 0)
 		i++;
-	if (argv[i][0] == '$')
-		return (dollar_echo(argv, env, i));
 	while (argv[i])
 	{
 		if (flag)
 			printf(" ");
-		printf("%s", argv[i++]);
-		flag = 1;
+		j = 0;
+		while (argv[i][j])
+		{
+			printf("%c", argv[i][j++]);
+			flag = 1;
+		}
+		i++;
 	}
 	if (strcmp(argv[1], "-n"))
 		printf("\n");

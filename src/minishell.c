@@ -41,20 +41,16 @@ void	minishell(Minishell *mini)
 	if (mini->buf == NULL || strcmp(mini->buf, "exit") == 0)
 		return ;
 	args = ft_split2(mini->buf, ' ');
-	if (is_pipe_or_redir(args) == 0)
+	if (is_pipe_or_redir(args) == 0 || contains_quotes(args) != 0)
 	{
-		if (args[0][0] == '$')
-		{
-			flag = env_print(mini->env, args[0] + 1);
-			if (flag == 2)
-				args = ft_split(ft_itoa(mini->env->exit_status), ' ');
-		}
-		else if (builtins(args, mini->env) == EXIT_FAILURE)
+		prepare(args, mini->env);
+		if (builtins(args, mini->env) == EXIT_FAILURE)
 			exec_process(args, mini->env);
 		if (flag == 2)
 			exec_process(args, mini->env);
 	}
 	else{
+		prepare(args, mini->env);
 		pid = fork();
 		if (pid < 0) {
 			perror("ERROR\n");

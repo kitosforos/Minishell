@@ -12,22 +12,35 @@
 
 #include "env.h"
 
-int	env_find(t_env *env, char *var)
+char	*env_find(t_env *env, char *var)
 {
     int		i;
 	t_list	*tmp;
+	int		aux;
+	char	*str;
 
+	aux = 0;
 	tmp = env->env;
-    i = ft_strlen(var);
+    i = 0;
+	while (var[i] && var[i] != ' ')
+		i++;
 	while (tmp->next)
 	{
-		if (ft_strncmp((char *)tmp->content, var, i) == 0)
-			return (1);
+		if (ft_strncmp((char *)tmp->content, var + 1, i - 2) == 0)
+		{
+			str = (char *)tmp->content;
+			while (str[aux] != '=')
+				aux++;
+			return ((char *)tmp->content + aux + 1);
+		}
 		tmp = tmp->next;
 	}
-	if (ft_strncmp((char *)tmp->content, var, i) == 0)
-			return (1);
-	return (0);
+	if (ft_strncmp((char *)tmp->content, var + 1, i - 2) == 0)
+		str = (char *)tmp->content;
+		while (str[aux] != '=')
+			aux++;
+		return ((char *)tmp->content + aux + 1);
+	return ("");
 }
 
 t_env	*env_init(char **envp)

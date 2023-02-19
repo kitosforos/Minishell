@@ -39,7 +39,7 @@ int	program_loop(Minishell *mini)
 	read_and_add(mini);
 	while (ft_strncmp(mini->buf, "exit", 4))
 	{
-		if (mini->buf != NULL && ft_strlen(mini->buf) && check_quotes(mini->buf) == 0)
+		if (mini->buf != NULL && ft_strlen(mini->buf) && check_quotes(mini->buf))
 		{
 			minishell(mini);
 			free(mini->buf);
