@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:07:21 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/02 21:35:38 by maralons         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:52:17 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "quotes.h"
 # include "libft.h"
 # include "env.h"
+# include "builtins.h"
 
 
 void	exec_process(char **arr, t_env *env);

@@ -6,13 +6,15 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:05:15 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/11 01:16:20 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/14 16:52:24 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REDIR_H
 #define REDIR_H
 
+#include <readline/readline.h>
+#include <readline/history.h>
 #include "process.h"
 #include "libft.h"
 #include "env.h"
