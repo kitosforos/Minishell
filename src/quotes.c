@@ -50,7 +50,6 @@ char	*ignore_quotes(char *str)
 	int		flag2;
 	int		j;
 
-	env = env;
 	i = 0;
 	j = 0;
 	flag = 0;

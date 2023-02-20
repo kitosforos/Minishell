@@ -66,7 +66,6 @@ int	my_echo(char *argv[])
 	int	j;
 	int	flag;
 
-	env = env;
 	flag = 0;
 	i = 1;
 	j = 0;
