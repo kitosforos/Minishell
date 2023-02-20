@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/20 12:25:21 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/20 16:05:12 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int exitt(Minishell *mini)
 			write(1, " se requiere un argumento numérico\n", 36);
 			split_free(buf);
 			free(mini->buf);
+			clear_history();
 			return (2);
 		}
 	}
