@@ -68,9 +68,7 @@ void	exec_process(char **arr, t_env *env)
 {
 	pid_t	parent;
 	int		status;
-	int		i;
 
-	i = 0;
 	parent = fork();
 	if (parent < 0) 
 		return ;

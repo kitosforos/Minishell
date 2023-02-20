@@ -14,13 +14,10 @@
 
 int	builtins(char *cmds[], t_env *env)
 {
-	int	i;
-
-	i = 0;
 	if (!cmds[0])
 		return (EXIT_FAILURE);
 	if (strcmp(cmds[0], "echo") == 0)
-		env->exit_status = my_echo(cmds, env);
+		env->exit_status = my_echo(cmds);
 	else if (strcmp(cmds[0], "pwd") == 0)
 		env->exit_status = my_pwd(cmds);
 	else if (strcmp(cmds[0], "env") == 0)
@@ -63,7 +60,7 @@ int	dollar_echo(char *argv[], t_env *env, int i)
 	return (EXIT_SUCCESS);
 }
 
-int	my_echo(char *argv[], t_env *env)
+int	my_echo(char *argv[])
 {
 	int	i;
 	int	j;

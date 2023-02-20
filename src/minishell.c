@@ -42,7 +42,7 @@ void	minishell(Minishell *mini)
 		return ;
 	
 	args = ft_split2(mini->buf, ' ');
-	if (is_pipe_or_redir(args) == 0 || contains_quotes(args) != 0)
+	if (is_pipe_or_redir(args) == 0)
 	{
 		prepare(args, mini->env);
 		if (builtins(args, mini->env) == EXIT_FAILURE)

@@ -25,7 +25,6 @@ int	my_cd(char	*argv);
 int	my_export(char *args[], t_env *env);
 int	export_add(char *var, t_env *env);
 int	my_unset(char *args[], t_env *env);
-int	my_select(char *one, char *two);
 int	exit_numeric(char *cmds[]);
 
 #endif

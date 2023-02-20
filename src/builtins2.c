@@ -35,13 +35,23 @@ int	my_export(char *args[], t_env *env)
 	char	**words;
 	char	**env_word;
 	t_list	*tmp;
+	int		i;
 
+	i = 0;
 	if (args[1][0] >= 48 && args[1][0] <= 57)
 		return (exit_numeric(args));
 	tmp = env->env;
 	words = ft_split(args[1], '=');
+	while (words[0][i])
+	{
+		if (ft_isalnum(words[0][i]) == 0 && words[0][i] != '_')
+			return(exit_numeric(args));
+		i++;
+	}
 	env_word = ft_split(tmp->content, '=');
-	if (env_find(env, words[0]))
+	if (!words[1])
+		return (EXIT_SUCCESS);
+	if (ft_strncmp(env_find(env, words[0]), "", 1) != 0)
 	{
 		while (ft_strncmp(words[0], env_word[0], ft_strlen(env_word[0])) != 0)
 		{
@@ -78,7 +88,7 @@ int	my_unset(char *args[], t_env *env)
 	if (args[1][0] >= 48 && args[1][0] <= 57)
 		return (exit_numeric(args));
 	env_word = ft_split(tmp->content, '=');
-	if (env_find(env, args[1]))
+	if (ft_strncmp(env_find(env, args[1]), "", 1) != 0)
 	{
 		while (ft_strncmp(args[1], env_word[0], ft_strlen(env_word[0])) != 0)
 		{
@@ -92,14 +102,6 @@ int	my_unset(char *args[], t_env *env)
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
-}
-
-int	my_select(char *one, char *two)
-{
-	if (ft_strlen(two) > ft_strlen(one))
-		return ft_strlen(two);
-	else
-		return ft_strlen(one);
 }
 
 int	exit_numeric(char *cmds[])

@@ -14,19 +14,22 @@
 
 char	*env_find(t_env *env, char *var)
 {
-    int		i;
 	t_list	*tmp;
 	int		aux;
 	char	*str;
+	char	*wd;
+	int		i;
 
+	wd = malloc(sizeof(char) * ft_strlen(var));
+	i = 1;
+	while (var[i] && var[i] != '$' && (ft_isalnum(var[i]) || var[i] == '_'))
+		i++;
+	ft_strlcpy(wd, var, i + 1);
 	aux = 0;
 	tmp = env->env;
-    i = 0;
-	while (var[i] && var[i] != ' ')
-		i++;
 	while (tmp->next)
 	{
-		if (ft_strncmp((char *)tmp->content, var + 1, i - 2) == 0)
+		if (ft_strncmp((char *)tmp->content, wd + 1, my_select((char *)tmp->content, wd + 1)) == 0)
 		{
 			str = (char *)tmp->content;
 			while (str[aux] != '=')
@@ -35,11 +38,13 @@ char	*env_find(t_env *env, char *var)
 		}
 		tmp = tmp->next;
 	}
-	if (ft_strncmp((char *)tmp->content, var + 1, i - 2) == 0)
+	if (ft_strncmp((char *)tmp->content, wd + 1, my_select((char *)tmp->content, wd + 1)) == 0)
+	{
 		str = (char *)tmp->content;
 		while (str[aux] != '=')
 			aux++;
 		return ((char *)tmp->content + aux + 1);
+	}
 	return ("");
 }
 
@@ -85,4 +90,19 @@ int	env_print(t_env *env, char *var)
 	if (ft_strncmp(var, "?", 2) == 0)
 		return (2);
 	return (0);
+}
+
+int	my_select(char *one, char *two)
+{
+	int	i;
+
+	i = 0;
+	while (one[i] != '=')
+			i++;
+	if ((int)ft_strlen(two) > i)
+		return ft_strlen(two);
+	else
+	{
+		return i;
+	}
 }
