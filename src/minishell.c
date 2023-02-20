@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:52:11 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/20 12:22:30 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/20 16:46:48 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,23 @@ int	minishell(Minishell *mini)
 	else{
 		prepare(args, mini->env);
 		pid = fork();
-		if (pid < 0) {
+		if (pid < 0)
+		{
 			perror("ERROR\n");
-		printf("\n");
+			printf("\n");
+			split_free(args);
 			exit(1);
 		}
 		else if(pid == 0) {
 			redirs(args, mini->env);
+			split_free(args);
 			exit(0);
 		}
 		else
+		{
+			split_free(args);
 			wait(NULL);
+		}
 	}
 	return (EXIT_SUCCESS);
 }

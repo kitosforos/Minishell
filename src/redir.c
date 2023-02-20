@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:05:09 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/18 12:36:19 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/20 16:42:39 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	redir_destroy(t_redir *red)
 	free(red->pipes);
 	while (red->cmds)
 	{
-		free(red->cmds->content);
 		lst = red->cmds->next;
 		free(red->cmds);
 		red->cmds = lst;	
@@ -50,6 +49,8 @@ char **take_cmd(t_list *lst)
 		&& ft_strncmp(l->content, ">", 1) && ft_strncmp(l->content, "<", 1))
 	{
 		cmd[i] = (char *) malloc(sizeof(char)*(ft_strlen(l->content)+1));
+		if (!cmd[i])
+			return (NULL);
 		ft_strlcpy(cmd[i++], l->content, ft_strlen(l->content)+1);
 		l = l->next;
 	}
@@ -69,6 +70,8 @@ t_redir	*redir_init(char **args, t_env *env)
 	red->n = 0;
 	i = 1;
 	red->cmds = ft_lstnew(args[0]);
+	if (!red->cmds)
+		return (NULL);
 	while (args[i])
 	{
 		if (args[i][0] == '|')
@@ -81,6 +84,8 @@ t_redir	*redir_init(char **args, t_env *env)
 		i++;
 	}
 	red->pipes = (int *) malloc(sizeof(int)*red->n*2);
+	if (!red->pipes)
+		return (NULL);
 	/* parent creates all needed pipes at the start */
 	for ( i = 0; i < red->n; i++ ){
 		if( pipe(red->pipes + i*2) < 0 )
@@ -147,15 +152,16 @@ int	redir_errors(t_redir *red, char **args)
 
 int redirs(char **args, t_env *env)
 {
-	t_redir *red;
-	
+	t_redir	*red;
+
 	red = redir_init(args, env);
-	if (redir_errors(red, args) == EXIT_FAILURE)
+	if (red && redir_errors(red, args) == EXIT_FAILURE)
 	{
 		printf("minishell: error sintáctico\n");
 		return (EXIT_FAILURE);
 	}
-	pipex(red);
+	if (red)
+		pipex(red);
 	redir_destroy(red);
 	return (EXIT_SUCCESS);
 }
@@ -184,6 +190,8 @@ int redirection(t_redir *red, t_list *lst) {
 		if (ft_strlen(lst->next->content) == 1)
 		{
 			red->file = open(lst->next->next->content, O_RDONLY);
+			if (red->file < 0)
+				return (EXIT_FAILURE);
 			dup2(red->file, 0);
 		}
 		else if (ft_strlen(lst->next->content) == 2 && ft_strncmp(lst->next->content, "<<", 2) == 0)
@@ -256,7 +264,6 @@ int	pipex(t_redir *red)
 			str = take_cmd(lst);
 			redirection(red, lst);
 			child_process(str, red->env);
-			exit(0);
 		}
 		else if( pds < 0)
 		{

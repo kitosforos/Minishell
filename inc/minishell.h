@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:36:46 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/11 14:46:43 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/20 16:45:41 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,5 @@ void		mini_free(Minishell *mini);
 Minishell	*mini_init(char **envp);
 int		minishell(Minishell *mini);
 char	**ft_split2(char const *s, char c);
+void	split_free(char **strs);
 #endif
