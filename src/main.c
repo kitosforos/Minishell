@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/17 18:02:36 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/20 11:53:57 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,43 @@ void	errors(int argc, char **argv)
 		exit(EXIT_FAILURE);
 }
 
-int	program_loop(Minishell *mini)
+int exitt(Minishell *mini)
 {
-	int	exit;
-	int	i;
+	char	**buf;
+	int		exit;
+	int		i;
+	
+	i = 0;
+	exit = 0;
+	buf = ft_split(mini->buf, ' ');
+	if (buf[0] && buf[1])
+		exit = ft_atoi(buf[1]);
+	while (buf[1] && buf[1][i])
+	{
+		if (ft_isdigit(buf[1][i++]) == 0)
+		{
+			write(1, "exit\n", 5);
+			write(1, "minishell: exit: ", 17);
+			write(1, buf[1], ft_strlen(buf[1]));
+			write(1, " se requiere un argumento numérico\n", 36);
+			split_free(buf);
+			free(mini->buf);
+			return (2);
+		}
+	}
+	write(1, "exit\n", 5);
+	if (buf[0] && buf[1] && buf[2])
+	{
+		write(1, "minishell: exit: demasiados argumentos\n", 39);
+		exit = 1;
+	}
+	split_free(buf);
+	free(mini->buf);
+	return (exit % 256);
+}
 
-	i = 5;
+int	program_loop(Minishell *mini)
+{	
 	read_and_add(mini);
 	while (ft_strncmp(mini->buf, "exit", 4))
 	{
@@ -46,15 +77,7 @@ int	program_loop(Minishell *mini)
 		}
 		read_and_add(mini);
 	}
-	exit = ft_atoi(mini->buf + 5);
-	while (mini->buf[i])
-	{
-		if (ft_isalpha(mini->buf[i++]))
-			exit = 255;
-	}
-	printf("exit\n");
-	free(mini->buf);
-	return (exit % 256);
+	return (exitt(mini));	
 }
 
 void	program_free(Minishell *mini)

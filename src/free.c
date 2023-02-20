@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 19:13:34 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/20 11:49:03 by danicn           ###   ########.fr       */
+/*   Created: 2023/02/20 11:44:36 by danicn            #+#    #+#             */
+/*   Updated: 2023/02/20 11:55:02 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include <stdlib.h>
 
-# include <string.h>
-#include "minishell.h"
-#include "quotes.h"
-#include "process.h"
-#include "libft.h"
-#include "env.h"
-#include "signals.h"
+void	split_free(char **strs)
+{
+	char	**aux;
 
-extern int g_signal;
-
-
-void	errors(int argc, char **argv);
-int		program_loop(Minishell *mini);
-void	program_free(Minishell *mini);
-void	split_free(char **strs);
-#endif
+	aux = strs;
+	while (*strs)
+	{
+		free(*strs);
+		strs++;	
+	}
+	free(aux);
+}
