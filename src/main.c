@@ -30,15 +30,13 @@ void	errors(int argc, char **argv)
 		exit(EXIT_FAILURE);
 }
 
-int exitt(Minishell *mini)
+int exitt(Minishell *mini, char **buf)
 {
-	char	**buf;
 	int		exit;
 	int		i;
 	
 	i = 0;
 	exit = 0;
-	buf = ft_split(mini->buf, ' ');
 	if (buf[0] && buf[1])
 		exit = ft_atoi(buf[1]);
 	while (buf[1] && buf[1][i])
@@ -68,8 +66,11 @@ int exitt(Minishell *mini)
 
 int	program_loop(Minishell *mini)
 {	
+	char	**buf;
+
 	read_and_add(mini);
-	while (ft_strncmp(mini->buf, "exit", 4))
+	buf = ft_split(mini->buf, ' ');
+	while (ft_strncmp(buf[0], "exit", my_select2(buf[0], "exit")))
 	{
 		if (mini->buf != NULL && ft_strlen(mini->buf) && check_quotes(mini->buf))
 		{
@@ -77,8 +78,10 @@ int	program_loop(Minishell *mini)
 			free(mini->buf);
 		}
 		read_and_add(mini);
+		split_free(buf);
+		buf = ft_split(mini->buf, ' ');
 	}
-	return (exitt(mini));	
+	return (exitt(mini, buf));	
 }
 
 void	program_free(Minishell *mini)
@@ -86,6 +89,13 @@ void	program_free(Minishell *mini)
 	mini_free(mini);
 }
 
+int	my_select2(char *one, char *two)
+{
+	if (ft_strlen(one) > ft_strlen(two))
+		return (ft_strlen(one));
+	else
+		return (ft_strlen(two));
+}
 
 int	main(int argc, char **argv, char **envp)
 {

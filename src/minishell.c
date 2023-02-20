@@ -35,23 +35,20 @@ Minishell	*mini_init(char **envp)
 	return (mini);
 }
 
-void	minishell(Minishell *mini)
+int	minishell(Minishell *mini)
 {
 	char	**args;
-	int		flag;
 	pid_t	pid;
 
-	flag = 0;
-	if (mini->buf == NULL || ft_strncmp(mini->buf, "exit", 4) == 0)
-		return ;
+	if (mini->buf == NULL)
+		return (EXIT_FAILURE);
 	
 	args = ft_split2(mini->buf, ' ');
 	if (is_pipe_or_redir(args) == 0)
 	{
-		prepare(args, mini->env);
+		if (prepare(args, mini->env) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		if (builtins(args, mini->env) == EXIT_FAILURE)
-			exec_process(args, mini->env);
-		if (flag == 2)
 			exec_process(args, mini->env);
 	}
 	else{
@@ -69,5 +66,5 @@ void	minishell(Minishell *mini)
 		else
 			wait(NULL);
 	}
-
+	return (EXIT_SUCCESS);
 }

@@ -34,6 +34,6 @@ typedef struct _Minishell {
 
 void		mini_free(Minishell *mini);
 Minishell	*mini_init(char **envp);
-void		minishell(Minishell *mini);
+int		minishell(Minishell *mini);
 char	**ft_split2(char const *s, char c);
 #endif

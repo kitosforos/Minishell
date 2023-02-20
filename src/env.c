@@ -40,6 +40,8 @@ char	*env_find(t_env *env, char *var)
 	int		i;
 
 	wd = malloc(sizeof(char) * ft_strlen(var));
+	if (!wd)
+		return (NULL);
 	i = 1;
 	while (var[i] && var[i] != '$' && (ft_isalnum(var[i]) || var[i] == '_'))
 		i++;

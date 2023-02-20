@@ -55,6 +55,8 @@ char	*ignore_quotes(char *str)
 	flag = 0;
 	flag2 = 0;
 	word = malloc(sizeof(char) * 10000000);
+	if (!word)
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == '\'' && flag == 0 && flag2 == 0)
@@ -95,6 +97,8 @@ char	*ignore_single_quotes(char *str)
 	i = 0;
 	j = 0;
 	word = malloc(sizeof(char) * 100000000);
+	if (!word)
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == '\'')
@@ -109,6 +113,7 @@ char	*ignore_single_quotes(char *str)
 		word[j++] = str[i++];
 	}
 	word[j] = 0;
+	free(str);
 	return (word);
 }
 
@@ -120,11 +125,16 @@ int	prepare(char **str, t_env *env)
 	while (str[i])
 	{
 		str[i] = ignore_quotes(str[i]);
+		if (str[i] == NULL)
+			return (1);
 		str[i] = prepare_dollar(str[i], env);
+		if (str[i] == NULL)
+			return (1);
 		str[i] = ignore_single_quotes(str[i]);
+		if (str[i] == NULL)
+			return (1);
 		i++;
 	}
-	i = 0;
 	return (0);
 }
 
@@ -140,7 +150,11 @@ char	*prepare_dollar(char	*str, t_env *env)
 	j = 0;
 	flag = 0;
 	word = malloc(sizeof(char) * 10000000);
+	if (!word)
+		return (NULL);
 	aux = malloc(sizeof(char) * 10000000);
+	if (!aux)
+		return (NULL);
 	if (ft_strncmp(str, "$?", ft_strlen(str)) == 0)
 		return (ft_itoa(env->exit_status));
 	while (str[i])
@@ -161,6 +175,8 @@ char	*prepare_dollar(char	*str, t_env *env)
 		else
 			word[j++] = str[i++];
 	}
+	free(aux);
+	free(str);
 	word[j] = 0;
 	return (word);
 }
