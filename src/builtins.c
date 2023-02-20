@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:58:13 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/13 20:48:13 by maralons         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:00:05 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	my_echo(char *argv[])
 	int	j;
 	int	flag;
 
+	env = env;
 	flag = 0;
 	i = 1;
 	j = 0;
