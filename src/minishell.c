@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:52:11 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/17 18:00:35 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/20 12:22:30 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 void	mini_free(Minishell *mini)
 {
-	free(mini);
+	if (mini)
+	{
+		env_free(mini->env);
+		free(mini);
+	}
 }
 
 Minishell	*mini_init(char **envp)
@@ -38,7 +42,7 @@ void	minishell(Minishell *mini)
 	pid_t	pid;
 
 	flag = 0;
-	if (mini->buf == NULL || strcmp(mini->buf, "exit") == 0)
+	if (mini->buf == NULL || ft_strncmp(mini->buf, "exit", 4) == 0)
 		return ;
 	
 	args = ft_split2(mini->buf, ' ');

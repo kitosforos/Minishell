@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/20 11:53:57 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/20 12:25:21 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int exitt(Minishell *mini)
 	}
 	split_free(buf);
 	free(mini->buf);
+	clear_history();
 	return (exit % 256);
 }
 

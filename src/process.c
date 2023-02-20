@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:28:12 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/14 16:40:48 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/20 12:00:35 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ void	exec_process(char **arr, t_env *env)
 {
 	pid_t	parent;
 	int		status;
-	int		i;
 
-	i = 0;
 	parent = fork();
 	if (parent < 0) 
 		return ;

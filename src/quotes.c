@@ -50,6 +50,7 @@ char	*ignore_quotes(char *str, t_env *env)
 	int		flag;
 	int		j;
 
+	env = env;
 	i = 0;
 	j = 0;
 	flag = 0;
@@ -123,6 +124,7 @@ int	prepare(char **str, t_env *env)
 		i++;
 	}
 	i = 0;
+	return (i);
 }
 
 char	*prepare_dollar(char	*str, t_env *env)

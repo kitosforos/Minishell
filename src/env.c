@@ -6,11 +6,30 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:37:14 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/03 11:14:46 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/20 12:22:01 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+
+void delete(void *p)
+{
+	if (p)
+		free(p);	
+}
+
+void	env_free(t_env *env)
+{
+	t_list	*lst;
+	
+	while (env->env)
+	{
+		lst = env->env->next;
+		free(env->env);
+		env->env = lst;
+	}
+	free(env);
+}
 
 char	*env_find(t_env *env, char *var)
 {
@@ -36,10 +55,12 @@ char	*env_find(t_env *env, char *var)
 		tmp = tmp->next;
 	}
 	if (ft_strncmp((char *)tmp->content, var + 1, i - 2) == 0)
+	{
 		str = (char *)tmp->content;
 		while (str[aux] != '=')
 			aux++;
 		return ((char *)tmp->content + aux + 1);
+	}
 	return ("");
 }
 
