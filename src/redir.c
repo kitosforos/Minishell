@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:05:09 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/22 15:21:00 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/22 16:39:37 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,8 @@ char **take_cmd(t_list *lst)
 	
 	i = 0;
 	l = lst;
-	
-	while (l && ft_strncmp(l->content, "|", 1) != 0)
-	{
-		i++;
+	while (l && ft_strncmp(l->content, "|", 1) != 0 && i++ > -1)
 		l = l->next;
-	}
 	cmd = (char **) malloc(sizeof(char *)*(i+1));
 	if (!cmd)
 		return (NULL);
@@ -118,42 +114,57 @@ int is_pipe_or_redir(char **text)
 // 	return (EXIT_SUCCESS);
 // }
 
+int	redir_check_errors(t_list **lst)
+{
+	if (ft_strncmp("|", (*lst)->content, 1) == 0)
+	{
+		*lst = (*lst)->next;
+		if (*lst && ft_strncmp("|", (*lst)->content, 1) == 0)
+			return (1);
+	}
+	if (*lst && ft_strlen((*lst)->content) == 2 && ft_strncmp(">>", (*lst)->content, 2) == 0)
+	{
+		*lst = (*lst)->next;
+		if (*lst && (ft_strncmp(">", (*lst)->content, 1) == 0 
+			|| ft_strncmp("<", (*lst)->content, 1) == 0 || ft_strncmp("|", (*lst)->content, 1) == 0))
+			return (1);
+	}
+	if (*lst && ft_strlen((*lst)->content) == 2 
+		&& (ft_strncmp("<<", (*lst)->content, 2) == 0 || ft_strncmp("|", (*lst)->content, 1) == 0))
+	{
+		*lst = (*lst)->next;
+		if (*lst && (ft_strncmp(">", (*lst)->content, 1) == 0 
+			|| ft_strncmp("<", (*lst)->content, 1) == 0 || ft_strncmp("|", (*lst)->content, 1) == 0))
+			return (1);
+	}
+	return (0);
+}
+
 int	redir_errors(t_redir *red, char **args)
 {
 	t_list *lst;
+	int 	err;
 	
 	if (!red || !args)
 		return (EXIT_FAILURE);
+	err = 0;
 	lst = red->cmds;
 	while (lst)
 	{
-		if (ft_strncmp("|", lst->content, 1) == 0)
-		{
-			lst = lst->next;
-			if (lst && ft_strncmp("|", lst->content, 1) == 0)
-				return (1);
-		}
-		if (lst && ft_strlen(lst->content) == 2 && ft_strncmp(">>", lst->content, 2) == 0)
-		{
-			lst = lst->next;
-			if (lst && (ft_strncmp(">", lst->content, 1) == 0 || ft_strncmp("<", lst->content, 1) == 0 || ft_strncmp("|", lst->content, 1) == 0))
-				return (1);
-		}
-		if (lst && ft_strlen(lst->content) == 2 && (ft_strncmp("<<", lst->content, 2) == 0 || ft_strncmp("|", lst->content, 1) == 0))
-		{
-			lst = lst->next;
-			if (lst && (ft_strncmp(">", lst->content, 1) == 0 || ft_strncmp("<", lst->content, 1) == 0 || ft_strncmp("|", lst->content, 1) == 0))
-				return (1);
-		}
+		err = redir_check_errors(&lst);
+		if (err == 1)
+			break;
 		lst = lst->next;
 	}
-	return (0);
+	return (err);
 }
 
 int redirs(char **args, t_env *env)
 {
 	t_redir	*red;
+	int		err;
 
+	err = 0;
 	red = redir_init(args, env);
 	if (red && redir_errors(red, args) == EXIT_FAILURE)
 	{
@@ -161,9 +172,9 @@ int redirs(char **args, t_env *env)
 		return (EXIT_FAILURE);
 	}
 	if (red)
-		pipex(red);
+		err = pipex(red);
 	redir_destroy(red);
-	return (EXIT_SUCCESS);
+	return (err);
 }
 
 
@@ -219,68 +230,68 @@ int redirection(t_redir *red, t_list *lst) {
 	return (0);
 }
 
+int	input_output(t_redir *red, t_list **lst, int i)
+{
+	if(*lst != red->cmds)
+		if( dup2(red->pipes[(i-1)*2], 0) < 0)
+			return (1);
+	if (ft_strncmp((*lst)->content, "<", 1) == 0)
+	{
+		red->file = open((*lst)->next->content, O_RDONLY);
+		if (red->file < 0)
+			return (1);
+		if (dup2(red->file, 0) < 0)
+			return (1);
+		*lst = (*lst)->next->next;
+	}
+	if (i != red->n)
+		if( dup2(red->pipes[i*2+1], 1) < 0 )
+			return(1);
+	return (0);
+}
+
+int	pipex_child(t_redir *red, t_list **lst, int i)
+{
+	pid_t	pds;
+	char	**str;
+
+	pds = fork();
+	if( pds == 0 )
+	{
+		if (input_output(red, lst, i) < 0)
+			return (1);
+		for( i = 0; i < 2 * red->n; i++)
+			close(red->pipes[i]);
+		str = take_cmd(*lst);
+		if (!str)
+			return (1);
+		redirection(red, *lst);
+		child_process(str, red->env);
+	}
+	else if(pds < 0)
+		return (1);
+	return (0);
+}
+
 int	pipex(t_redir *red)
 {
 	int	i;
-	int j;
-	pid_t	pds;
 	t_list	*lst;
-	char	**str;
 	
 	i = 0;
 	lst = red->cmds;
 	while(lst)
 	{
-		pds = fork();
-		if( pds == 0 ) {
-			
-			/* child gets input from the previous command,
-				if it's not the first command */
-			if(lst != red->cmds)
-			{
-				if( dup2(red->pipes[(i-1)*2], 0) < 0)
-				{
-					perror("ERRORx\n");
-					exit(1);
-				}
-			}
-			if (ft_strncmp(lst->content, "<", 1) == 0)
-			{
-				red->file = open(lst->next->content, O_RDONLY);
-				dup2(red->file, 0);
-				lst = lst->next->next;
-			}
-			/* child outputs to next command, if it's not
-				the last command */
-			if(i != red->n){
-				if( dup2(red->pipes[i*2+1], 1) < 0 ) {
-					perror("ERRORy\n");
-					exit(1);
-				}
-			}
-			for( j = 0; j < 2 * red->n; j++ ){
-				close(red->pipes[j]);
-			}
-			str = take_cmd(lst);
-			redirection(red, lst);
-			child_process(str, red->env);
-		}
-		else if( pds < 0)
-		{
-			perror("ERRORz\n");
-			exit(1);
-		}
-		while (lst && ft_strncmp(lst->content, "|", 1) != 0) {
+		if (pipex_child(red, &lst, i) == -1)
+			return (1);
+		while (lst && ft_strncmp(lst->content, "|", 1) != 0)
 			lst = lst->next;
-		}
 		if (lst && ft_strncmp(lst->content, "|", 1) == 0)
 			lst = lst->next;
 		i++;
 	}
 	wait(NULL);
-	/* parent closes all of its copies at the end */
-	for( i = 0; i < 2 * red->n; i++ ){
+	for( i = 0; i < 2 * red->n; i++ )
 		close(red->pipes[i]);
-	}
 	return (EXIT_SUCCESS);
 }
