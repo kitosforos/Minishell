@@ -55,8 +55,10 @@ char	*ignore_quotes(char *str)
 	flag = 0;
 	flag2 = 0;
 	word = malloc(sizeof(char) * 10000000);
-	if (!word)
+	if (!word) {
+		free(str);
 		return (NULL);
+	}
 	while (str[i])
 	{
 		if (str[i] == '\'' && flag == 0 && flag2 == 0)
@@ -68,6 +70,7 @@ char	*ignore_quotes(char *str)
 			if (!str[i + 1])
 			{
 				word[j] = 0;
+				free(str);
 				return (word);
 			}
 			i++;
@@ -85,6 +88,7 @@ char	*ignore_quotes(char *str)
 		}
 	}
 	word[j] = 0;
+	free(str);
 	return (word);
 }
 
@@ -120,7 +124,7 @@ char	*ignore_single_quotes(char *str)
 int	prepare(char **str, t_env *env)
 {
 	int	i;
-
+	
 	i = 0;
 	while (str[i])
 	{

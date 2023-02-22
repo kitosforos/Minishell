@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/20 16:05:12 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/22 15:16:41 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,17 @@ int exitt(Minishell *mini, char **buf)
 	{
 		if (ft_isdigit(buf[1][i++]) == 0)
 		{
-			write(1, "exit\n", 5);
-			write(1, "minishell: exit: ", 17);
-			write(1, buf[1], ft_strlen(buf[1]));
-			write(1, " se requiere un argumento numérico\n", 36);
+			printf("exit\nminishell: exit: %s se requiere un argumento numérico", buf[1]);
 			split_free(buf);
 			free(mini->buf);
 			clear_history();
 			return (2);
 		}
 	}
-	write(1, "exit\n", 5);
+	printf("exit\n");
 	if (buf[0] && buf[1] && buf[2])
 	{
-		write(1, "minishell: exit: demasiados argumentos\n", 39);
+		printf("minishell: exit: demasiados argumentos\n");
 		exit = 1;
 	}
 	split_free(buf);

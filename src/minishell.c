@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:52:11 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/20 17:30:23 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/22 15:44:19 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,14 @@ int	minishell(Minishell *mini)
 		}
 		else if(pid == 0) {
 			redirs(args, mini->env);
+			split_free(args);
 			exit(0);
 		}
 		else
 		{
 			wait(NULL);
-			split_free(args);
 		}
 	}
+	split_free(args);
 	return (EXIT_SUCCESS);
 }

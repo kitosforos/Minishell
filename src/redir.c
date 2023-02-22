@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:05:09 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/20 17:28:54 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/22 15:21:00 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	redir_destroy(t_redir *red)
 	while (red->cmds)
 	{
 		lst = red->cmds->next;
-		free(red->cmds->content);
 		free(red->cmds);
 		red->cmds = lst;	
 	}
