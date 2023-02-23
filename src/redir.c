@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:05:09 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/22 16:39:37 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/23 18:03:00 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,11 @@ char **take_cmd(t_list *lst)
 	return (cmd);
 }
 
-t_redir	*redir_init(char **args, t_env *env)
+int	redir_lst(char **args, t_redir *red)
 {
-	t_redir *red;
 	int	i;
 	
-	red = (t_redir *) malloc(sizeof(t_redir));
-	if (!red)
-		return (NULL);
-	red->env = env;
-	red->n = 0;
 	i = 1;
-	red->cmds = ft_lstnew(args[0]);
-	if (!red->cmds)
-		return (NULL);
 	while (args[i])
 	{
 		if (args[i][0] == '|')
@@ -81,16 +72,32 @@ t_redir	*redir_init(char **args, t_env *env)
 	}
 	red->pipes = (int *) malloc(sizeof(int)*red->n*2);
 	if (!red->pipes)
-		return (NULL);
-	/* parent creates all needed pipes at the start */
-	for ( i = 0; i < red->n; i++ ){
-		if( pipe(red->pipes + i*2) < 0 )
-		{
-			perror("Error");
-			exit(1);
-		}
+		return (1);
+	i = 0;
+	while (i < red->n)
+	{
+		if( pipe(red->pipes + i*2) < 0)
+			return (1);
+		i++;
 	}
-	return red;
+	return (0);
+}
+
+t_redir	*redir_init(char **args, t_env *env)
+{
+	t_redir *red;
+	
+	red = (t_redir *) malloc(sizeof(t_redir));
+	if (!red)
+		return (NULL);
+	red->env = env;
+	red->n = 0;
+	red->cmds = ft_lstnew(args[0]);
+	if (!red->cmds)
+		return (NULL);
+	if (redir_lst(args, red) == EXIT_FAILURE)
+		return (NULL);
+	return (red);
 }
 
 int is_pipe_or_redir(char **text)
@@ -168,6 +175,7 @@ int redirs(char **args, t_env *env)
 	red = redir_init(args, env);
 	if (red && redir_errors(red, args) == EXIT_FAILURE)
 	{
+		redir_destroy(red);
 		printf("minishell: error sintáctico\n");
 		return (EXIT_FAILURE);
 	}
@@ -177,57 +185,78 @@ int redirs(char **args, t_env *env)
 	return (err);
 }
 
+int	red_output(t_list *lst, t_redir *red)
+{
+	int	err;
+	
+	err = 0;
+	if (ft_strlen(lst->next->content) == 1)
+		red->file = open((char *)lst->next->next->content, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+	else if (ft_strlen(lst->next->content) == 2 && ft_strncmp(lst->next->content, ">>", 2) == 0)
+		red->file = open((char *)lst->next->next->content, O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
+	if (red->file == -1)
+		return (EXIT_FAILURE);
+	err = dup2(red->file, 1);
+	if (err < 0)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
 
-int redirection(t_redir *red, t_list *lst) {
-	char *buffer;
+int	red_input_get(t_redir *red, t_list *lst)
+{
+	char	*buffer;
+	int		err;
+	
+	red->file = open(".auxiliar", O_WRONLY | O_CREAT, S_IRWXU);
+	if (red->file < 0)
+		return (EXIT_FAILURE);
+	buffer = readline("> ");
+	while (strncmp(buffer, lst->next->next->content, ft_strlen(buffer)) != 0)
+	{
+		write(red->file, buffer, ft_strlen(buffer));
+		write(red->file, "\n", 1);
+		free(buffer);
+		buffer = readline("> ");
+	}
+	close(red->file);
+	red->file = open(".auxiliar", O_RDONLY);
+	if (red->file < 0)
+		return (EXIT_FAILURE);
+	err = dup2(red->file, 0);
+	if (err < 0)
+		return (EXIT_FAILURE);
+	unlink(".auxiliar");
+	return (EXIT_SUCCESS);
+}
+
+int	red_input(t_redir *red, t_list *lst)
+{
+	int		err;
+
+	err = 0;	
+	if (ft_strlen(lst->next->content) == 1)
+	{
+		red->file = open(lst->next->next->content, O_RDONLY);
+		if (red->file < 0)
+			return (EXIT_FAILURE);
+		err = dup2(red->file, 0);
+		if (err < 0)
+			return (EXIT_FAILURE);
+	}
+	else if (ft_strlen(lst->next->content) == 2 && ft_strncmp(lst->next->content, "<<", 2) == 0)
+		err = red_input_get(red, lst);
+	return (err);
+}
+int redirection(t_redir *red, t_list *lst) {	
+	int	err;
 	
 	while (lst->next && ft_strncmp(lst->next->content, "|", 1) != 0 && ft_strncmp(lst->next->content, ">", 1) != 0 && ft_strncmp(lst->next->content, "<", 1) != 0)
 		lst = lst->next;
 	if (lst->next && ft_strncmp(lst->next->content, ">", 1) == 0)
-	{
-		if (ft_strlen(lst->next->content) == 1)
-			red->file = open((char *)lst->next->next->content, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
-		else if (ft_strlen(lst->next->content) == 2 && ft_strncmp(lst->next->content, ">>", 2) == 0)
-			red->file = open((char *)lst->next->next->content, O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
-		if (red->file == -1) {
-			perror("ERROR: \n");
-			exit(1);
-		}
-		//fprintf(stderr, "%s\n", (char *)lst->next->next->content);
-		dup2(red->file, 1);
-	}
+		err = red_output(lst, red);
 	else if(lst->next && ft_strncmp(lst->next->content, "<", 1) == 0)
-	{
-		if (ft_strlen(lst->next->content) == 1)
-		{
-			red->file = open(lst->next->next->content, O_RDONLY);
-			if (red->file < 0)
-				return (EXIT_FAILURE);
-			dup2(red->file, 0);
-		}
-		else if (ft_strlen(lst->next->content) == 2 && ft_strncmp(lst->next->content, "<<", 2) == 0)
-		{
-			red->file = open(".auxiliar", O_WRONLY | O_CREAT, S_IRWXU);
-			if (red->file < 0)
-			{
-				printf("ERROR in file");
-				exit(1);
-			}
-			buffer = readline("> ");
-			while (strncmp(buffer, lst->next->next->content, ft_strlen(buffer)) != 0)
-			{
-				write(red->file, buffer, ft_strlen(buffer));
-				write(red->file, "\n", 1);
-				free(buffer);
-				buffer = readline("> ");
-			}
-			close(red->file);
-			red->file = open(".auxiliar", O_RDONLY);
-			dup2(red->file, 0);
-			unlink(".auxiliar");
-		}
-	}
-	return (0);
+		err = red_input(red, lst);
+	return (err);
 }
 
 int	input_output(t_redir *red, t_list **lst, int i)
