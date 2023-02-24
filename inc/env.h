@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:37:31 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/20 12:12:35 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/24 17:16:54 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,8 @@ void		env_free(t_env *env);
 t_env		*env_init(char **envp);
 int			env_print(t_env *env, char *var);
 char		*env_find(t_env *env, char *var);
-int	my_select(char *one, char *two);
+int			my_select(char *one, char *two);
+char		*env_case_one(char *str, t_list *tmp, int *aux, char *wd);
+void		set_aux_i(char *var, int *aux, int *i);
+void		delete(void *p);
 #endif

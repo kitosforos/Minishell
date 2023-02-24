@@ -3,25 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:37:14 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/20 12:22:01 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/24 17:16:24 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-void delete(void *p)
-{
-	if (p)
-		free(p);	
-}
-
 void	env_free(t_env *env)
 {
 	t_list	*lst;
-	
+
 	while (env->env)
 	{
 		lst = env->env->next;
@@ -42,30 +36,20 @@ char	*env_find(t_env *env, char *var)
 	wd = malloc(sizeof(char) * ft_strlen(var));
 	if (!wd)
 		return (NULL);
-	i = 1;
-	while (var[i] && var[i] != '$' && (ft_isalnum(var[i]) || var[i] == '_'))
-		i++;
+	str = NULL;
+	set_aux_i(var, &aux, &i);
 	ft_strlcpy(wd, var, i + 1);
-	aux = 0;
 	tmp = env->env;
 	while (tmp->next)
 	{
-		if (ft_strncmp((char *)tmp->content, wd + 1, my_select((char *)tmp->content, wd + 1)) == 0)
-		{
-			str = (char *)tmp->content;
-			while (str[aux] != '=')
-				aux++;
-			return ((char *)tmp->content + aux + 1);
-		}
+		if (ft_strncmp((char *)tmp->content, wd + 1,
+				my_select((char *)tmp->content, wd + 1)) == 0)
+			return (env_case_one(str, tmp, &aux, wd));
 		tmp = tmp->next;
 	}
-	if (ft_strncmp((char *)tmp->content, wd + 1, my_select((char *)tmp->content, wd + 1)) == 0)
-	{
-		str = (char *)tmp->content;
-		while (str[aux] != '=')
-			aux++;
-		return ((char *)tmp->content + aux + 1);
-	}
+	if (ft_strncmp((char *)tmp->content, wd + 1,
+			my_select((char *)tmp->content, wd + 1)) == 0)
+		return (env_case_one(str, tmp, &aux, wd));
 	return ("");
 }
 
@@ -95,7 +79,7 @@ int	env_print(t_env *env, char *var)
 	t_list	*tmp;
 
 	tmp = env->env;
-	if (!var || !env)
+	if (!var)
 		return (EXIT_FAILURE);
 	if (env_find(env, var))
 	{
@@ -106,7 +90,7 @@ int	env_print(t_env *env, char *var)
 			tmp = tmp->next;
 		}
 		if (ft_strncmp(tmp->content, var, ft_strlen(var)) == 0)
-				printf("%s\n", (char *)tmp->content + ft_strlen(var) + 1);
+			printf("%s\n", (char *)tmp->content + ft_strlen(var) + 1);
 	}
 	if (ft_strncmp(var, "?", 2) == 0)
 		return (2);
@@ -121,9 +105,9 @@ int	my_select(char *one, char *two)
 	while (one[i] != '=')
 			i++;
 	if ((int)ft_strlen(two) > i)
-		return ft_strlen(two);
+		return (ft_strlen(two));
 	else
 	{
-		return i;
+		return (i);
 	}
 }

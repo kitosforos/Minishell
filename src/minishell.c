@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:52:11 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/22 16:18:54 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/24 16:27:16 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	piping_process(char **args, Minishell *mini)
 {
 	pid_t	pid;
 	int		err;
-	
+
 	err = 0;
 	prepare(args, mini->env);
 	pid = fork();
@@ -27,15 +27,14 @@ void	piping_process(char **args, Minishell *mini)
 		split_free(args);
 		exit(1);
 	}
-	else if(pid == 0) {
+	else if (pid == 0)
+	{
 		err = redirs(args, mini->env);
 		split_free(args);
 		exit(err);
 	}
 	else
-	{
 		wait(NULL);
-	}
 }
 
 void	mini_free(Minishell *mini)
@@ -56,7 +55,7 @@ Minishell	*mini_init(char **envp)
 		return (NULL);
 	mini->env = env_init(envp);
 	if (!mini->env)
-		return NULL;
+		return (NULL);
 	mini->buf = NULL;
 	return (mini);
 }
@@ -67,7 +66,6 @@ int	minishell(Minishell *mini)
 
 	if (mini->buf == NULL)
 		return (EXIT_FAILURE);
-	
 	args = ft_split2(mini->buf, ' ');
 	if (is_pipe_or_redir(args) == 0)
 	{
@@ -76,9 +74,8 @@ int	minishell(Minishell *mini)
 		if (builtins(args, mini->env) == EXIT_FAILURE)
 			exec_process(args, mini->env);
 	}
-	else{
+	else
 		piping_process(args, mini);
-	}
-	split_free(args);
+	// split_free(args);
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:58:13 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/20 12:00:05 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/24 14:03:51 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,10 @@ int	builtins(char *cmds[], t_env *env)
 	return (EXIT_SUCCESS);
 }
 
-int	dollar_echo(char *argv[], t_env *env, int i)
+int	return_echo(void)
 {
-	int		flag;
-	char	**words_env;
-	char	*var;
-	t_list	*tmp;
-
-	tmp = env->env;
-	flag = i;
-	if (argv[i][1] == '?')
-		printf("%d", env->exit_status);
-	var = ft_strtrim(argv[i], "$");
-	while (tmp->content && tmp->next && ft_strlen(var))
-	{
-		words_env = ft_split(tmp->content, '=');
-		if (ft_strncmp(words_env[0], var, my_select(words_env[0], var)) == 0)
-			printf("%s", words_env[1]);
-		tmp = tmp->next;
-	}
-	words_env = ft_split(tmp->content, '=');
-	if (strcmp(words_env[0], var) == 0)
-			printf("%s", words_env[1]);
-	if (flag == 1)
-		printf("\n");
-	return (EXIT_SUCCESS);
+	printf("\n");
+	return (1);
 }
 
 int	my_echo(char *argv[])
@@ -70,22 +49,12 @@ int	my_echo(char *argv[])
 	i = 1;
 	j = 0;
 	if (!argv[1])
-	{
-		printf("\n");
-		return (1);
-	}
+		return (return_echo());
 	if (strcmp(argv[1], "-n") == 0)
 		i++;
 	while (argv[i])
 	{
-		if (flag)
-			printf(" ");
-		j = 0;
-		while (argv[i][j])
-		{
-			printf("%c", argv[i][j++]);
-			flag = 1;
-		}
+		echo_procces(argv[i], &j, &flag);
 		i++;
 	}
 	if (strcmp(argv[1], "-n"))
@@ -114,7 +83,7 @@ int	my_pwd(char *cmds[])
 
 int	my_env(t_env *env, char *cmds[])
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	if (cmds[1])
 	{
@@ -122,11 +91,12 @@ int	my_env(t_env *env, char *cmds[])
 		return (EXIT_FAILURE);
 	}
 	tmp = env->env;
-	while (tmp->content && tmp->next)
+	while (tmp->next)
 	{
 		printf("%s\n", (char *)tmp->content);
 		tmp = tmp->next;
 	}
-	printf("%s\n", (char *)tmp->content);
+	if (tmp->content)
+		printf("%s\n", (char *)tmp->content);
 	return (EXIT_SUCCESS);
 }

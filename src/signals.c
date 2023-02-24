@@ -12,8 +12,6 @@
 
 #include "signals.h"
 
-int g_signal;
-
 void	set_signals(void)
 {
 	signal(SIGINT, ctrlc);

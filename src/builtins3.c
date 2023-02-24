@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/23 13:56:56 by dcruz-na          #+#    #+#             */
-/*   Updated: 2023/02/24 13:58:41 by marcos           ###   ########.fr       */
+/*   Created: 2023/02/24 11:48:13 by marcos            #+#    #+#             */
+/*   Updated: 2023/02/24 11:55:12 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "builtins.h"
 
-int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
+void	echo_procces(char *argv, int *j, int *flag)
 {
-	unsigned int	i;
-
-	i = 0;
-	if (!s1)
-		return (0 - ft_strlen(s2));
-	while ((*s1 || *s2) && i < n)
+	if (*flag)
+		printf(" ");
+	*j = 0;
+	while (argv[*j])
 	{
-		if (*s1 != *s2)
-		{
-			return ((unsigned char)*s1 - *s2);
-		}
-		s1++;
-		s2++;
-		i++;
+		printf("%c", argv[*j]);
+		*j += 1;
+		*flag = 1;
 	}
-	return (0);
 }

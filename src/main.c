@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/22 15:16:41 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/24 15:14:53 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,38 +24,28 @@ void	read_and_add(Minishell *mini)
 	}
 }
 
-void	errors(int argc, char **argv)
-{
-	if (argc != 1 || !(*argv))
-		exit(EXIT_FAILURE);
-}
-
-int exitt(Minishell *mini, char **buf)
+int	exitt(Minishell *mini, char **buf)
 {
 	int		exit;
 	int		i;
-	
-	i = 0;
-	exit = 0;
+
+	set_to_zero(&i, &exit);
 	if (buf[0] && buf[1])
 		exit = ft_atoi(buf[1]);
 	while (buf[1] && buf[1][i])
 	{
 		if (ft_isdigit(buf[1][i++]) == 0)
 		{
-			printf("exit\nminishell: exit: %s se requiere un argumento numérico", buf[1]);
-			split_free(buf);
-			free(mini->buf);
-			clear_history();
-			return (2);
+			printf("exit\nexit:%s se requiere un argumento númerico.\n", buf[1]);
+			exit = 2;
 		}
 	}
-	printf("exit\n");
 	if (buf[0] && buf[1] && buf[2])
 	{
 		printf("minishell: exit: demasiados argumentos\n");
 		exit = 1;
 	}
+	printf("exit\n");
 	split_free(buf);
 	free(mini->buf);
 	clear_history();
@@ -70,7 +60,8 @@ int	program_loop(Minishell *mini)
 	buf = ft_split(mini->buf, ' ');
 	while (ft_strncmp(buf[0], "exit", my_select2(buf[0], "exit")))
 	{
-		if (mini->buf != NULL && ft_strlen(mini->buf) && check_quotes(mini->buf))
+		if (mini->buf != NULL && ft_strlen(mini->buf)
+			&& check_quotes(mini->buf))
 		{
 			minishell(mini);
 			free(mini->buf);
@@ -79,16 +70,13 @@ int	program_loop(Minishell *mini)
 		split_free(buf);
 		buf = ft_split(mini->buf, ' ');
 	}
-	return (exitt(mini, buf));	
-}
-
-void	program_free(Minishell *mini)
-{
-	mini_free(mini);
+	return (exitt(mini, buf));
 }
 
 int	my_select2(char *one, char *two)
 {
+	if (!one)
+		return (4);
 	if (ft_strlen(one) > ft_strlen(two))
 		return (ft_strlen(one));
 	else
