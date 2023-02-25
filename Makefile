@@ -1,14 +1,16 @@
 NAME = minishell
 LEAKS = -fsanitize=address -g3
 LIBFT = libft/libft.a
-SRCS = src/builtins.c src/process.c src/minishell.c src/main.c src/env.c src/env2.c src/builtins2.c src/builtins3.c src/builtins4.c src/redir.c src/signals.c src/ft_split2.c src/quotes.c src/quotes2.c src/quotes3.c src/quotes4.c src/free.c
+SRCS = src/builtins.c src/process.c src/minishell.c src/main.c src/env.c src/env2.c \
+		src/builtins2.c src/builtins3.c src/builtins4.c src/redir.c src/signals.c src/ft_split2.c src/quotes.c src/quotes2.c src/quotes3.c \
+		 src/quotes4.c src/free.c src/redir2.c src/redir3.c
 INC = -IUsers/${USER}/.brew/opt/readline/include -Iinc -Ilibft
 LIB = -L/Users/${USER}/.brew/opt/readline/lib -lreadline 
 OBJS = $(patsubst src/%, obj/%, $(SRCS:.c=.o))
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra
 ############################
 $(NAME): $(OBJS) $(LIBFT)
-		gcc $(CFLAGS) -g $^ -o $@ -Llibft -lft $(INC) $(LIB)
+		gcc $(CFLAGS) $(LEAKS) -g $^ -o $@ -Llibft -lft $(INC) $(LIB)
 
 $(LIBFT):
 		make bonus -C libft
@@ -16,7 +18,7 @@ $(LIBFT):
 all: $(NAME)
 
 obj/%.o: src/%.c
-		gcc $(CFLAGS) -c -g $< -o $@ $(INC)
+		gcc $(CFLAGS) $(LEAKS) -c -g $< -o $@ $(INC)
 
 clean:
 		rm -f obj/*.o

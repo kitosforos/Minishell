@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   process.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:07:21 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/24 13:10:53 by marcos           ###   ########.fr       */
+/*   Updated: 2023/02/25 17:59:10 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROCESS_H
-#define PROCESS_H
+# define PROCESS_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -26,7 +26,6 @@
 # include "env.h"
 # include "builtins.h"
 
-
 void	exec_process(char **arr, t_env *env);
 void	free_path(char **path, char **arr, char *cmd_path);
 char	*find_path(t_env *env);
@@ -34,4 +33,3 @@ char	*find_cmd_path(char **path, char *cmd);
 int		child_process(char **arr, t_env *env);
 
 #endif
-

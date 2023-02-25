@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 13:53:59 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/20 15:59:28 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/25 17:00:19 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,17 @@ static void	init(char *s, int *j, int *k, char c)
 {
 	while ((char)(s[*j]) == c)
 		*k = ++(*j);
-    if (s[(*j)] == '|' || s[(*j)] == '<' || s[(*j)] == '>')
-    {
-        if ((s[(*j)] == '<' && s[(*j) + 1] == '<') || (s[(*j)] == '>' && s[(*j) + 1] == '>'))
-            (*j)++;
-        (*j)++;
-        return ;
-    }        
-	while ((char)(s[*j]) != c && s[*j] && s[*j] != '|' && s[*j] != '<' && s[*j] != '>') {
+	if (s[(*j)] == '|' || s[(*j)] == '<' || s[(*j)] == '>')
+	{
+		if ((s[(*j)] == '<' && s[(*j) + 1] == '<')
+			|| (s[(*j)] == '>' && s[(*j) + 1] == '>'))
+			(*j)++;
 		(*j)++;
-    }
+		return ;
+	}
+	while ((char)(s[*j]) != c && s[*j] && s[*j] != '|'
+		&& s[*j] != '<' && s[*j] != '>')
+		(*j)++;
 }
 
 static int	allocate(char **s, int i, int j, int k)
@@ -63,13 +64,14 @@ static int	counting_words(const char *str, char c)
 	trigger = 0;
 	while (*str)
 	{
-        if (*str == '|' || *str == '<' || *str == '>')
-        {
-            if ((*str == '<' && *(str + 1) == '<') || (*str == '>' && *(str + 1) == '>'))
-                str++;
-            trigger = 0;
-            i++;
-        }
+		if (*str == '|' || *str == '<' || *str == '>')
+		{
+			if ((*str == '<' && *(str + 1) == '<')
+				|| (*str == '>' && *(str + 1) == '>'))
+				str++;
+			trigger = 0;
+			i++;
+		}
 		else if (*str != c && trigger == 0)
 		{
 			trigger = 1;
@@ -115,7 +117,6 @@ char	**ft_split2(char const *s, char c)
 //     char *x = " hola>>que  |>>tal|archivo.txt <";
 //     char **split;
 //     int i=0;
-    
 //     split = ft_split2(x, ' ');
 //     while (split[i]) {
 //         printf("%d: %s\n", i, split[i]);
