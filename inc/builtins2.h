@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 19:29:36 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/24 15:02:27 by marcos           ###   ########.fr       */
+/*   Updated: 2023/02/25 19:11:07 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ char	*set_aux(char *word, char *args);
 char	*get_exp(char *args, int *i);
 int		uns_proc(char *args, t_list *tmp, t_list *tmp2, char **env_word);
 int		exit_numeric(char *cmds[]);
+void	split_free(char **strs);
 
 #endif
