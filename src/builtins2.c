@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 19:28:23 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/24 15:01:11 by marcos           ###   ########.fr       */
+/*   Updated: 2023/02/25 19:35:13 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	my_cd(char *argv)
 char	*get_exp(char *args, int *i)
 {
 	char	**words;
-
+	char	*word;
+	
 	words = ft_split(args, '=');
 	printf("%s\n", words[0]);
 	while (words[0][*i])
@@ -43,19 +44,26 @@ char	*get_exp(char *args, int *i)
 		*i += 1;
 	}
 	if (!words[1])
+	{
+		split_free(words);
 		return (EXIT_SUCCESS);
-	return (words[0]);
+	}
+	word = (char *) malloc(sizeof(words[0]));
+	ft_strlcpy(word, words[0], ft_strlen(words[0]) + 1);
+	split_free(words);
+	return (word);
 }
 
 char	*set_aux(char *word, char *args)
 {
 	char	*aux;
-
-	aux = malloc(sizeof(char) * (ft_strlen(args) + 1));
-	if (!aux)
-		return (NULL);
+	char	*x;
+	
+	args = args;
 	aux = ft_strjoin("", "$");
+	x = aux;
 	aux = ft_strjoin(aux, word);
+	free(x);
 	return (aux);
 }
 
@@ -91,5 +99,8 @@ int	my_export(char *args[], t_env *env)
 		exp_proc(word, env_word, tmp, args[1]);
 	else
 		export_add(args[1], env);
+	free(aux);
+	split_free(env_word);
+	free(word);
 	return (EXIT_SUCCESS);
 }

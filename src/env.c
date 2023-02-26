@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:37:14 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/24 17:16:24 by marcos           ###   ########.fr       */
+/*   Updated: 2023/02/25 19:56:41 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	env_free(t_env *env)
 	while (env->env)
 	{
 		lst = env->env->next;
+		free(env->env->content);
 		free(env->env);
 		env->env = lst;
 	}
@@ -33,7 +34,7 @@ char	*env_find(t_env *env, char *var)
 	char	*wd;
 	int		i;
 
-	wd = malloc(sizeof(char) * ft_strlen(var));
+	wd = malloc(sizeof(char) * ft_strlen(var) + 1);
 	if (!wd)
 		return (NULL);
 	str = NULL;
@@ -50,6 +51,7 @@ char	*env_find(t_env *env, char *var)
 	if (ft_strncmp((char *)tmp->content, wd + 1,
 			my_select((char *)tmp->content, wd + 1)) == 0)
 		return (env_case_one(str, tmp, &aux, wd));
+	free(wd);		
 	return ("");
 }
 
@@ -58,17 +60,22 @@ t_env	*env_init(char **envp)
 	t_env	*env;
 	t_list	*node;
 	int		i;
-
-	i = 1;
+	char	*str;
+	
+	i = 0;
 	env = (t_env *) malloc(sizeof(t_env));
 	if (!env)
 		return (NULL);
-	env->env = ft_lstnew(envp[0]);
+	str = (char *) malloc(sizeof(char) * ft_strlen(envp[0]) + 1);
+	ft_strlcpy(str, envp[0], ft_strlen(envp[0]) + 1);
+	env->env = ft_lstnew(str);
 	env->envp = envp;
 	env->exit_status = 0;
-	while (envp[i])
+	while (envp[++i])
 	{
-		node = ft_lstnew(envp[i++]);
+		str = (char *) malloc(sizeof(char) * ft_strlen(envp[i]) + 1);
+		ft_strlcpy(str, envp[i], ft_strlen(envp[i]) + 1);
+		node = ft_lstnew(str);
 		ft_lstadd_back(&env->env, node);
 	}
 	return (env);

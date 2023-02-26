@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:31:45 by marcos            #+#    #+#             */
-/*   Updated: 2023/02/24 17:41:55 by marcos           ###   ########.fr       */
+/*   Updated: 2023/02/25 18:37:13 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*ignore_single_quotes(char *str)
 		word[j++] = str[i++];
 	}
 	word[j] = 0;
+	free(str);
 	return (word);
 }
 
