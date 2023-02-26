@@ -16,5 +16,6 @@ char	*ignore_single_quotes(char *str);
 int		prepare(char **str, t_env *env);
 int		set_flag3(char str, int flag);
 char	*pd_procces(char *str, char *word, t_env *env, char *aux);
+int	prepare_arg(char *str, t_env *env);
 char	*prepare_dollar(char	*str, t_env *env);
 int		contains_quotes(char **str);
