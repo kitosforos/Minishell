@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 19:28:23 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/25 19:35:13 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/27 21:17:57 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*get_exp(char *args, int *i)
 	char	*word;
 	
 	words = ft_split(args, '=');
-	printf("%s\n", words[0]);
 	while (words[0][*i])
 	{
 		if (ft_isalnum(words[0][*i]) == 0 && words[0][*i] != '_')
