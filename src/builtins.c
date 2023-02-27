@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:58:13 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/24 14:03:51 by marcos           ###   ########.fr       */
+/*   Updated: 2023/02/27 21:22:16 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@ int	builtins(char *cmds[], t_env *env)
 {
 	if (!cmds[0])
 		return (EXIT_FAILURE);
-	if (strcmp(cmds[0], "echo") == 0)
+	if (!cmds[0][0])
+		return (EXIT_SUCCESS);
+	if (ft_strncmp(cmds[0], "echo", ft_strlen(cmds[0])) == 0)
 		env->exit_status = my_echo(cmds);
-	else if (strcmp(cmds[0], "pwd") == 0)
+	else if (ft_strncmp(cmds[0], "pwd", ft_strlen(cmds[0])) == 0)
 		env->exit_status = my_pwd(cmds);
-	else if (strcmp(cmds[0], "env") == 0)
+	else if (ft_strncmp(cmds[0], "env", ft_strlen(cmds[0])) == 0)
 		env->exit_status = my_env(env, cmds);
-	else if (strcmp(cmds[0], "cd") == 0)
+	else if (ft_strncmp(cmds[0], "cd", ft_strlen(cmds[0])) == 0)
 		env->exit_status = my_cd(cmds[1]);
-	else if (strcmp(cmds[0], "export") == 0)
+	else if (ft_strncmp(cmds[0], "export", ft_strlen(cmds[0])) == 0)
 		env->exit_status = my_export(cmds, env);
 	else if (ft_strncmp(cmds[0], "unset", ft_strlen(cmds[0])) == 0)
 		env->exit_status = my_unset(cmds, env);
