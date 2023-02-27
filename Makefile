@@ -7,7 +7,7 @@ SRCS = src/builtins.c src/process.c src/minishell.c src/main.c src/env.c src/env
 INC = -IUsers/${USER}/.brew/opt/readline/include -Iinc -Ilibft
 LIB = -L/Users/${USER}/.brew/opt/readline/lib -lreadline 
 OBJS = $(patsubst src/%, obj/%, $(SRCS:.c=.o))
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -g
 ############################
 $(NAME): $(OBJS) $(LIBFT)
 		gcc $(CFLAGS) -g $^ -o $@ -Llibft -lft $(INC) $(LIB)

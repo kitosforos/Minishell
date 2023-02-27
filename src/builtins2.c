@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 19:28:23 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/27 21:17:57 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/28 00:07:52 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	exp_proc(char *word, char **env_word, t_list *tmp, char *arg)
 		tmp = tmp->next;
 		env_word = ft_split(tmp->content, '=');
 	}
-	tmp->content = arg;
+	ft_strlcpy(tmp->content, arg, ft_strlen(arg) + 1);
 	return (EXIT_SUCCESS);
 }
 
