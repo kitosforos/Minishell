@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:31:45 by marcos            #+#    #+#             */
-/*   Updated: 2023/02/25 18:37:13 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/27 10:33:37 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ char	*pd_procces(char *str, char *word, t_env *env, char *aux)
 	int	i;
 	int	j;
 	int	flag;
-
 	flag = 0;
+	
 	set_to_zero(&i, &j);
 	while (str[i])
 	{
@@ -82,8 +82,8 @@ char	*pd_procces(char *str, char *word, t_env *env, char *aux)
 		if (str[i] == '$' && flag == 0)
 		{	
 			ft_strlcpy(aux, env_find(env, str + i),
-				ft_strlen(env_find(env, str + i)) + 1);
-			word = ft_strjoin(word, aux);
+			ft_strlen(env_find(env, str + i)) + 1);
+			ft_strlcpy(word + strlen(word), aux, ft_strlen(aux) + 1);
 			j += ft_strlen(aux);
 			i++;
 			while (str[i] && str[i] != ' ' && str[i] != '$'
@@ -101,8 +101,8 @@ char	*prepare_dollar(char *str, t_env *env)
 {
 	char	*word;
 	char	*aux;
-
-	word = malloc(sizeof(char) * 100000000);
+	
+	word = ft_calloc(10000000, sizeof(char));
 	if (!word)
 		return (NULL);
 	aux = malloc(sizeof(char) * 100000000);
