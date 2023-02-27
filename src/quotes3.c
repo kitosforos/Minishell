@@ -6,7 +6,7 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:31:45 by marcos            #+#    #+#             */
-/*   Updated: 2023/02/27 10:33:37 by danicn           ###   ########.fr       */
+/*   Updated: 2023/02/27 11:14:12 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*pd_procces(char *str, char *word, t_env *env, char *aux)
 	flag = 0;
 	
 	set_to_zero(&i, &j);
-	while (str[i])
+	while (str && str[i])
 	{
 		flag = set_flag3(str[i], flag);
 		if (str[i] == '$' && flag == 0)
