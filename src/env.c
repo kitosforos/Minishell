@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 17:37:14 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/25 19:56:41 by danicn           ###   ########.fr       */
+/*   Updated: 2023/03/01 12:18:23 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*env_find(t_env *env, char *var)
 	if (ft_strncmp((char *)tmp->content, wd + 1,
 			my_select((char *)tmp->content, wd + 1)) == 0)
 		return (env_case_one(str, tmp, &aux, wd));
-	free(wd);		
+	free(wd);
 	return ("");
 }
 
@@ -61,7 +61,7 @@ t_env	*env_init(char **envp)
 	t_list	*node;
 	int		i;
 	char	*str;
-	
+
 	i = 0;
 	env = (t_env *) malloc(sizeof(t_env));
 	if (!env)

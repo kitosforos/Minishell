@@ -6,7 +6,7 @@
 /*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:28:12 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/24 17:23:53 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/01 12:17:03 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	exec_process(char **arr, t_env *env)
 	pid_t	parent;
 	int		status;
 
+	if (ft_strncmp(arr[0], env_find(env, "$PATH"), 5) == 0)
+		printf("orden <%s> no encontrada\n", arr[0]);
 	parent = fork();
 	if (parent < 0)
 		return ;
@@ -92,6 +94,7 @@ int	child_process(char **arr, t_env *env)
 
 	if (!arr || !arr[0])
 		return (1);
+	desprepare_pipes(arr);
 	if (builtins(arr, env) == EXIT_FAILURE)
 	{
 		path = ft_split(find_path(env), ':');

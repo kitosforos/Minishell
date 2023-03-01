@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:31:45 by marcos            #+#    #+#             */
-/*   Updated: 2023/02/27 11:14:12 by danicn           ###   ########.fr       */
+/*   Updated: 2023/03/01 12:22:36 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ char	*pd_procces(char *str, char *word, t_env *env, char *aux)
 	int	i;
 	int	j;
 	int	flag;
+
 	flag = 0;
-	
 	set_to_zero(&i, &j);
 	while (str && str[i])
 	{
@@ -82,7 +82,7 @@ char	*pd_procces(char *str, char *word, t_env *env, char *aux)
 		if (str[i] == '$' && flag == 0)
 		{	
 			ft_strlcpy(aux, env_find(env, str + i),
-			ft_strlen(env_find(env, str + i)) + 1);
+				ft_strlen(env_find(env, str + i)) + 1);
 			ft_strlcpy(word + strlen(word), aux, ft_strlen(aux) + 1);
 			j += ft_strlen(aux);
 			i++;
@@ -101,7 +101,7 @@ char	*prepare_dollar(char *str, t_env *env)
 {
 	char	*word;
 	char	*aux;
-	
+
 	word = ft_calloc(10000000, sizeof(char));
 	if (!word)
 		return (NULL);

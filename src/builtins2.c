@@ -6,7 +6,7 @@
 /*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 19:28:23 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/28 00:07:52 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/01 12:18:05 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_exp(char *args, int *i)
 {
 	char	**words;
 	char	*word;
-	
+
 	words = ft_split(args, '=');
 	while (words[0][*i])
 	{
@@ -57,7 +57,7 @@ char	*set_aux(char *word, char *args)
 {
 	char	*aux;
 	char	*x;
-	
+
 	args = args;
 	aux = ft_strjoin("", "$");
 	x = aux;
