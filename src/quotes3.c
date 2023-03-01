@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:31:45 by marcos            #+#    #+#             */
-/*   Updated: 2023/03/01 12:22:36 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/01 19:34:39 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,12 @@ char	*prepare_dollar(char *str, t_env *env)
 	if (!aux)
 		return (NULL);
 	if (ft_strncmp(str, "$?", ft_strlen(str)) == 0)
+	{
+		free(aux);
+		free(str);
+		free(word);
 		return (ft_itoa(env->exit_status));
+	}
 	word = pd_procces(str, word, env, aux);
 	free(aux);
 	free(str);

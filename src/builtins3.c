@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:48:13 by marcos            #+#    #+#             */
-/*   Updated: 2023/03/01 19:28:11 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/01 19:57:14 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	uns_proc(char *args, t_list *tmp, t_list *tmp2, char **env_word)
 		flag = 1;
 	}
 	split_free(env_word);
+	free(tmp2->next->content);
+	free(tmp2->next);
 	tmp2->next = tmp2->next->next;
 	return (EXIT_SUCCESS);
 }
@@ -83,6 +85,8 @@ int	my_unset(char *args[], t_env *env)
 		free(aux);
 		return (uns_proc(args[1], tmp, tmp2, env_word));
 	}
+	split_free(env_word);
+	free(aux);
 	return (EXIT_FAILURE);
 }
 
