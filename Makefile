@@ -11,7 +11,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 CC = gcc
 ############################
 $(NAME): $(OBJS) $(LIBFT)
-		$(CC) $(CFLAGS) -g $^ -o $@ -Llibft -lft $(INC) $(LIB)
+		$(CC) $(CFLAGS)  -g $^ -o $@ -Llibft -lft $(INC) $(LIB)
 
 $(LIBFT):
 		make bonus -C libft
