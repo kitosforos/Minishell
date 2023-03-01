@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:05:09 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/25 17:22:16 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/03/01 19:24:36 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,3 @@ int	is_pipe_or_redir(char **text)
 	}
 	return (0);
 }
-
-// int	pipex(t_redir *red, char **args)
-// {
-// 	if (!red || !args)
-// 		return (EXIT_FAILURE);
-// 	return (EXIT_SUCCESS);
-// }
