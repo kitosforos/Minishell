@@ -8,9 +8,10 @@ INC = -IUsers/${USER}/.brew/opt/readline/include -Iinc -Ilibft
 LIB = -L/Users/${USER}/.brew/opt/readline/lib -lreadline 
 OBJS = $(patsubst src/%, obj/%, $(SRCS:.c=.o))
 CFLAGS = -Wall -Wextra -Werror -g
+CC = gcc
 ############################
 $(NAME): $(OBJS) $(LIBFT)
-		gcc $(CFLAGS) -g $^ -o $@ -Llibft -lft $(INC) $(LIB)
+		$(CC) $(CFLAGS) -g $^ -o $@ -Llibft -lft $(INC) $(LIB)
 
 $(LIBFT):
 		make bonus -C libft
@@ -18,7 +19,7 @@ $(LIBFT):
 all: $(NAME)
 
 obj/%.o: src/%.c
-		gcc $(CFLAGS) -c -g $< -o $@ $(INC)
+		$(CC) $(CFLAGS) -c -g $< -o $@ $(INC)
 
 clean:
 		rm -f obj/*.o
