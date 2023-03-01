@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 10:20:33 by marcos            #+#    #+#             */
-/*   Updated: 2023/02/24 11:34:24 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/01 19:07:33 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_quotes(char *str)
 
 	i = 0;
 	count = 1;
-	while (str[i] && !count)
+	while (str[i] && count)
 	{
 		if (str[i] == '\"')
 			cq_case_one(str, &i, &count);
