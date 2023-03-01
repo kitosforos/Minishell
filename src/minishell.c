@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	piping_process(char **args, Minishell *mini)
+void	piping_process(char **args, t_minishell *mini)
 {
 	pid_t	pid;
 	int		err;
@@ -36,7 +36,7 @@ void	piping_process(char **args, Minishell *mini)
 		wait(NULL);
 }
 
-void	mini_free(Minishell *mini)
+void	mini_free(t_minishell *mini)
 {
 	if (mini)
 	{
@@ -45,11 +45,11 @@ void	mini_free(Minishell *mini)
 	}
 }
 
-Minishell	*mini_init(char **envp)
+t_minishell	*mini_init(char **envp)
 {
-	Minishell	*mini;
+	t_minishell	*mini;
 
-	mini = (Minishell *) malloc(sizeof(Minishell));
+	mini = (t_minishell *) malloc(sizeof(t_minishell));
 	if (!mini)
 		return (NULL);
 	mini->env = env_init(envp);
@@ -88,7 +88,7 @@ void	prepare_pipes(char *buf)
 	}
 }
 
-int	minishell(Minishell *mini)
+int	minishell(t_minishell *mini)
 {
 	char	**args;
 

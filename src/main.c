@@ -6,13 +6,13 @@
 /*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/27 20:57:26 by danicn           ###   ########.fr       */
+/*   Updated: 2023/03/01 18:32:09 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	read_and_add(Minishell *mini)
+void	read_and_add(t_minishell *mini)
 {
 	mini->buf = readline("Minishell > ");
 	if (mini->buf != NULL)
@@ -24,7 +24,7 @@ void	read_and_add(Minishell *mini)
 	}
 }
 
-int	exitt(Minishell *mini, char **buf)
+int	exitt(t_minishell *mini, char **buf)
 {
 	int		exit;
 	int		i;
@@ -52,7 +52,7 @@ int	exitt(Minishell *mini, char **buf)
 	return (exit % 256);
 }
 
-int	program_loop(Minishell *mini)
+int	program_loop(t_minishell *mini)
 {	
 	char	**buf;
 
@@ -85,7 +85,7 @@ int	my_select2(char *one, char *two)
 
 int	main(int argc, char **argv, char **envp)
 {
-	Minishell	*mini;
+	t_minishell	*mini;
 	int			exit;
 
 	errors(argc, argv);

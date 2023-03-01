@@ -26,7 +26,7 @@ void	split_free(char **strs)
 	free(aux);
 }
 
-void	program_free(Minishell *mini)
+void	program_free(t_minishell *mini)
 {
 	mini_free(mini);
 }

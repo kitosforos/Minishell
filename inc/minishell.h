@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:36:46 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/01 12:19:02 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/01 18:31:24 by danicn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@
 # include "libft.h"
 # include "redir.h"
 
-typedef struct _Minishell {
+typedef struct s_minishell {
 	char		*buf;
 	t_env		*env;
-}	Minishell;
+}	t_minishell;
 
-void		mini_free(Minishell *mini);
-Minishell	*mini_init(char **envp);
-int			minishell(Minishell *mini);
+void		mini_free(t_minishell *mini);
+t_minishell	*mini_init(char **envp);
+int			minishell(t_minishell *mini);
 char		**ft_split2(char const *s, char c);
 void		split_free(char **strs);
 void		prepare_pipes(char *buf);

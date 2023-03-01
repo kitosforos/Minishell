@@ -22,8 +22,8 @@
 # include "signals.h"
 
 void	errors(int argc, char **argv);
-int		program_loop(Minishell *mini);
-void	program_free(Minishell *mini);
+int		program_loop(t_minishell *mini);
+void	program_free(t_minishell *mini);
 void	split_free(char **strs);
 int		my_select2(char *one, char *two);
 #endif
