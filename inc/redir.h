@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:05:15 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/25 17:35:06 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/03/02 00:17:12 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ int		redir_lst(char **args, t_redir *red);
 t_redir	*redir_init(char **args, t_env *env);
 int		redirection(t_redir *red, t_list *lst);
 int		input_output(t_redir *red, t_list **lst, int i);
-int		pipex_child(t_redir *red, t_list **lst, int i);
+int		pipex_child(t_redir *red, t_list **lst, int i, int j);
 
 #endif

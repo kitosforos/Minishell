@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:18:17 by dcruz-na          #+#    #+#             */
-/*   Updated: 2023/02/25 17:52:33 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/03/02 00:17:27 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,18 @@ int	input_output(t_redir *red, t_list **lst, int i)
 	return (0);
 }
 
-int	pipex_child(t_redir *red, t_list **lst, int i)
+int	pipex_child(t_redir *red, t_list **lst, int i, int j)
 {
 	pid_t	pds;
 	char	**str;
 
 	pds = fork();
-	if (pds == 0)
+	if (pds > 0)
+	{
+		close(red->pipes[j]);
+		wait(NULL);
+	}
+	else if (pds == 0)
 	{
 		if (input_output(red, lst, i) < 0)
 			return (1);
@@ -95,19 +100,22 @@ int	pipex_child(t_redir *red, t_list **lst, int i)
 int	pipex(t_redir *red)
 {
 	int		i;
+	int		j;
 	t_list	*lst;
 
+	j = 1;
 	i = 0;
 	lst = red->cmds;
 	while (lst)
 	{
-		if (pipex_child(red, &lst, i) == -1)
+		if (pipex_child(red, &lst, i, j) == -1)
 			return (1);
 		while (lst && ft_strncmp(lst->content, "|", 1) != 0)
 			lst = lst->next;
 		if (lst && ft_strncmp(lst->content, "|", 1) == 0)
 			lst = lst->next;
 		i++;
+		j += 2;
 	}
 	wait(NULL);
 	i = 0;
