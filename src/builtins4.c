@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins4.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 14:58:35 by marcos            #+#    #+#             */
-/*   Updated: 2023/02/25 18:19:07 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:42:56 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins2.h"
+#include "builtins.h"
 
 int	export_add(char *var, t_env *env)
 {
@@ -59,7 +59,7 @@ int	my_unset(char *args[], t_env *env)
 
 	tmp = env->env;
 	tmp2 = env->env;
-	aux = set_aux(args[1], args[1]);
+	aux = set_aux(args[1]);
 	if (args[1][0] >= 48 && args[1][0] <= 57)
 		return (exit_numeric(args));
 	env_word = ft_split(tmp->content, '=');

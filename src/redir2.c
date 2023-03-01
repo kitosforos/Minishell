@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:18:12 by dcruz-na          #+#    #+#             */
-/*   Updated: 2023/02/25 17:54:04 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/03/01 18:56:31 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,18 @@ int	red_output(t_list *lst, t_redir *red)
 
 	err = 0;
 	if (ft_strlen(lst->next->content) == 1)
+	{
+		desprepare_pipes((char **)&(lst->next->next->content));
 		red->file = open((char *)lst->next->next->content, O_WRONLY
 				| O_CREAT | O_TRUNC, S_IRWXU);
+	}
 	else if (ft_strlen(lst->next->content) == 2
 		&& ft_strncmp(lst->next->content, ">>", 2) == 0)
+	{
+		desprepare_pipes((char **)&(lst->next->next->content));
 		red->file = open((char *)lst->next->next->content, O_WRONLY
 				| O_APPEND | O_CREAT, S_IRWXU);
+	}
 	if (red->file == -1)
 		return (EXIT_FAILURE);
 	err = dup2(red->file, 1);
