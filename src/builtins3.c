@@ -6,7 +6,7 @@
 /*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:48:13 by marcos            #+#    #+#             */
-/*   Updated: 2023/03/01 19:59:30 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/03/01 20:01:18 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ int	my_unset(char *args[], t_env *env)
 	tmp2 = env->env;
 	aux = set_aux(args[1]);
 	if (args[1][0] >= 48 && args[1][0] <= 57)
+	{
+		free(aux);
 		return (exit_numeric(args));
+	}
 	env_word = ft_split(tmp->content, '=');
 	if (ft_strncmp(env_find(env, aux), "", 1) != 0)
 	{
