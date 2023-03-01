@@ -3,24 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/03/01 19:59:35 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/03/02 00:23:19 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+extern int flagg;
+
 void	read_and_add(t_minishell *mini)
 {
-	mini->buf = readline("Minishell > ");
-	if (mini->buf != NULL)
-		add_history(mini->buf);
+	if (flagg)
+	{
+		mini->buf = readline("Minishell > ");
+		if (mini->buf != NULL)
+			add_history(mini->buf);
+		else
+		{
+			printf("exit\n");
+			exit(EXIT_SUCCESS);
+		}
+	}
 	else
 	{
-		printf("exit\n");
-		exit(EXIT_SUCCESS);
+		mini->buf = readline("");
+		flagg = 1;
 	}
 }
 
@@ -86,6 +96,7 @@ int	main(int argc, char **argv, char **envp)
 	t_minishell	*mini;
 	int			exit;
 
+	flagg = 1;
 	errors(argc, argv);
 	mini = mini_init(envp);
 	if (!mini)
