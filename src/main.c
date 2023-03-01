@@ -6,7 +6,7 @@
 /*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/03/01 19:06:16 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/03/01 19:06:51 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	program_loop(t_minishell *mini)
 		if (mini->buf != NULL && ft_strlen(mini->buf)
 			&& check_quotes(mini->buf))
 		{
+			printf("%s\n", mini->buf);
 			minishell(mini);
 			free(mini->buf);
 		}

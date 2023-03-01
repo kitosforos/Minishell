@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 19:28:23 by maralons          #+#    #+#             */
-/*   Updated: 2023/03/01 12:18:05 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/01 18:42:07 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins2.h"
+#include "builtins.h"
 
 int	my_cd(char *argv)
 {
@@ -53,12 +53,11 @@ char	*get_exp(char *args, int *i)
 	return (word);
 }
 
-char	*set_aux(char *word, char *args)
+char	*set_aux(char *word)
 {
 	char	*aux;
 	char	*x;
 
-	args = args;
 	aux = ft_strjoin("", "$");
 	x = aux;
 	aux = ft_strjoin(aux, word);
@@ -92,7 +91,7 @@ int	my_export(char *args[], t_env *env)
 	word = get_exp(args[1], &i);
 	if (!word)
 		return (exit_numeric(args));
-	aux = set_aux(word, args[1]);
+	aux = set_aux(word);
 	env_word = ft_split(tmp->content, '=');
 	if (ft_strncmp(env_find(env, aux), "", 1) != 0)
 		exp_proc(word, env_word, tmp, args[1]);
