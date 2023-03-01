@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:58:13 by maralons          #+#    #+#             */
-/*   Updated: 2023/02/27 21:22:16 by danicn           ###   ########.fr       */
+/*   Updated: 2023/03/01 19:23:01 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ int	my_echo(char *argv[])
 	j = 0;
 	if (!argv[1])
 		return (return_echo());
-	if (strcmp(argv[1], "-n") == 0)
+	if (ft_strncmp(argv[1], "-n", 2) == 0)
 		i++;
 	while (argv[i])
 	{
 		echo_procces(argv[i], &j, &flag);
 		i++;
 	}
-	if (strcmp(argv[1], "-n"))
+	if (ft_strncmp(argv[1], "-n", 2))
 		printf("\n");
 	return (0);
 }
