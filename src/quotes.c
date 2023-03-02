@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 10:20:33 by marcos            #+#    #+#             */
-/*   Updated: 2023/03/01 19:07:33 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/02 15:27:28 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	cq_case_two(char *str, int *i, int *count)
 		if (str[*i] == '\'')
 		{
 			*count = 1;
+			break ;
 		}
 		*i += 1;
 	}
