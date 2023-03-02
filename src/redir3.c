@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:18:17 by dcruz-na          #+#    #+#             */
-/*   Updated: 2023/03/02 00:17:27 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/02 10:34:27 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ int	pipex(t_redir *red)
 		i++;
 		j += 2;
 	}
-	wait(NULL);
 	i = 0;
 	while (i < 2 * red->n)
 		close(red->pipes[i++]);

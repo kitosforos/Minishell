@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/03/02 00:23:19 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/02 10:37:08 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-extern int flagg;
+extern int	g_flagg;
 
 void	read_and_add(t_minishell *mini)
 {
-	if (flagg)
+	if (g_flagg)
 	{
 		mini->buf = readline("Minishell > ");
 		if (mini->buf != NULL)
@@ -30,7 +30,7 @@ void	read_and_add(t_minishell *mini)
 	else
 	{
 		mini->buf = readline("");
-		flagg = 1;
+		g_flagg = 1;
 	}
 }
 
@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 	t_minishell	*mini;
 	int			exit;
 
-	flagg = 1;
+	g_flagg = 1;
 	errors(argc, argv);
 	mini = mini_init(envp);
 	if (!mini)

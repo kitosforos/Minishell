@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 19:32:24 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/02 00:20:29 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/02 10:38:08 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
 
-int flagg;
+int	g_flagg;
 
 void	set_signals(void)
 {
@@ -23,7 +23,7 @@ void	set_signals(void)
 void	ctrlc(int n)
 {
 	n += 1;
-	flagg = 0;
+	g_flagg = 0;
 	printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();

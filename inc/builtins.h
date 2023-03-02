@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:42:42 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/01 18:42:40 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/02 10:37:52 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,5 @@ char	*get_exp(char *args, int *i);
 int		uns_proc(char *args, t_list *tmp, t_list *tmp2, char **env_word);
 int		exit_numeric(char *cmds[]);
 void	split_free(char **strs);
-
 
 #endif
