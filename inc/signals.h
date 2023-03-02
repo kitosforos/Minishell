@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 19:35:15 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/01 18:50:51 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/02 10:42:32 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,4 @@
 void	rl_replace_line(const char *text, int clear_undo);
 void	set_signals(void);
 void	ctrlc(int n);
-void	ctrlbs(int n);
 #endif
