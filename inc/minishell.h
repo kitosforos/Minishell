@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:36:46 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/01 18:31:24 by danicn           ###   ########.fr       */
+/*   Updated: 2023/03/02 10:44:35 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_minishell {
 	t_env		*env;
 }	t_minishell;
 
+void		piping_process(char **args, t_minishell *mini);
 void		mini_free(t_minishell *mini);
 t_minishell	*mini_init(char **envp);
 int			minishell(t_minishell *mini);

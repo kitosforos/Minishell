@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:56:54 by dcruz-na          #+#    #+#             */
-/*   Updated: 2023/03/01 12:20:39 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/02 10:41:36 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*ignore_single_quotes(char *str);
 int		prepare(char **str, t_env *env);
 int		set_flag3(char str, int flag);
 char	*pd_procces(char *str, char *word, t_env *env, char *aux);
-int		prepare_arg(char *str, t_env *env);
 char	*prepare_dollar(char	*str, t_env *env);
 int		contains_quotes(char **str);
 
