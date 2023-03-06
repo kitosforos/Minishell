@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:31:47 by marcos            #+#    #+#             */
-/*   Updated: 2023/02/24 11:45:19 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/06 21:05:09 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,10 @@ char	*iq_procces(char *str, char *word, int flag, int flag2)
 				return (aux);
 			flag2 = set_flag2(flag2);
 		}
+		else if (str[i] == '\'' && flag2 == 1)
+			iq_case_two(&i, word, &j, 17);
 		else
-		{
-			if (str[i] == '\'' && flag2 == 1)
-				word[j++] = '\'';
 			word[j++] = str[i++];
-		}
 	}
 	word[j] = 0;
 	free(str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:56:54 by dcruz-na          #+#    #+#             */
-/*   Updated: 2023/03/02 15:45:17 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/06 21:05:18 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int		set_flag3(char str, int flag);
 char	*pd_procces(char *str, char *word, t_env *env, char *aux);
 char	*prepare_dollar(char	*str, t_env *env, int flag);
 int		contains_quotes(char **str);
+void	iq_case_two(int *i, char *wd, int *j, char s);
 
 #endif

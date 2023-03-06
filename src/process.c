@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:28:12 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/03 22:24:58 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/06 20:19:24 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	child_process(char **arr, t_env *env)
 		cmd_path = find_cmd_path(path, arr[0]);
 		if (!cmd_path)
 		{
-			put_error_cmd(arr[1]);
+			put_error_cmd(arr[0]);
 			env->exit_status = 127;
 			exit(127);
 		}

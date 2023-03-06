@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:18:17 by dcruz-na          #+#    #+#             */
-/*   Updated: 2023/03/03 22:06:26 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/06 21:06:29 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,7 @@ int	pipex(t_redir *red)
 	t_list	*lst;
 
 	j = 1;
-	i = 0;
-	res = 0;
+	set_to_zero(&i, &res);
 	lst = red->cmds;
 	while (lst)
 	{

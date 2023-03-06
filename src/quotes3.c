@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:31:45 by marcos            #+#    #+#             */
-/*   Updated: 2023/03/02 15:54:37 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/06 21:05:51 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*ignore_single_quotes(char *str)
 			if (aux)
 				return (aux);
 		}
+		else if (str[i] == 17)
+			iq_case_two(&i, word, &j, '\'');
 		else
 			word[j++] = str[i++];
 	}
@@ -49,15 +51,12 @@ int	prepare(char **str, t_env *env)
 		str[i] = ignore_quotes(str[i]);
 		if (str[i] == NULL)
 			return (1);
-		// printf("[1] %s\n", str[i]);
 		str[i] = prepare_dollar(str[i], env, 0);
 		if (str[i] == NULL)
 			return (1);
-		// printf("[2] %s\n", str[i]);
 		str[i] = ignore_single_quotes(str[i]);
 		if (str[i] == NULL)
 			return (1);
-		// printf("[3] %s\n", str[i]);
 		i++;
 	}
 	return (0);
@@ -112,23 +111,12 @@ char	*prepare_dollar(char *str, t_env *env, int flag)
 	aux = malloc(sizeof(char) * 100000000);
 	if (!aux)
 		return (NULL);
-	if (ft_strncmp(str, "$?", 2) == 0)
+	if (ft_strncmp(str, "$?", my_select2(str, "$?")) == 0)
 	{
-		if (ft_strncmp(str, "$?", 3) == 0)
-		{
-			if (!flag)
-			{
-				free(aux);
-				free(word);
-				free(str);
-			}
-			return (ft_itoa(env->exit_status));
-		}
-		else
-		{
-			printf("%d", env->exit_status);
-			return (prepare_dollar(str + 2, env, 1));
-		}
+		free(aux);
+		free(word);
+		free(str);
+		return (ft_itoa(env->exit_status));
 	}
 	word = pd_procces(str, word, env, aux);
 	if (!flag)
