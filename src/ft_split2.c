@@ -6,43 +6,20 @@
 /*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 13:53:59 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/25 17:00:19 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/03/06 21:49:46 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "ft_split2.h"
 
-static void	declar(int *i, int *j, int *k);
-static void	init(char *s, int *j, int *k, char c);
-static int	allocate(char **s, int i, int j, int k);
-static int	counting_words(const char *str, char c);
-
-static void	declar(int *i, int *j, int *k)
+void	declar(int *i, int *j, int *k)
 {
 	*i = 0;
 	*j = 0;
 	*k = 0;
 }
 
-static void	init(char *s, int *j, int *k, char c)
-{
-	while ((char)(s[*j]) == c)
-		*k = ++(*j);
-	if (s[(*j)] == '|' || s[(*j)] == '<' || s[(*j)] == '>')
-	{
-		if ((s[(*j)] == '<' && s[(*j) + 1] == '<')
-			|| (s[(*j)] == '>' && s[(*j) + 1] == '>'))
-			(*j)++;
-		(*j)++;
-		return ;
-	}
-	while ((char)(s[*j]) != c && s[*j] && s[*j] != '|'
-		&& s[*j] != '<' && s[*j] != '>')
-		(*j)++;
-}
-
-static int	allocate(char **s, int i, int j, int k)
+int	allocate(char **s, int i, int j, int k)
 {
 	s[i] = (char *)malloc(sizeof(char) * (j - k + 1));
 	if (s[i] == NULL)
@@ -55,29 +32,53 @@ static int	allocate(char **s, int i, int j, int k)
 	return (1);
 }
 
-static int	counting_words(const char *str, char c)
+void	comillas(char **str, int *i, int *x, int *trigger)
 {
-	int	i;
-	int	trigger;
+	if (**str == '\"')
+	{
+		(*str)++;
+		while (**str != '\"')
+			(*str)++;
+		(*i)++;
+		*x = 1;
+	}
+	else if (**str == '\'')
+	{
+		(*str)++;
+		while (**str != '\'')
+			(*str)++;
+		(*i)++;
+		*x = 1;
+	}
+	else if (**str == '|' || **str == '<' || **str == '>')
+	{
+		if ((**str == '<' && *((*str) + 1) == '<')
+			|| (**str == '>' && *((*str) + 1) == '>'))
+			(*str)++;
+		*trigger = 0;
+		(*i)++;
+		*x = 1;
+	}
+}
+
+int	counting_words(const char *str, char c)
+{
+	int		i;
+	int		trigger;
+	int		x;
 
 	i = 0;
 	trigger = 0;
 	while (*str)
 	{
-		if (*str == '|' || *str == '<' || *str == '>')
-		{
-			if ((*str == '<' && *(str + 1) == '<')
-				|| (*str == '>' && *(str + 1) == '>'))
-				str++;
-			trigger = 0;
-			i++;
-		}
-		else if (*str != c && trigger == 0)
+		x = 0;
+		comillas((char **)(&str), &i, &x, &trigger);
+		if (!x && (*str != c && trigger == 0))
 		{
 			trigger = 1;
 			i++;
 		}
-		else if (*str == c)
+		else if (!x && (*str == c))
 			trigger = 0;
 		str++;
 	}
@@ -114,7 +115,7 @@ char	**ft_split2(char const *s, char c)
 
 // int main(int argc, char **argv)
 // {
-//     char *x = " hola>>que  |>>tal|archivo.txt <";
+//     char *x = "\"  hola\'  \"qutajlsl\'    \" lol \'";
 //     char **split;
 //     int i=0;
 //     split = ft_split2(x, ' ');
