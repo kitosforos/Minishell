@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:36:46 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/06 23:20:59 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/06 23:21:32 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ char		**ft_split2(char const *s, char c);
 void		split_free(char **strs);
 void		prepare_pipes(char *buf);
 void		exit_free(char **buf, t_minishell *mini);
-void		return_echo(void);
+int			return_echo(void);
 #endif

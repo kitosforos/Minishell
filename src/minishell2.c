@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:13:08 by maralons          #+#    #+#             */
-/*   Updated: 2023/03/06 23:14:09 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/06 23:40:43 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ void	echo_procces(char *argv, int *k, char *buf)
 		j += 1;
 		*k += 1;
 	}
+	if (ft_isalpha(buf[*k]))
+		*k += 1;
+	if (buf[*k] == '\'' || buf[*k] == '\"')
+		*k += 1;
 	if (buf[*k] == ' ')
 	{
 		printf(" ");
