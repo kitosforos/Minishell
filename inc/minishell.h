@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:36:46 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/02 10:44:35 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/06 22:35:46 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ int			minishell(t_minishell *mini);
 char		**ft_split2(char const *s, char c);
 void		split_free(char **strs);
 void		prepare_pipes(char *buf);
-
+void		exit_free(char **buf, t_minishell *mini);
 #endif

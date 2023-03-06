@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/03/06 20:16:03 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/06 22:44:57 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	exitt(t_minishell *mini, char **buf)
 		{
 			printf("exit\nexit:%s se requiere un argumento númerico.\n", buf[1]);
 			exit = 2;
+			exit_free(buf, mini);
+			return (exit % 256);
 		}
 	}
 	if (buf[0] && buf[1] && buf[2])
@@ -47,10 +49,7 @@ int	exitt(t_minishell *mini, char **buf)
 		printf("minishell: exit: demasiados argumentos\n");
 		exit = 1;
 	}
-	printf("exit\n");
-	split_free(buf);
-	free(mini->buf);
-	clear_history();
+	exit_free(buf, mini);
 	return (exit % 256);
 }
 
