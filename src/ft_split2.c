@@ -6,7 +6,7 @@
 /*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 13:53:59 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/06 21:49:46 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/03/06 22:19:50 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char	**ft_split2(char const *s, char c)
 
 // int main(int argc, char **argv)
 // {
-//     char *x = "\"  hola\'  \"qutajlsl\'    \" lol \'";
+//     char *x = "\"jflsjl      g\"jgd\"\'    \' jlfsl     jlfs\'   \"";
 //     char **split;
 //     int i=0;
 //     split = ft_split2(x, ' ');

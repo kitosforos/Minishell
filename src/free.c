@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 11:44:36 by danicn            #+#    #+#             */
-/*   Updated: 2023/02/24 15:14:59 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/06 22:35:04 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,12 @@ void	errors(int argc, char **argv)
 {
 	if (argc != 1 || !(*argv))
 		exit(EXIT_FAILURE);
+}
+
+void	exit_free(char **buf, t_minishell *mini)
+{
+	printf("exit\n");
+	split_free(buf);
+	free(mini->buf);
+	clear_history();
 }

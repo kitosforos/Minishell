@@ -6,7 +6,7 @@
 /*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 19:28:23 by maralons          #+#    #+#             */
-/*   Updated: 2023/03/01 19:37:55 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/03/06 23:08:15 by dcruz-na         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	exp_proc(char *word, char **env_word, t_list *tmp, char *arg)
 	while (ft_strncmp(word, env_word[0], ft_strlen(env_word[0])) != 0)
 	{
 		tmp = tmp->next;
+		split_free(env_word);
 		env_word = ft_split(tmp->content, '=');
 	}
 	ft_strlcpy(tmp->content, arg, ft_strlen(arg) + 1);
