@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:52:11 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/06 20:08:07 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/06 23:16:19 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,9 @@ int	minishell(t_minishell *mini)
 	if (is_pipe_or_redir(args) == 0)
 	{
 		desprepare_pipes(args);
-		if (builtins(args, mini->env) == EXIT_FAILURE)
+		if (ft_strncmp(args[0], "echo", my_select2(args[0], "echo")) == 0)
+			mini->env->exit_status = my_echo(args, mini);
+		else if (builtins(args, mini->env) == EXIT_FAILURE)
 			exec_process(args, mini->env);
 	}
 	else

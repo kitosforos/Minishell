@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 12:36:46 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/02 10:44:35 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/06 23:15:07 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ typedef struct s_minishell {
 }	t_minishell;
 
 void		piping_process(char **args, t_minishell *mini);
+void		echo_procces(char *argv, int *k, char *buf);
+int			my_echo(char *argv[], t_minishell *mini);
 void		mini_free(t_minishell *mini);
 t_minishell	*mini_init(char **envp);
 int			minishell(t_minishell *mini);
 char		**ft_split2(char const *s, char c);
 void		split_free(char **strs);
 void		prepare_pipes(char *buf);
-
+int			return_echo(void);
 #endif

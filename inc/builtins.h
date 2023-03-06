@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:42:42 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/02 15:25:53 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/06 23:14:34 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,10 @@
 
 # define PATH_MAX 32768
 
-int		return_echo(void);
-int		my_echo(char *argv[]);
 int		my_pwd(char *cmds[]);
 int		my_env(t_env *env, char *cmds[]);
 int		builtins(char *cmds[], t_env *env);
-void	echo_procces(char *argv, int *j, int *flag);
+void	echo_procces(char *argv, int *k, char *buf);
 int		my_cd(char	*argv);
 int		my_export(char *args[], t_env *env);
 int		export_add(char *var, t_env *env);

@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danicn <danicn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:48:13 by marcos            #+#    #+#             */
-/*   Updated: 2023/03/01 23:58:50 by danicn           ###   ########.fr       */
+/*   Updated: 2023/03/06 23:13:39 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-
-void	echo_procces(char *argv, int *j, int *flag)
-{
-	if (*flag)
-		printf(" ");
-	*j = 0;
-	while (argv[*j])
-	{
-		printf("%c", argv[*j]);
-		*j += 1;
-		*flag = 1;
-	}
-}
 
 int	export_add(char *var, t_env *env)
 {

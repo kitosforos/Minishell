@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:58:13 by maralons          #+#    #+#             */
-/*   Updated: 2023/03/06 20:27:21 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/06 23:14:17 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	builtins(char *cmds[], t_env *env)
 		return (EXIT_FAILURE);
 	if (!cmds[0][0])
 		return (EXIT_SUCCESS);
-	if (ft_strncmp(cmds[0], "echo", my_select2("echo", cmds[0])) == 0)
-		env->exit_status = my_echo(cmds);
 	else if (ft_strncmp(cmds[0], "pwd", my_select2("pwd", cmds[0])) == 0)
 		env->exit_status = my_pwd(cmds);
 	else if (ft_strncmp(cmds[0], "env", my_select2("env", cmds[0])) == 0)
@@ -35,35 +33,6 @@ int	builtins(char *cmds[], t_env *env)
 	else
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
-}
-
-int	return_echo(void)
-{
-	printf("\n");
-	return (1);
-}
-
-int	my_echo(char *argv[])
-{
-	int	i;
-	int	j;
-	int	flag;
-
-	flag = 0;
-	i = 1;
-	j = 0;
-	if (!argv[1])
-		return (return_echo());
-	if (ft_strncmp(argv[1], "-n", 2) == 0)
-		i++;
-	while (argv[i])
-	{
-		echo_procces(argv[i], &j, &flag);
-		i++;
-	}
-	if (ft_strncmp(argv[1], "-n", 2))
-		printf("\n");
-	return (0);
 }
 
 int	my_pwd(char *cmds[])
