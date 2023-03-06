@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 19:35:15 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/02 10:42:32 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/03 21:47:49 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <signal.h>
+# include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 

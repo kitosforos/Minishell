@@ -6,7 +6,7 @@
 /*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:16:42 by marcos            #+#    #+#             */
-/*   Updated: 2023/03/01 12:17:06 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/03 22:33:35 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ void	desprepare_pipes(char **args)
 		}
 		i++;
 	}
+}
+
+void	put_error_cmd(char *arr)
+{
+	ft_putstr_fd("orden <", STDERR_FILENO);
+	ft_putstr_fd(arr, STDERR_FILENO);
+	ft_putstr_fd("> no encontrada\n", STDERR_FILENO);
 }

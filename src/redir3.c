@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcruz-na <dcruz-na@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 17:18:17 by dcruz-na          #+#    #+#             */
-/*   Updated: 2023/03/02 10:34:27 by dcruz-na         ###   ########.fr       */
+/*   Updated: 2023/03/03 22:06:26 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	pipex_child(t_redir *red, t_list **lst, int i, int j)
 	if (pds > 0)
 	{
 		close(red->pipes[j]);
-		wait(NULL);
+		wait3(NULL, WNOHANG, NULL);
 	}
 	else if (pds == 0)
 	{
@@ -100,11 +100,13 @@ int	pipex_child(t_redir *red, t_list **lst, int i, int j)
 int	pipex(t_redir *red)
 {
 	int		i;
+	int		res;
 	int		j;
 	t_list	*lst;
 
 	j = 1;
 	i = 0;
+	res = 0;
 	lst = red->cmds;
 	while (lst)
 	{
@@ -117,6 +119,8 @@ int	pipex(t_redir *red)
 		i++;
 		j += 2;
 	}
+	while (res != -1)
+		res = wait(NULL);
 	i = 0;
 	while (i < 2 * red->n)
 		close(red->pipes[i++]);

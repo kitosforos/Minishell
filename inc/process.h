@@ -6,7 +6,7 @@
 /*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 13:07:21 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/01 12:08:48 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/03 22:12:14 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ char	*find_path(t_env *env);
 char	*find_cmd_path(char **path, char *cmd);
 int		child_process(char **arr, t_env *env);
 void	desprepare_pipes(char **args);
+void	put_error_cmd(char *arr);
 
 #endif

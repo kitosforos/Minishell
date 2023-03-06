@@ -6,11 +6,13 @@
 /*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:28:12 by danicn            #+#    #+#             */
-/*   Updated: 2023/03/01 12:17:03 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/03 22:24:58 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
+
+int	g_flagg;
 
 char	*find_cmd_path(char **path, char *cmd)
 {
@@ -66,15 +68,18 @@ void	free_path(char **path, char **arr, char *cmd_path)
 
 void	exec_process(char **arr, t_env *env)
 {
-	pid_t	parent;
 	int		status;
 
 	if (ft_strncmp(arr[0], env_find(env, "$PATH"), 5) == 0)
-		printf("orden <%s> no encontrada\n", arr[0]);
-	parent = fork();
-	if (parent < 0)
+	{
+		ft_putstr_fd("orden <", STDERR_FILENO);
+		ft_putstr_fd(arr[0], STDERR_FILENO);
+		ft_putstr_fd("> no encontrada\n", STDERR_FILENO);
+	}
+	g_flagg = fork();
+	if (g_flagg < 0)
 		return ;
-	else if (parent == 0)
+	else if (g_flagg == 0)
 	{
 		child_process(arr, env);
 		exit(0);
@@ -103,7 +108,7 @@ int	child_process(char **arr, t_env *env)
 		cmd_path = find_cmd_path(path, arr[0]);
 		if (!cmd_path)
 		{
-			printf("orden <<%s>> no encontrada\n", arr[0]);
+			put_error_cmd(arr[1]);
 			env->exit_status = 127;
 			exit(127);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 19:13:40 by maralons          #+#    #+#             */
-/*   Updated: 2023/03/02 10:51:36 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/03 21:54:05 by marcos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,13 @@ extern int	g_flagg;
 
 void	read_and_add(t_minishell *mini)
 {
-	if (g_flagg)
-	{
-		mini->buf = readline("Minishell > ");
-		if (mini->buf != NULL)
-			add_history(mini->buf);
-		else
-		{
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
-		}
-	}
+	mini->buf = readline("Minishell > ");
+	if (mini->buf != NULL)
+		add_history(mini->buf);
 	else
 	{
-		mini->buf = readline("");
-		g_flagg = 1;
+		printf("exit\n");
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -73,6 +65,7 @@ int	program_loop(t_minishell *mini)
 		if (mini->buf != NULL && ft_strlen(mini->buf)
 			&& check_quotes(mini->buf))
 			minishell(mini);
+		g_flagg = 0;
 		free(mini->buf);
 		read_and_add(mini);
 		split_free(buf);
@@ -96,7 +89,7 @@ int	main(int argc, char **argv, char **envp)
 	t_minishell	*mini;
 	int			exit;
 
-	g_flagg = 1;
+	g_flagg = 0;
 	errors(argc, argv);
 	mini = mini_init(envp);
 	if (!mini)
