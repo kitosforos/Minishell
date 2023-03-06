@@ -6,11 +6,13 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 11:58:13 by maralons          #+#    #+#             */
-/*   Updated: 2023/03/01 19:23:01 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/06 20:27:21 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+extern int	g_flagg;
 
 int	builtins(char *cmds[], t_env *env)
 {
@@ -18,17 +20,17 @@ int	builtins(char *cmds[], t_env *env)
 		return (EXIT_FAILURE);
 	if (!cmds[0][0])
 		return (EXIT_SUCCESS);
-	if (ft_strncmp(cmds[0], "echo", ft_strlen(cmds[0])) == 0)
+	if (ft_strncmp(cmds[0], "echo", my_select2("echo", cmds[0])) == 0)
 		env->exit_status = my_echo(cmds);
-	else if (ft_strncmp(cmds[0], "pwd", ft_strlen(cmds[0])) == 0)
+	else if (ft_strncmp(cmds[0], "pwd", my_select2("pwd", cmds[0])) == 0)
 		env->exit_status = my_pwd(cmds);
-	else if (ft_strncmp(cmds[0], "env", ft_strlen(cmds[0])) == 0)
+	else if (ft_strncmp(cmds[0], "env", my_select2("env", cmds[0])) == 0)
 		env->exit_status = my_env(env, cmds);
-	else if (ft_strncmp(cmds[0], "cd", ft_strlen(cmds[0])) == 0)
+	else if (ft_strncmp(cmds[0], "cd", my_select2("cd", cmds[0])) == 0)
 		env->exit_status = my_cd(cmds[1]);
-	else if (ft_strncmp(cmds[0], "export", ft_strlen(cmds[0])) == 0)
+	else if (ft_strncmp(cmds[0], "export", my_select2("export", cmds[0])) == 0)
 		env->exit_status = my_export(cmds, env);
-	else if (ft_strncmp(cmds[0], "unset", ft_strlen(cmds[0])) == 0)
+	else if (ft_strncmp(cmds[0], "unset", my_select2("unset", cmds[0])) == 0)
 		env->exit_status = my_unset(cmds, env);
 	else
 		return (EXIT_FAILURE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcos <marcos@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:34:49 by marcos            #+#    #+#             */
-/*   Updated: 2023/02/24 11:45:03 by marcos           ###   ########.fr       */
+/*   Updated: 2023/03/06 21:04:53 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ int	contains_quotes(char **str)
 		i++;
 	}
 	return (0);
+}
+
+void	iq_case_two(int *i, char *wd, int *j, char s)
+{
+	*i += 1;
+	wd[*j] = s;
+	*j += 1;
 }
