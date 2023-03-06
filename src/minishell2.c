@@ -6,7 +6,7 @@
 /*   By: maralons <maralons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 23:13:08 by maralons          #+#    #+#             */
-/*   Updated: 2023/03/06 23:40:43 by maralons         ###   ########.fr       */
+/*   Updated: 2023/03/06 23:48:39 by maralons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	echo_procces(char *argv, int *k, char *buf)
 		*k += 1;
 	if (buf[*k] == ' ')
 	{
+		while (buf[*k] == ' ')
+			*k += 1;
 		printf(" ");
 		*k += 1;
 	}
